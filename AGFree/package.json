@@ -2,7 +2,7 @@
     "name": "agfree",
     "version": "1.0.0",
     "scripts": {
-        "build": "ng build --prod --base-href /",
+        "web:build": "ng build --prod --base-href /",
         "serve": "ng serve",
         "lint": "ng lint",
         "createFilesWithApiKeys": "node createFilesWithApiKeys.js"
