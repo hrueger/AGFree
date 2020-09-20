@@ -12,9 +12,9 @@ import { RemoteService } from "./_services/remote.service";
 export class AppComponent {
     public currentUser: any;
     public pushMessage: any;
-    public showNav: boolean = false;
+    public showNav = false;
     public isShare: boolean;
-    public showEverything: boolean = true;
+    public showEverything = true;
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
@@ -48,9 +48,9 @@ export class AppComponent {
             }
         });
         this.translateService.setDefaultLang(
-            localStorage.getItem("language") ?
-            localStorage.getItem("language") :
-            this.translateService.getBrowserLang(),
+            localStorage.getItem("language")
+                ? localStorage.getItem("language")
+                : this.translateService.getBrowserLang(),
         );
         this.translateService.onLangChange.subscribe(() => {
             this.showEverything = false;

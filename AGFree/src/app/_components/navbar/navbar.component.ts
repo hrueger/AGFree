@@ -12,8 +12,8 @@ import { AuthenticationService } from "../../_services/authentication.service";
     templateUrl: "./navbar.component.html",
 })
 export class NavbarComponent {
-    public headline: string = "";
-    public showMenu: boolean = false;
+    public headline = "";
+    public showMenu = false;
     @Output() public toggleNav = new EventEmitter<any>();
 
     constructor(

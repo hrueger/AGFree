@@ -11,7 +11,7 @@ import { ConfigService } from "../../_services/config.service";
 export class CreateTicketsComponent {
     public guid: string;
     public name: string;
-    public x: number = 10;
+    public x = 10;
     public tickets: any = [];
     constructor(private remoteService: RemoteService, private alertService: AlertService, private configService: ConfigService) { }
 
@@ -21,7 +21,7 @@ export class CreateTicketsComponent {
     }
 
     public saveOne() {
-        this.remoteService.getNoCache("post", "tickets", {tickets: [{name: this.name, guid: this.guid}]}).subscribe(async (res) => {
+        this.remoteService.getNoCache("post", "tickets", { tickets: [{ name: this.name, guid: this.guid }] }).subscribe(async (res) => {
             if (res && res.status) {
                 this.alertService.success("Erfolgreich gespeichert!");
                 this.guid = await this.createGuid();
@@ -31,7 +31,7 @@ export class CreateTicketsComponent {
     }
 
     public saveMany() {
-        this.remoteService.getNoCache("post", "tickets", {tickets: this.tickets}).subscribe((res) => {
+        this.remoteService.getNoCache("post", "tickets", { tickets: this.tickets }).subscribe((res) => {
             if (res && res.status) {
                 this.alertService.success("Erfolgreich gespeichert!");
                 this.tickets = [];
@@ -42,7 +42,7 @@ export class CreateTicketsComponent {
 
     public async addTickets() {
         for (let i = 0; i < this.x; i++) {
-            this.tickets.push({name: "", guid: await this.createGuid()});
+            this.tickets.push({ name: "", guid: await this.createGuid() });
         }
     }
 
@@ -56,13 +56,11 @@ export class CreateTicketsComponent {
                 const v = c == "x" ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
-        } else if (config.idType == "numbers") {
-            return "xxxxxxxxxxxx".replace(/[x]/g, (c) => {
-                return Math.floor(Math.random() * 10).toString();
-            });
-        } else if (config.idType == "letters") {
-            let result           = '';
-            const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        } if (config.idType == "numbers") {
+            return "xxxxxxxxxxxx".replace(/[x]/g, (c) => Math.floor(Math.random() * 10).toString());
+        } if (config.idType == "letters") {
+            let result = "";
+            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             const charactersLength = characters.length;
             for (let i = 0; i < 12; i++) {
                 result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -70,5 +68,4 @@ export class CreateTicketsComponent {
             return result;
         }
     }
-
 }

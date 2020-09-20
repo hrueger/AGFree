@@ -1,15 +1,17 @@
 import { Component, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { RemoteService } from "../../_services/remote.service";
-import { PageSettingsModel, GridComponent, SelectionSettingsModel, EditSettingsModel, ColumnModel, Column, SaveEventArgs, EditEventArgs, DialogEdit } from "@syncfusion/ej2-angular-grids";
+import {
+    PageSettingsModel, GridComponent, SelectionSettingsModel, EditSettingsModel, ColumnModel, Column, SaveEventArgs, EditEventArgs, DialogEdit,
+} from "@syncfusion/ej2-angular-grids";
 import { HttpClient } from "@angular/common/http";
-import { AlertService } from "../../_services/alert.service";
 import { DatePipe } from "@angular/common";
+import { fabric } from "fabric";
+import * as QRCode from "qrcode";
+import { RemoteService } from "../../_services/remote.service";
+import { AlertService } from "../../_services/alert.service";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import * as PDFKit from "../../_lib/pdfkit.standalone";
 import { ConfigService } from "../../_services/config.service";
-import { fabric } from "fabric";
 import * as blobStream from "../../_lib/blob-stream";
-import * as QRCode from "qrcode";
 
 @Component({
     selector: "app-tickets",
@@ -22,10 +24,10 @@ export class TicketsComponent {
     public selectionOptions: SelectionSettingsModel = { type: "Multiple", checkboxOnly: false };
     public editSettings: EditSettingsModel = { allowEditing: true, mode: "Dialog" };
     @ViewChild("grid") public grid: GridComponent;
-    public rowsSelected: number = 0;
-    public printing: string = "";
+    public rowsSelected = 0;
+    public printing = "";
     public deleting: boolean;
-    private refreshed: boolean = false;
+    private refreshed = false;
     private translations: any = {};
     private config: any = {};
 
@@ -65,9 +67,9 @@ export class TicketsComponent {
     public async dataBound(args: any) {
         if (this.refreshed) {
             return;
-        } else {
-            this.refreshed = true;
         }
+        this.refreshed = true;
+
         for (const col of (this.grid.columns as ColumnModel[])) {
             if (col.field === "id") {
                 col.visible = false;
@@ -79,22 +81,16 @@ export class TicketsComponent {
                 col.allowEditing = true;
             } else if (col.field == "createdAt") {
                 col.headerText = this.translations.createdAt;
-                col.formatter = (field: string, data1: any, column: object) => {
-                    return this.datePipe.transform(data1.createdAt, "short");
-                }
+                col.formatter = (field: string, data1: any, column: object) => this.datePipe.transform(data1.createdAt, "short");
                 col.allowEditing = false;
             } else if (col.field == "updatedAt") {
                 col.headerText = this.translations.updatedAt;
-                col.formatter = (field: string, data1: any, column: object) => {
-                    return this.datePipe.transform(data1.createdAt, "short");
-                }
+                col.formatter = (field: string, data1: any, column: object) => this.datePipe.transform(data1.createdAt, "short");
                 col.allowEditing = false;
             } else if (col.field == "activated") {
                 col.headerText = this.translations.activated;
                 col.allowEditing = false;
-                col.formatter = (field: string, data1: any, column: object) => {
-                    return data1.activated ? `<span class="badge badge-success">${this.translations.yes}</span>` : `<span class="badge badge-danger">${this.translations.no}</span>`;
-                }
+                col.formatter = (field: string, data1: any, column: object) => (data1.activated ? `<span class="badge badge-success">${this.translations.yes}</span>` : `<span class="badge badge-danger">${this.translations.no}</span>`);
                 col.disableHtmlEncode = false;
             }
         }
@@ -165,7 +161,7 @@ export class TicketsComponent {
             this.deleting = true;
             if (this.rowsSelected) {
                 const guids = this.grid.getSelectedRecords().map((t: any) => t.guid);
-                this.remoteService.get("post", `tickets/delete`, { tickets: guids }).subscribe((res) => {
+                this.remoteService.get("post", "tickets/delete", { tickets: guids }).subscribe((res) => {
                     if (res && res.status) {
                         this.deleting = false;
                         this.tickets = this.tickets.filter((t) => !guids.includes(t.guid));
@@ -196,7 +192,12 @@ export class TicketsComponent {
         const ticketWidth = (pageWidth - ((ticketsX - 1) * ticketSpacing)) / ticketsX;
         const ticketHeight = (pageHeight - ((ticketsY - 1) * ticketSpacing)) / ticketsY;
 
-        const document = new PDFKit({ margin: ticketSpacing, info: { Author: "AGFree", CreationDate: new Date(), Creator: "AGFree", Title: "Tickets" } });
+        const document = new PDFKit({
+            margin: ticketSpacing,
+            info: {
+                Author: "AGFree", CreationDate: new Date(), Creator: "AGFree", Title: "Tickets",
+            },
+        });
         const stream = document.pipe(blobStream());
         let x = 0;
         let y = 0;
@@ -248,11 +249,10 @@ export class TicketsComponent {
                 enableRetinaScaling: true,
             }), ticketStartX, ticketStartY, { fit: [ticketWidth, ticketHeight] });
             const qrScaleFactor = 0.58;
-            document.image(await QRCode.toDataURL(ticket.guid, { margin: 1, width: qrSize}),
+            document.image(await QRCode.toDataURL(ticket.guid, { margin: 1, width: qrSize }),
                 ticketStartX + (properties.left * qrScaleFactor),
                 ticketStartY + (properties.top * qrScaleFactor),
-                { fit: [properties.width * qrScaleFactor, properties.height * qrScaleFactor] }
-            );
+                { fit: [properties.width * qrScaleFactor, properties.height * qrScaleFactor] });
 
             if (borderWidth > 0 || true) {
                 document.fillColor("black");
@@ -273,8 +273,8 @@ export class TicketsComponent {
             this.cdr.markForCheck();
         }
         document.end();
-        stream.on('finish', () => {
-            const url = stream.toBlobURL('application/pdf');
+        stream.on("finish", () => {
+            const url = stream.toBlobURL("application/pdf");
             window.open(url, "_blank");
             this.printing = "";
         });

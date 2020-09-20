@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { ZXingScannerComponent } from "@zxing/ngx-scanner"
+import { ZXingScannerComponent } from "@zxing/ngx-scanner";
 import { AlertService } from "../../_services/alert.service";
 import { RemoteService } from "../../_services/remote.service";
 import { FastTranslateService } from "../../_services/fast-translate.service";
@@ -11,7 +11,7 @@ import { FastTranslateService } from "../../_services/fast-translate.service";
 })
 export class ScanComponent {
     @ViewChild("scanner") public scanner: ZXingScannerComponent;
-    private checking: boolean = false;
+    private checking = false;
     private ticketsDone: string[] = [];
     constructor(private alertService: AlertService, private remoteService: RemoteService, private fts: FastTranslateService) {}
 

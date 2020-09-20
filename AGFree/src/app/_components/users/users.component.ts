@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
     public isAdmin: boolean;
     public password1: string;
     public password2: string;
-    public invalidMessage: boolean = false;
+    public invalidMessage = false;
     public editUserName: any;
     public editUserEmail: any;
     public editUserPasswordOld: any;
@@ -120,7 +120,8 @@ export class UsersComponent implements OnInit {
                             pwNew: pwnew1val,
                             pwNew2: pwnew2val,
                             pwOld: this.editUserForm.get(
-                                "editUserPasswordOld").value,
+                                "editUserPasswordOld",
+                            ).value,
                             username: this.editUserForm.get("editUserName")
                                 .value,
                         })

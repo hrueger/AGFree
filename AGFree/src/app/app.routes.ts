@@ -35,7 +35,7 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         canDeactivate: [UnsavedDataGuard],
         component: EditorComponent,
-        path: "editor"
+        path: "editor",
     },
     {
         canActivate: [AuthGuard],
@@ -47,7 +47,7 @@ export const routes: Routes = [
         component: HomeComponent,
         path: "home",
     },
-    /* Authentication paths*/
+    /* Authentication paths */
     { path: "login", component: LoginComponent },
     { path: "resetPassword/:resetPasswordToken", component: LoginComponent },
     // otherwise redirect to home

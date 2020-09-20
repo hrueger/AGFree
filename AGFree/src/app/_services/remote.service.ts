@@ -22,16 +22,14 @@ export class RemoteService {
         let echtDaten = false;
         const req = this.getRequest(type, path, args);
         req.pipe(
-                tap((_) =>
-                    this.log(
-                        "fetched " +
-                        path +
-                        " with data " +
-                        JSON.stringify(args),
-                    ),
-                ),
-                catchError(this.handleError<any>(path, false)),
-            )
+            tap((_) => this.log(
+                `fetched ${
+                    path
+                } with data ${
+                    JSON.stringify(args)}`,
+            )),
+            catchError(this.handleError<any>(path, false)),
+        )
             .subscribe((data) => {
                 // console.log("internetdaten bekommen");
                 if (cacheData == null || !this.isEquivalent(cacheData, data)) {
@@ -68,26 +66,24 @@ export class RemoteService {
 
     public getNoCache(type, path: string, args?: any): Observable<any> {
         this.log(
-            "fetching " +
-            path +
-            " with data " +
-            JSON.stringify(args),
+            `fetching ${
+                path
+            } with data ${
+                JSON.stringify(args)}`,
         );
         return this.getRequest(type, path, args)
             .pipe(
-                tap((_) =>
-                    this.log(
-                        "fetched " +
-                        path +
-                        " with data " +
-                        JSON.stringify(args),
-                    ),
-                ),
+                tap((_) => this.log(
+                    `fetched ${
+                        path
+                    } with data ${
+                        JSON.stringify(args)}`,
+                )),
                 catchError(this.handleError<any>(path, false)),
             );
     }
     public uploadFile(action: string, name: string, file: any, args: object = {}): Observable<any> {
-        this.log("uploading file " + file.name);
+        this.log(`uploading file ${file.name}`);
         const formData: FormData = new FormData();
         formData.append(name, file, file.name);
         for (const key in args) {
@@ -98,9 +94,7 @@ export class RemoteService {
         return this.http
             .post<any>(`${environment.apiUrl}${action}`, formData)
             .pipe(
-                tap((_) =>
-                    this.log("uploading file " + file.name),
-                ),
+                tap((_) => this.log(`uploading file ${file.name}`)),
                 catchError(this.handleError<any>("fileUpload", false)),
             );
     }

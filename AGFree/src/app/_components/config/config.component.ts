@@ -10,11 +10,11 @@ import { ConfigService } from "../../_services/config.service";
     templateUrl: "./config.component.html",
 })
 export class ConfigComponent {
-    public updating: boolean = false;
+    public updating = false;
     constructor(private fb: FormBuilder, private remoteService: RemoteService, private configService: ConfigService, private alertService: AlertService) {}
     public configForm: FormGroup;
     public updates: any = {};
-    public canValidate: boolean = false;
+    public canValidate = false;
     public ngOnInit() {
         this.configService.reload();
         this.remoteService.get("get", "config/checkForUpdates").subscribe((data) => {
