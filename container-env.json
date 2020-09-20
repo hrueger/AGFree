@@ -1,0 +1,43 @@
+{
+    "container": {
+        "name": "agfree",
+        "scope": "hrueger"
+    },
+    "variables": [{
+            "name": "DB_NAME",
+            "description": "The name of the database",
+            "default": "db",
+            "type": "string"
+        },
+        {
+            "name": "DB_USER",
+            "description": "The database user",
+            "default": "root",
+            "type": "string"
+        },
+        {
+            "name": "DB_PASSWORD",
+            "description": "The database password",
+            "default": "",
+            "type": "string"
+        },
+        {
+            "name": "DB_PORT",
+            "description": "The port of the database server",
+            "default": 3306,
+            "type": "number"
+        },
+        {
+            "name": "DB_HOST",
+            "description": "The database server hostname or ip address",
+            "default": "localhost",
+            "type": "string"
+        },
+        {
+            "name": "JWT_SECRET",
+            "description": "The JWT secret, just choose a random string",
+            "default": "rwiuerslixalsdkxaxsdjxald",
+            "type": "string"
+        }
+    ]
+}

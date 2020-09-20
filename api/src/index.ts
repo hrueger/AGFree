@@ -7,20 +7,17 @@ import * as i18n from "i18n";
 import * as path from "path";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import { config } from "./config/config";
 import { Ticket } from "./entity/Ticket";
 import { User } from "./entity/User";
 import { createAdminUser1574018391679 } from "./migration/1574018391679-createAdminUser";
 import routes from "./routes";
-import { toInt } from "./utils/utils";
-import { createConfig1041039482032 } from "./migration/1041039482032-createConfig";
-import { Config } from "./entity/Config";
-import * as fileUpload from "express-fileupload";
-import * as proxy from "http-proxy-middleware";
+import { getConfig } from "container-env";
 
+const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
+console.log(config);
 i18n.configure({
   // tslint:disable-next-line: no-bitwise
-  defaultLocale: config.defaultLanguage ? config.defaultLanguage : "en",
+  defaultLocale: config.DEFAULT_LANGUAGE ? config.DEFAULT_LANGUAGE : "en",
   directory: path.join(__dirname, "../assets/i18n"),
   objectNotation: true,
 });
@@ -33,21 +30,20 @@ createConnection({
     migrationsDir: "src/migration",
     subscribersDir: "src/subscriber",
   },
-  database: config.database_name,
+  database: config.DB_NAME,
   entities: [
     User,
     Ticket,
-    Config,
   ],
   host: config.database_host,
   logging: false,
-  migrations: [createAdminUser1574018391679, createConfig1041039482032],
+  migrations: [createAdminUser1574018391679],
   migrationsRun: true,
-  password: config.database_password,
-  port: toInt(config.database_port),
+  password: config.DB_PASSWORD,
+  port: config.DB_PORT,
   synchronize: true,
   type: "mysql",
-  username: config.database_user,
+  username: config.DB_USER,
 })
   .then(async (connection) => {
 
@@ -64,21 +60,19 @@ createConnection({
     app.use(cors());
     app.use(helmet());
     app.use(bodyParser.json());
-    app.use(fileUpload({
-      limits: { fileSize: 30 * 1024 * 1024 },
-    }));
 
     // Set all routes from routes folder
     app.use("/api", routes);
 
     // Set routes for static built frontend
+    app.use("/", express.static("/app/dist/frontend"));
+    app.use("*", express.static("/app/dist/frontend/index.html"));
 
-    // for dev:
-    // app.use("/*", proxy.createProxyMiddleware({target: 'http://localhost:4200'}));
-    // for production:
-    app.use("/", express.static(path.join(__dirname, "../../frontend_build")));
-
-    app.listen(config.port, () => {
+    let port = 80;
+    if (process.env.NODE_ENV == "development") {
+        port = 3000;
+    }
+    app.listen(port, () => {
       // tslint:disable-next-line: no-console
       console.log(`Server started on port ${config.port}!`);
     });
