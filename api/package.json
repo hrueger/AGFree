@@ -19,17 +19,20 @@
     },
     "homepage": "https://github.com/hrueger/AGFree#readme",
     "devDependencies": {
-        "@types/i18n": "^0.8.7",
-        "@types/node": "^14.11.1",
-        "npx": "^10.2.2",
-        "ts-node": "9.0.0",
-        "tslint": "^6.1.3",
-        "typescript": "4.0.3",
+        "@schoolsquirrel/eslint-config-squirrel": "^0.1.2",
         "@types/bcryptjs": "^2.4.2",
         "@types/body-parser": "^1.19.0",
         "@types/cors": "^2.8.7",
         "@types/helmet": "0.0.48",
-        "@types/jsonwebtoken": "^8.5.0"
+        "@types/i18n": "^0.8.7",
+        "@types/jsonwebtoken": "^8.5.0",
+        "@types/node": "^14.11.1",
+        "eslint": "^7.9.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "npx": "^10.2.2",
+        "ts-node": "9.0.0",
+        "typescript": "4.0.3"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
@@ -50,7 +53,7 @@
         "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/index.ts",
         "prod": "tsc && node ./build/index.js",
         "build": "tsc",
-        "lint": "npx tslint --project .",
+        "lint": "eslint .",
         "createFilesWithApiKeys": "node src/scripts/generateSecretFilesWithKeys.js",
         "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
     }
