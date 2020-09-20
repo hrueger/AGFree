@@ -3,7 +3,7 @@ const request = require('request');
 let d = new Date();
 console.log("\x1b[34mReading packages...\x1b[0m");
 console.log("\x1b[34mThis can take a while!\x1b[0m");
-c.exec("npx npm-license-crawler --start ../../../ --json ./licenses.json.tmp", async () => {
+c.exec("npx npm-license-crawler --start ../../../ --json ./licenses.json.tmp", async() => {
     console.log(`\x1b[32mReading packages data finished in ${(new Date() - d) / 1000} seconds!\x1b[0m`);
     d = new Date();
     console.log("\x1b[34mCreating HTML file...\x1b[0m");
@@ -25,7 +25,7 @@ async function buildHtml(fileName, fs) {
     let c = 0;
     let knownPackageCount = 0;
     const knownPackages = [];
-    let html = "<!DOCTYPE html><html><head><title>AGTicket 3rd party licenses</title></head><body><h1>AGTicket 3rd party licenses</h1>";
+    let html = "<!DOCTYPE html><html><head><title>AGFree 3rd party licenses</title></head><body><h1>AGFree 3rd party licenses</h1>";
     for (const l in licenses) {
         const packageName = l.split("@")[0];
         if (!knownPackages.includes(packageName)) {
@@ -37,7 +37,7 @@ async function buildHtml(fileName, fs) {
                     html += `<h3 style='padding-top: 3em;'>${packageName} <small>(${package.licenses})</small></h3>`;
                     html += `<pre>${licenseText}</pre>`;
                 } catch {
-                    
+
                 }
             } else if (package.licenses) {
                 html += `<h3 style='padding-top: 3em;'>${packageName} <small>(${package.licenses})</small></h3>`;

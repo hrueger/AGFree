@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(["/"]);
             return;
         }
-        this.title.setTitle("AGTicket");
+        this.title.setTitle("AGFree");
         this.loginForm = this.formBuilder.group({
             password: ["", Validators.required],
             username: ["", Validators.required],

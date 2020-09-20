@@ -351,7 +351,7 @@ export class EditorComponent {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.getCanvasData()));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", `AGTicket_Design_${Date.now()}.agtd`);
+    downloadAnchorNode.setAttribute("download", `AGFree_Design_${Date.now()}.agtd`);
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();

@@ -37,11 +37,11 @@ jobs:
       with:
         node-version: 12
     - name: Install dependencies
-      working-directory: AGTicket
+      working-directory: AGFree
       run: npm i
     - name: Run create environment script
-      working-directory: AGTicket
+      working-directory: AGFree
       run: npm run createFilesWithApiKeys
     - name: Build
-      working-directory: AGTicket
+      working-directory: AGFree
       run: npm run build

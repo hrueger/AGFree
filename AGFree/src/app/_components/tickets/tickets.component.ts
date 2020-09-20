@@ -196,7 +196,7 @@ export class TicketsComponent {
         const ticketWidth = (pageWidth - ((ticketsX - 1) * ticketSpacing)) / ticketsX;
         const ticketHeight = (pageHeight - ((ticketsY - 1) * ticketSpacing)) / ticketsY;
 
-        const document = new PDFKit({ margin: ticketSpacing, info: { Author: "AGTicket", CreationDate: new Date(), Creator: "AGTicket", Title: "Tickets" } });
+        const document = new PDFKit({ margin: ticketSpacing, info: { Author: "AGFree", CreationDate: new Date(), Creator: "AGFree", Title: "Tickets" } });
         const stream = document.pipe(blobStream());
         let x = 0;
         let y = 0;

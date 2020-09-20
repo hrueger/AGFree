@@ -13,10 +13,10 @@ jobs:
       with:
         node-version: 12
     - name: Install dependencies
-      working-directory: AGTicket
+      working-directory: AGFree
       run: npm i
     - name: Lint
-      working-directory: AGTicket
+      working-directory: AGFree
       run: npm run lint
   lint_api:
     name: Lint API

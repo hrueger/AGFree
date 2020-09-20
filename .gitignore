@@ -1,9 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/AGTicket/dist
-/AGTicket/tmp
-/AGTicket/out-tsc
+/AGFree/dist
+/AGFree/tmp
+/AGFree/out-tsc
 
 .vs
 bin

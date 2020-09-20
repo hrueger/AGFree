@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "agticket": {
+        "agfree": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -14,13 +14,12 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "aot": true,
-                        "outputPath": "dist/agticket",
+                        "outputPath": "dist/agfree",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
-                        "assets": [
-                            {
+                        "assets": [{
                                 "glob": "**/*",
                                 "input": "src/assets/",
                                 "output": "/assets/"
@@ -39,18 +38,14 @@
                     },
                     "configurations": {
                         "production": {
-                            "budgets": [
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb"
-                                }
-                            ],
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
+                            "budgets": [{
+                                "type": "anyComponentStyle",
+                                "maximumWarning": "6kb"
+                            }],
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -66,18 +61,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "agticket:build"
+                        "browserTarget": "agfree:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "agticket:build:production"
+                            "browserTarget": "agfree:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "agticket:build"
+                        "browserTarget": "agfree:build"
                     }
                 },
                 "test": {
@@ -92,8 +87,7 @@
                             "./node_modules/ngx-ui-switch/ui-switch.component.css"
                         ],
                         "scripts": [],
-                        "assets": [
-                            {
+                        "assets": [{
                                 "glob": "**/*",
                                 "input": "src/assets/",
                                 "output": "/assets/"
@@ -121,5 +115,5 @@
             }
         }
     },
-    "defaultProject": "agticket"
+    "defaultProject": "agfree"
 }
