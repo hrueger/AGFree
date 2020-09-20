@@ -54,7 +54,6 @@
         "prod": "tsc && node ./build/index.js",
         "build": "tsc",
         "lint": "eslint .",
-        "createFilesWithApiKeys": "node src/scripts/generateSecretFilesWithKeys.js",
         "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
     }
 }

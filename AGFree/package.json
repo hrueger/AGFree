@@ -4,8 +4,7 @@
     "scripts": {
         "web:build": "ng build --prod --base-href /",
         "serve": "ng serve",
-        "lint": "eslint .",
-        "createFilesWithApiKeys": "node createFilesWithApiKeys.js"
+        "lint": "eslint ."
     },
     "private": true,
     "dependencies": {

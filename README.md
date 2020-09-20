@@ -19,8 +19,6 @@ ToDo
 ## I want to contribute
 1. Clone this repository by typing `git clone https://github.com/hrueger/AGFree` in your command prompt
 2. `cd AGFree/AGFree`
-3. Create files with secret keys using `npm run createFilesWithApiKeys` and enter your keys in these files.
-4. Type `ng serve` to start your dev session with LiveSync!
-5. In a second terminal run change to the `api` directory, run `npm run createFilesWithApiKeys` and enter your keys in these files.
-6. To start the api, type `npm start`.
-7. Before creating a pull request be sure to check for linting errors with `npm run lint`
+3. Type `ng serve` to start your dev session with LiveSync!
+4. In a second terminal run change to the `api` directory and type `npm start`.
+5. Before creating a pull request be sure to check for linting errors with `npm run lint`
