@@ -1,15 +1,15 @@
 import * as bcrypt from "bcryptjs";
 import {
-Column,
-CreateDateColumn,
-Entity,
-JoinTable,
-ManyToMany,
-ManyToOne,
-OneToMany,
-PrimaryGeneratedColumn,
-Unique,
-UpdateDateColumn,
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    Unique,
+    UpdateDateColumn,
 } from "typeorm";
 import { Ticket } from "./Ticket";
 
@@ -28,10 +28,10 @@ export class User {
   @Column()
   public isAdmin: boolean;
 
-  @Column({select: false})
+  @Column({ select: false })
   public password: string;
 
-  @Column({select: false, nullable: true})
+  @Column({ select: false, nullable: true })
   public passwordResetToken: string;
 
   @Column()
@@ -43,14 +43,13 @@ export class User {
   public updatedAt: Date;
 
   public hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
+      this.password = bcrypt.hashSync(this.password, 8);
   }
 
   public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
       if (unencryptedPassword) {
           return bcrypt.compareSync(unencryptedPassword, this.password);
-      } else {
-          return false;
       }
+      return false;
   }
 }

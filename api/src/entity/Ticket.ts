@@ -5,11 +5,11 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
-  } from "typeorm";
+} from "typeorm";
 import { User } from "./User";
 
 @Entity()
-  export class Ticket {
+export class Ticket {
     @PrimaryGeneratedColumn()
     public id: number;
 
@@ -29,4 +29,4 @@ import { User } from "./User";
 
     @Column()
     public activated: boolean;
-  }
+}

@@ -1,18 +1,19 @@
 const c = require("child_process");
-const request = require('request');
+const request = require("request");
+
 let d = new Date();
 console.log("\x1b[34mReading packages...\x1b[0m");
 console.log("\x1b[34mThis can take a while!\x1b[0m");
-c.exec("npx npm-license-crawler --start ../../../ --json ./licenses.json.tmp", async() => {
+c.exec("npx npm-license-crawler --start ../../../ --json ./licenses.json.tmp", async () => {
     console.log(`\x1b[32mReading packages data finished in ${(new Date() - d) / 1000} seconds!\x1b[0m`);
     d = new Date();
     console.log("\x1b[34mCreating HTML file...\x1b[0m");
-    var fs = require('fs');
-    var path = require('path');
-    var fileName = path.join(__dirname, '../../assets/3rdpartylicenses.html');
-    var stream = fs.createWriteStream(fileName);
-    stream.once('open', async function(fd) {
-        var html = await buildHtml("./licenses.json.tmp", fs);
+    const fs = require("fs");
+    const path = require("path");
+    const fileName = path.join(__dirname, "../../assets/3rdpartylicenses.html");
+    const stream = fs.createWriteStream(fileName);
+    stream.once("open", async (fd) => {
+        const html = await buildHtml("./licenses.json.tmp", fs);
         stream.end(html);
         console.log(`\x1b[32mFinished in ${(new Date() - d) / 1000} seconds!\x1b[0m`);
     });
@@ -20,7 +21,7 @@ c.exec("npx npm-license-crawler --start ../../../ --json ./licenses.json.tmp", a
 
 async function buildHtml(fileName, fs) {
     const licenses = JSON.parse(fs.readFileSync(fileName).toString());
-    const length = Object.keys(licenses).length;
+    const { length } = Object.keys(licenses);
     console.log(`\x1b[34m${length} packages found!\x1b[0m`);
     let c = 0;
     let knownPackageCount = 0;
@@ -54,7 +55,7 @@ async function buildHtml(fileName, fs) {
         }
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
-        process.stdout.write("\x1b[34m" + c + " of " + length + " packages processed, " + knownPackageCount + " packages were skipped\x1b[0m");
+        process.stdout.write(`\x1b[34m${c} of ${length} packages processed, ${knownPackageCount} packages were skipped\x1b[0m`);
         c++;
     }
     console.log();
@@ -67,9 +68,9 @@ function getHttpSync(url) {
         request(url, (error, response, body) => {
             if (error) reject(error);
             if (response.statusCode != 200) {
-                reject('Invalid status code <' + response.statusCode + '>');
+                reject(`Invalid status code <${response.statusCode}>`);
             }
-            if (!response.headers['content-type'].startsWith("text/plain")) {
+            if (!response.headers["content-type"].startsWith("text/plain")) {
                 reject();
             }
             resolve(body);
