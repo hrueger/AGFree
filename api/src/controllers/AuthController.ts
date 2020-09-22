@@ -81,7 +81,7 @@ class AuthController {
             summary: i18n.__("resetPassword.message").replace("%s", user.username),
             title: i18n.__("resetPassword.resetPassword"),
         }).then(() => {
-            res.send({ status: true });
+            res.send({ success: true });
         }).catch((err) => {
             // eslint-disable-next-line no-console
             console.log(err);
@@ -123,7 +123,7 @@ class AuthController {
         user.hashPassword();
         userRepository.save(user);
 
-        res.send({ status: true });
+        res.send({ success: true });
     } */
 }
 export default AuthController;

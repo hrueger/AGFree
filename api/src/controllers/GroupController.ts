@@ -32,7 +32,7 @@ class GroupController {
             res.status(500).send({ message: err });
             return;
         }
-        res.send({ status: true });
+        res.send({ success: true });
     }
 
     public static newGroup = async (req: Request, res: Response): Promise<void> => {
@@ -55,7 +55,7 @@ class GroupController {
             return;
         }
 
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 
     public static deleteGroup = async (req: Request, res: Response): Promise<void> => {
@@ -67,7 +67,7 @@ class GroupController {
             res.status(404).send({ message: i18n.__("errors.groupNotFound") });
             return;
         }
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 }
 

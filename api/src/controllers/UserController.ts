@@ -12,13 +12,13 @@ class UserController {
 
     public static newUser = async (req: Request, res: Response): Promise<void> => {
         const {
-            username, pw, pw2, email,
+            username, password1, password2, email,
         } = req.body;
-        if (!(username && email && pw && pw2)) {
+        if (!(username && email && password1 && password2)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
         }
-        if (pw != pw2) {
+        if (password1 != password2) {
             res.status(400).send({ message: i18n.__("errors.passwordsDontMatch") });
             return;
         }
@@ -26,7 +26,7 @@ class UserController {
         const user = new User();
         user.username = username;
         user.email = email;
-        user.password = pw;
+        user.password = password1;
 
         user.hashPassword();
 
@@ -37,7 +37,7 @@ class UserController {
             res.status(409).send({ message: i18n.__("errors.existingUsername") });
             return;
         }
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 
     public static editCurrent = async (req: Request, res: Response): Promise<void> => {
@@ -88,7 +88,7 @@ class UserController {
             return;
         }
 
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 
     public static deleteUser = async (req: Request, res: Response): Promise<void> => {
@@ -102,7 +102,7 @@ class UserController {
             return;
         }
 
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 }
 
