@@ -45,8 +45,6 @@ createConnection({
     username: config.DB_USER,
 })
     .then(async (connection) => {
-        if (!fs.existsSync(config.files_storage_path)) { fs.mkdirSync(config.files_storage_path); }
-
         await connection.query("SET NAMES utf8mb4;");
         await connection.synchronize();
         // eslint-disable-next-line no-console
@@ -69,12 +67,12 @@ createConnection({
         app.use("*", express.static("/app/dist/frontend/index.html"));
 
         let port = 80;
-        if (process.env.NODE_ENV == "development") {
+        if (process.env.NODE_ENV.trim() == "development") {
             port = 3000;
         }
         app.listen(port, () => {
             // eslint-disable-next-line no-console
-            console.log(`Server started on port ${config.port}!`);
+            console.log(`Server started on port ${port}!`);
         });
     })
     // eslint-disable-next-line no-console
