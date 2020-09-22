@@ -34,7 +34,7 @@ body {
     border-width: 0;
 }
 
-* {
+*:not(.spinner-border) {
     border-radius: 0 !important;
 }
 
