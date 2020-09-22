@@ -168,7 +168,7 @@ export class LoginComponent implements OnInit {
             email: this.cuf.email.value,
         }).subscribe((data) => {
             this.loading = false;
-            if (data.status == true) {
+            if (data.success == true) {
                 this.createUserSucceeded = true;
             }
         });

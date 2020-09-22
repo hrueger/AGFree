@@ -38,61 +38,72 @@
 </form>
 
 <form [formGroup]="createUserForm" class="form-signin mt-4 border border-primary" (ngSubmit)="onSubmitCreateUser()" *ngIf="createUser">
+
     <div class="text-center mb-4">
         <img src="assets/logo/AGFree.png" alt="Logo" height="120">
         <h1 class="h3 mb-3 font-weight-normal">AGFree</h1>
     </div>
-    <div class="form-label-group">
-        <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.username.errors}" required autofocus id="inputUsername" />
-        <label for="inputUsername">{{'general.username' | translate}}</label>
-        <div *ngIf="cuSubmitted && cuf.username.errors" class="invalid-feedback">
-            <div *ngIf="cuf.username.errors.required">
-                {{'errors.fillOutUsername' | translate}}
-            </div>
-            <div *ngIf="cuf.username.errors.pattern">
-                {{'errors.pattern' | translate}}
+
+    <ng-container *ngIf="createUserSucceeded">
+        <div class="alert alert-success">
+            <b>Erfolg!</b><br> Der Benutzer wurde erfolgreich erstellt!
+        </div>
+        <button class="btn btn-outline-primary w-100" (click)="createUser = false; createUserSucceeded = false; $event.preventDefault">Zum Login</button>
+    </ng-container>
+
+    <ng-container *ngIf="!createUserSucceeded">
+        <div class="form-label-group">
+            <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.username.errors}" required autofocus id="inputUsername" />
+            <label for="inputUsername">{{'general.username' | translate}}</label>
+            <div *ngIf="cuSubmitted && cuf.username.errors" class="invalid-feedback">
+                <div *ngIf="cuf.username.errors.required">
+                    {{'errors.fillOutUsername' | translate}}
+                </div>
+                <div *ngIf="cuf.username.errors.pattern">
+                    {{'errors.pattern' | translate}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-label-group">
-        <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.email.errors}" required id="inputEmail" />
-        <label for="inputEmail">{{'general.email' | translate}}</label>
-        <div *ngIf="cuSubmitted && cuf.email.errors" class="invalid-feedback">
-            <div *ngIf="cuf.email.errors.required">
-                {{'errors.fillOutEmail' | translate}}
-            </div>
-            <div *ngIf="cuf.email.errors.email">
-                {{'errors.email' | translate}}
-            </div>
-        </div>
-    </div>
-    <div class="form-label-group">
-        <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password.errors}" id="inputPassword" />
-        <label for="inputPassword">{{'general.password' | translate}}</label>
-        <div *ngIf="cuSubmitted && cuf.password.errors" class="invalid-feedback">
-            <div *ngIf="cuf.password.errors.required">
-                {{'errors.fillOutPassword' | translate}}
+        <div class="form-label-group">
+            <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.email.errors}" required id="inputEmail" />
+            <label for="inputEmail">{{'general.email' | translate}}</label>
+            <div *ngIf="cuSubmitted && cuf.email.errors" class="invalid-feedback">
+                <div *ngIf="cuf.email.errors.required">
+                    {{'errors.fillOutEmail' | translate}}
+                </div>
+                <div *ngIf="cuf.email.errors.email">
+                    {{'errors.email' | translate}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-label-group">
-        <input [placeholder]="'general.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
-        <label for="inputPassword2">{{'general.repeatPassword' | translate}}</label>
-        <div *ngIf="cuSubmitted && cuf.password2.errors" class="invalid-feedback">
-            <div *ngIf="cuf.password2.errors.required">
-                {{'errors.fillOutPassword' | translate}}
+        <div class="form-label-group">
+            <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password.errors}" id="inputPassword" />
+            <label for="inputPassword">{{'general.password' | translate}}</label>
+            <div *ngIf="cuSubmitted && cuf.password.errors" class="invalid-feedback">
+                <div *ngIf="cuf.password.errors.required">
+                    {{'errors.fillOutPassword' | translate}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" type="button" (click)="createUser = false; $event.preventDefault" class="btn btn-link">
+        <div class="form-label-group">
+            <input [placeholder]="'general.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
+            <label for="inputPassword2">{{'general.repeatPassword' | translate}}</label>
+            <div *ngIf="cuSubmitted && cuf.password2.errors" class="invalid-feedback">
+                <div *ngIf="cuf.password2.errors.required">
+                    {{'errors.fillOutPassword' | translate}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" type="button" (click)="createUser = false; $event.preventDefault" class="btn btn-link">
             {{'general.back' | translate}}
         </button>
-        <button [disabled]="loading" class="float-right btn btn-outline-primary">
+            <button [disabled]="loading" class="float-right btn btn-outline-primary">
             {{'login.createUser' | translate}}
             <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
         </button>
-    </div>
+        </div>
+    </ng-container>
 </form>
 
 <!--<form [formGroup]="resetPasswordForm" class="form-signin" (ngSubmit)="onSubmitResetPassword()" *ngIf="resetPassword && !passwordResetSucceeded">
