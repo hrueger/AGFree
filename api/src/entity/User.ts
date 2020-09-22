@@ -41,11 +41,11 @@ public groups: Group[];
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  public hashPassword() {
+  public hashPassword(): void {
       this.password = bcrypt.hashSync(this.password, 8);
   }
 
-  public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+  public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {
       if (unencryptedPassword) {
           return bcrypt.compareSync(unencryptedPassword, this.password);
       }
