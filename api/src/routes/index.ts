@@ -1,14 +1,12 @@
 import { Router } from "express";
 import auth from "./auth";
-import tickets from "./tickets";
+import groups from "./groups";
 import user from "./user";
-import config from "./config";
 
 const routes = Router();
 
 routes.use("/auth", auth);
-routes.use("/tickets", tickets);
-routes.use("/config", config);
+routes.use("/groups", groups);
 routes.use("/users", user);
 
 export default routes;

@@ -5,13 +5,11 @@ import {
     Entity,
     JoinTable,
     ManyToMany,
-    ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
     Unique,
     UpdateDateColumn,
 } from "typeorm";
-import { Ticket } from "./Ticket";
+import { Group } from "./Group";
 
 @Entity()
 @Unique(["username"])
@@ -25,14 +23,15 @@ export class User {
   @Column()
   public email: string;
 
-  @Column()
-  public isAdmin: boolean;
+@JoinTable()
+@ManyToMany(() => Group, (group) => group.users)
+public groups: Group[];
 
   @Column({ select: false })
   public password: string;
 
-  @Column({ select: false, nullable: true })
-  public passwordResetToken: string;
+  // @Column({ select: false, nullable: true })
+  // public passwordResetToken: string;
 
   @Column()
   @CreateDateColumn()

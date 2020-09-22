@@ -8,13 +8,12 @@ import * as path from "path";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { getConfig } from "container-env";
-import { Ticket } from "./entity/Ticket";
+import { Group } from "./entity/Group";
 import { User } from "./entity/User";
-import { createAdminUser1574018391679 } from "./migration/1574018391679-createAdminUser";
 import routes from "./routes";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
-console.log(config);
+
 i18n.configure({
     // tslint:disable-next-line: no-bitwise
     defaultLocale: config.DEFAULT_LANGUAGE ? config.DEFAULT_LANGUAGE : "en",
@@ -33,11 +32,11 @@ createConnection({
     database: config.DB_NAME,
     entities: [
         User,
-        Ticket,
+        Group,
     ],
     host: config.database_host,
     logging: false,
-    migrations: [createAdminUser1574018391679],
+    migrations: [],
     migrationsRun: true,
     password: config.DB_PASSWORD,
     port: config.DB_PORT,
@@ -50,7 +49,7 @@ createConnection({
 
         await connection.query("SET NAMES utf8mb4;");
         await connection.synchronize();
-        // tslint:disable-next-line: no-console
+        // eslint-disable-next-line no-console
         console.log("Migrations: ", await connection.runMigrations());
         // Create a new express application instance
         const app = express();
@@ -72,9 +71,9 @@ createConnection({
             port = 3000;
         }
         app.listen(port, () => {
-            // tslint:disable-next-line: no-console
+            // eslint-disable-next-line no-console
             console.log(`Server started on port ${config.port}!`);
         });
     })
-// tslint:disable-next-line: no-console
+    // eslint-disable-next-line no-console
     .catch((error) => console.log(error));
