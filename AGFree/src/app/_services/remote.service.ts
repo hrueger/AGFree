@@ -84,22 +84,6 @@ export class RemoteService {
                 catchError(this.handleError<any>(path, false)),
             );
     }
-    public uploadFile(action: string, name: string, file: any, args: any = {}): Observable<any> {
-        this.log(`uploading file ${file.name}`);
-        const formData: FormData = new FormData();
-        formData.append(name, file, file.name);
-        for (const key in args) {
-            if (args.hasOwnProperty(key)) {
-                formData.append(key, args[key]);
-            }
-        }
-        return this.http
-            .post<any>(`${getApiUrl()}${action}`, formData)
-            .pipe(
-                tap((_) => this.log(`uploading file ${file.name}`)),
-                catchError(this.handleError<any>("fileUpload", false)),
-            );
-    }
 
     private getRequest(type: string, path: string, args: any) {
         let req;
