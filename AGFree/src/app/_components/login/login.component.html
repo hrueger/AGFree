@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" class="form-signin mt-4 border border-primary" (ngSubmit)="onSubmit()" *ngIf="!resetPassword && !inputNewPassword">
+<form [formGroup]="loginForm" class="form-signin mt-4 border border-primary" (ngSubmit)="onSubmit()" *ngIf="!resetPassword && !inputNewPassword && !createUser">
     <div class="text-center mb-4">
         <img src="assets/logo/AGFree.png" alt="Logo" height="120">
         <h1 class="h3 mb-3 font-weight-normal">AGFree</h1>
@@ -22,16 +22,80 @@
         </div>
     </div>
     <div class="form-group">
-        <button [disabled]="loading" type="button" (click)="resetPassword = true; $event.preventDefault" class="btn btn-link">
+        <!--<button [disabled]="loading" type="button" (click)="resetPassword = true; $event.preventDefault" class="btn btn-link">
             {{'login.lostPassword' | translate}}
-        </button>
+        </button>-->
         <button [disabled]="loading" class="float-right btn btn-outline-primary">
             {{'login.login' | translate}}
             <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
         </button>
     </div>
+    <div class="form-group">
+        <button [disabled]="loading" type="button" (click)="createUser = true; $event.preventDefault" class="btn btn-link w-100 mt-2">
+            {{'login.createAccount' | translate}}
+        </button>
+    </div>
 </form>
-<form [formGroup]="resetPasswordForm" class="form-signin" (ngSubmit)="onSubmitResetPassword()" *ngIf="resetPassword && !passwordResetSucceeded">
+
+<form [formGroup]="createUserForm" class="form-signin mt-4 border border-primary" (ngSubmit)="onSubmitCreateUser()" *ngIf="createUser">
+    <div class="text-center mb-4">
+        <img src="assets/logo/AGFree.png" alt="Logo" height="120">
+        <h1 class="h3 mb-3 font-weight-normal">AGFree</h1>
+    </div>
+    <div class="form-label-group">
+        <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.username.errors}" required autofocus id="inputUsername" />
+        <label for="inputUsername">{{'general.username' | translate}}</label>
+        <div *ngIf="cuSubmitted && cuf.username.errors" class="invalid-feedback">
+            <div *ngIf="cuf.username.errors.required">
+                {{'errors.fillOutUsername' | translate}}
+            </div>
+            <div *ngIf="cuf.username.errors.pattern">
+                {{'errors.pattern' | translate}}
+            </div>
+        </div>
+    </div>
+    <div class="form-label-group">
+        <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.email.errors}" required id="inputEmail" />
+        <label for="inputEmail">{{'general.email' | translate}}</label>
+        <div *ngIf="cuSubmitted && cuf.email.errors" class="invalid-feedback">
+            <div *ngIf="cuf.email.errors.required">
+                {{'errors.fillOutEmail' | translate}}
+            </div>
+            <div *ngIf="cuf.email.errors.email">
+                {{'errors.email' | translate}}
+            </div>
+        </div>
+    </div>
+    <div class="form-label-group">
+        <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password.errors}" id="inputPassword" />
+        <label for="inputPassword">{{'general.password' | translate}}</label>
+        <div *ngIf="cuSubmitted && cuf.password.errors" class="invalid-feedback">
+            <div *ngIf="cuf.password.errors.required">
+                {{'errors.fillOutPassword' | translate}}
+            </div>
+        </div>
+    </div>
+    <div class="form-label-group">
+        <input [placeholder]="'general.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
+        <label for="inputPassword2">{{'general.repeatPassword' | translate}}</label>
+        <div *ngIf="cuSubmitted && cuf.password2.errors" class="invalid-feedback">
+            <div *ngIf="cuf.password2.errors.required">
+                {{'errors.fillOutPassword' | translate}}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" type="button" (click)="createUser = false; $event.preventDefault" class="btn btn-link">
+            {{'general.back' | translate}}
+        </button>
+        <button [disabled]="loading" class="float-right btn btn-outline-primary">
+            {{'login.createUser' | translate}}
+            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
+        </button>
+    </div>
+</form>
+
+<!--<form [formGroup]="resetPasswordForm" class="form-signin" (ngSubmit)="onSubmitResetPassword()" *ngIf="resetPassword && !passwordResetSucceeded">
     <div class="form-group">
         <label>{{'login.inputEmail' | translate}}:</label>
         <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{
@@ -47,10 +111,9 @@
         <button [disabled]="loading" type="button" (click)="resetPassword = false; $event.preventDefault" class="btn btn-link">
             {{'general.back' | translate}}
         </button>
-        <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-        />
         <button [disabled]="loading" class="btn btn-outline-primary float-right">
             {{'general.reset' | translate}}
+            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
         </button>
     </div>
 </form>
@@ -61,10 +124,10 @@
     <button [disabled]="loading" type="button" (click)="resetPassword = false; passwordResetSucceeded = false; $event.preventDefault" class="btn btn-link">
         {{'general.back' | translate}}
     </button>
-</div>
+</div>-->
 
 
-<form [formGroup]="inputNewPasswordForm" (ngSubmit)="onSubmitNewPassword()" *ngIf="inputNewPassword && !inputNewPasswordSucceeded" class="form-signin">
+<!--<form [formGroup]="inputNewPasswordForm" (ngSubmit)="onSubmitNewPassword()" *ngIf="inputNewPassword && !inputNewPasswordSucceeded" class="form-signin">
     <div class="form-group">
         <label>{{'login.inputNewPassword' | translate}}:</label>
         <input [placeholder]="'general.password' | translate" type="password" formControlName="password1" class="form-control" [ngClass]="{'is-invalid': inpSubmitted && inp.password1.errors}" />
@@ -87,19 +150,18 @@
         <button [disabled]="loading" type="button" (click)="inputNewPassword = false; $event.preventDefault" class="btn btn-link">
             {{'general.back' | translate}}
         </button>
-        <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-        />
         <button [disabled]="loading" class="btn btn-outline-primary float-right">
             {{'general.save' | translate}}
+            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
         </button>
     </div>
-</form>
+</form>-->
 
-<div *ngIf="inputNewPassword && inputNewPasswordSucceeded" class="form-signin">
+<!--<div *ngIf="inputNewPassword && inputNewPasswordSucceeded" class="form-signin">
     <div class="alert alert-success">
         {{'login.passwordResetSuccessful' | translate}}
     </div>
     <button [disabled]="loading" type="button" (click)="inputNewPassword = false; inputNewPasswordSucceeded = false; $event.preventDefault" class="btn btn-link">
         {{'login.toLogin' | translate}}
     </button>
-</div>
+</div>-->

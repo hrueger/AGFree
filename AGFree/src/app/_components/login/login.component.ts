@@ -15,18 +15,22 @@ export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
     public resetPasswordForm: FormGroup;
     public inputNewPasswordForm: FormGroup;
+    public createUserForm: FormGroup;
 
     public loading = false;
 
     public submitted = false;
     public rpSubmitted = false;
     public inpSubmitted = false;
+    public cuSubmitted = false;
 
     public resetPassword = false;
     public inputNewPassword = false;
+    public createUser = false;
 
     public passwordResetSucceeded = false;
     public inputNewPasswordSucceeded = false;
+    public createUserSucceeded = false;
 
     public returnUrl: string;
 
@@ -49,6 +53,12 @@ export class LoginComponent implements OnInit {
         this.loginForm = this.formBuilder.group({
             password: ["", Validators.required],
             username: ["", Validators.required],
+        });
+        this.createUserForm = this.formBuilder.group({
+            username: ["", [Validators.required, Validators.pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+ [a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+/)]],
+            password: ["", Validators.required],
+            password2: ["", Validators.required],
+            email: ["", [Validators.required, Validators.email]],
         });
         this.resetPasswordForm = this.formBuilder.group({
             email: ["", [Validators.required, Validators.email]],
@@ -74,6 +84,9 @@ export class LoginComponent implements OnInit {
     }
     get inpf() {
         return this.inputNewPasswordForm.controls;
+    }
+    get cuf() {
+        return this.createUserForm.controls;
     }
 
     public onSubmit() {
@@ -135,6 +148,28 @@ export class LoginComponent implements OnInit {
             this.loading = false;
             if (data.status == true) {
                 this.inputNewPasswordSucceeded = true;
+            }
+        });
+    }
+
+    public onSubmitCreateUser() {
+        this.cuSubmitted = true;
+
+        // stop here if form is invalid
+        if (this.createUserForm.invalid) {
+            return;
+        }
+
+        this.loading = true;
+        this.remoteService.getNoCache("post", "users", {
+            password1: this.cuf.password.value,
+            password2: this.cuf.password2.value,
+            username: this.cuf.username.value,
+            email: this.cuf.email.value,
+        }).subscribe((data) => {
+            this.loading = false;
+            if (data.status == true) {
+                this.createUserSucceeded = true;
             }
         });
     }
