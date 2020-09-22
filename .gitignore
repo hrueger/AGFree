@@ -46,7 +46,4 @@ obj
 bin
 *.secret
 google-services.json
-environment.ts
-environment.prod.ts
-environment.tns.ts
 filestest
