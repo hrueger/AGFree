@@ -42,7 +42,7 @@ registerLocaleData(localeDe);
         EditorComponent,
     ],
     imports: [
-        RouterModule.forRoot(routes, { useHash: true, enableTracing: false }),
+        RouterModule.forRoot(routes),
         BrowserAnimationsModule,
         BrowserModule,
         NgbModule,
