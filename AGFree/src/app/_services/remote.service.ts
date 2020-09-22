@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, first, tap } from "rxjs/operators";
 import { environment } from "../../environments/environment";
+import { getApiUrl } from "../_helpers/utils";
 import { AlertService } from "./alert.service";
 import { CacheService } from "./cache.service";
 
@@ -39,7 +40,8 @@ export class RemoteService {
                         subject.next(data);
                         this.cacheService.put(data, path, args);
                     } else {
-                        // ToDo this.alertService.snackbar("Offline-Modus (Daten können veraltet sein)");
+                        // ToDo this.alertService
+                        // .snackbar("Offline-Modus (Daten können veraltet sein)");
                     }
 
                     // console.log("cache updated and new data served: " + data);
@@ -82,7 +84,7 @@ export class RemoteService {
                 catchError(this.handleError<any>(path, false)),
             );
     }
-    public uploadFile(action: string, name: string, file: any, args: object = {}): Observable<any> {
+    public uploadFile(action: string, name: string, file: any, args: any = {}): Observable<any> {
         this.log(`uploading file ${file.name}`);
         const formData: FormData = new FormData();
         formData.append(name, file, file.name);
@@ -92,7 +94,7 @@ export class RemoteService {
             }
         }
         return this.http
-            .post<any>(`${environment.apiUrl}${action}`, formData)
+            .post<any>(`${getApiUrl()}${action}`, formData)
             .pipe(
                 tap((_) => this.log(`uploading file ${file.name}`)),
                 catchError(this.handleError<any>("fileUpload", false)),
@@ -103,22 +105,22 @@ export class RemoteService {
         let req;
         if (type == "get") {
             req = this.http
-                .get<any>(`${environment.apiUrl}${path}`, {
+                .get<any>(`${getApiUrl()}${path}`, {
                     ...args,
                 });
         } else if (type == "post") {
             req = this.http
-                .post<any>(`${environment.apiUrl}${path}`, {
+                .post<any>(`${getApiUrl()}${path}`, {
                     ...args,
                 });
         } else if (type == "put") {
             req = this.http
-                .put<any>(`${environment.apiUrl}${path}`, {
+                .put<any>(`${getApiUrl()}${path}`, {
                     ...args,
                 });
         } else if (type == "delete") {
             req = this.http
-                .delete<any>(`${environment.apiUrl}${path}`, {
+                .delete<any>(`${getApiUrl()}${path}`, {
                     ...args,
                 });
         }

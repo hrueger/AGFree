@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
+import { getApiUrl } from "../_helpers/utils";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -33,7 +34,7 @@ export class AuthenticationService {
     public login(username: string, password: string) {
         return this.http
             .post<any>(
-                `${environment.apiUrl}auth/login`,
+                `${getApiUrl()}auth/login`,
                 {
                     password,
                     username,
