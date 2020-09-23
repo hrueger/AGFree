@@ -107,9 +107,8 @@ export class ScheduleComponent {
 
     constructor(private remoteService: RemoteService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.remoteService.get("get", "/users/schedule").subscribe((d) => {
-            console.log(this.userdata);
             this.userdata = d || [];
         });
     }
