@@ -1,0 +1,4 @@
+table.table tbody tr td:not(:first-of-type):not(:last-of-type) {
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}

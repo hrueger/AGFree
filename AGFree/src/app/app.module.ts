@@ -25,9 +25,9 @@ import { JwtInterceptor } from "./_helpers/jwt.interceptor";
 import { RenewJwtTokenInterceptor } from "./_helpers/renewJwtToken.interceptor";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
-import { EditorComponent } from "./_components/editor/editor.component";
+import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { UnsavedDataGuard } from "./_guards/unsaved-data.guard";
-import { getApiUrl } from "./_helpers/utils";
+import { ScheduleComponent } from './_components/schedule/schedule.component';
 
 registerLocaleData(localeDe);
 
@@ -39,7 +39,8 @@ registerLocaleData(localeDe);
         UsersComponent,
         NavbarComponent,
         HomeComponent,
-        EditorComponent,
+        MyScheduleComponent,
+        ScheduleComponent,
     ],
     imports: [
         RouterModule.forRoot(routes),

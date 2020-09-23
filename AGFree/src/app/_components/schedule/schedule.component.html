@@ -1,0 +1,14 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Mein Stundenplan</th>
+            <th *ngFor="let day of days">{{day}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of getRows()">
+            <td>{{row[0]}}</td>
+            <td *ngFor="let period of row"></td>
+        </tr>
+    </tbody>
+</table>

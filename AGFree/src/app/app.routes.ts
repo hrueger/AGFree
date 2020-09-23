@@ -3,15 +3,15 @@ import { HomeComponent } from "./_components/home/home.component";
 import { LoginComponent } from "./_components/login/login.component";
 import { UsersComponent } from "./_components/users/users.component";
 import { AuthGuard } from "./_guards/auth.guard";
-import { EditorComponent } from "./_components/editor/editor.component";
+import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { UnsavedDataGuard } from "./_guards/unsaved-data.guard";
 
 export const routes: Routes = [
     {
         canActivate: [AuthGuard],
         canDeactivate: [UnsavedDataGuard],
-        component: EditorComponent,
-        path: "editor",
+        component: MyScheduleComponent,
+        path: "schedule",
     },
     {
         canActivate: [AuthGuard],
