@@ -146,7 +146,13 @@ export class ScheduleComponent {
         if (!this.edit) {
             return;
         }
-        this.userdata.push({ dayId: period.dayId, periodId: period.id });
+        if (this.isFree(period)) {
+            this.userdata.push({ dayId: period.dayId, periodId: period.id });
+        } else {
+            this.userdata = this.userdata.filter(
+                (u) => u.periodId != period.id || u.dayId != period.dayId,
+            );
+        }
         this.save();
     }
 
