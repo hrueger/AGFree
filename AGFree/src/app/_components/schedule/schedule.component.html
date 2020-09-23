@@ -6,7 +6,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of getRows()">
+        <tr *ngFor="let row of getRows()" [class.isBreak]="isBreak(row)" [class.isLaunchBreak]="isLaunchBreak(row)">
             <td>{{row[0]}}</td>
             <td *ngFor="let period of row"></td>
         </tr>

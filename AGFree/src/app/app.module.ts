@@ -27,7 +27,7 @@ import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
 import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { UnsavedDataGuard } from "./_guards/unsaved-data.guard";
-import { ScheduleComponent } from './_components/schedule/schedule.component';
+import { ScheduleComponent } from "./_components/schedule/schedule.component";
 
 registerLocaleData(localeDe);
 
