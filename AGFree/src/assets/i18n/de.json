@@ -1,16 +1,9 @@
 {
     "errors": {
-        "avalibleInLaterVersion": "Das wird in einer späteren Version hinzugefügt.",
         "fillOutPassword": "Das Passwordfeld muss ausgefüllt werden!",
         "fillOutUsername": "Das Benutzernamefeld muss ausgefüllt werden!",
-        "noTicketsFound": "Keine Tickets gefunden!",
-        "numberBetween0and50": "Bitte geben Sie eine gültige Zahl zwischen 0 und 50 ein.",
-        "numberBetween1and10": "Bitte geben Sie eine gültige Zahl zwischen 1 und 10 ein.",
-        "numberBetween1and20": "Bitte geben Sie eine gültige Zahl zwischen 1 und 20 ein.",
         "requiredFieldMissing": "Dieses Feld muss ausgefüllt werden!",
-        "requiredFieldsMissing": "Bitte füllen Sie alle Pflichtfelder aus!",
-        "validCodeType": "Bitte geben Sie einen gültigen Typ ein.",
-        "validIdType": "Bitte geben Sie einen gültigen Typ ein."
+        "requiredFieldsMissing": "Bitte füllen Sie alle Pflichtfelder aus!"
     },
     "general": {
         "back": "Zurück",
@@ -24,7 +17,10 @@
         "unsavedDataWarning": "Möchten Sie diese Seite wirklich verlassen? Dann gehen Ihre Änderungen verloren. Möchten Sie Ihre Arbeit vorher speichern, klicken Sie auf \"Abbrechen\".",
         "update": "Aktualisieren",
         "updated": "Aktualisiert",
-        "username": "Benutzername"
+        "username": "Benutzername",
+        "people": "Personen",
+        "groups": "Gruppen",
+        "mySchedule": "Mein Stundenplan"
     },
     "login": {
         "inputEmail": "Bitte geben Sie Ihre Email-Adresse ein",

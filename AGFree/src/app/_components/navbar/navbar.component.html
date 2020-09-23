@@ -17,24 +17,18 @@
     <div class="collapse navbar-collapse" [class.show]="showMenu">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/scan">{{'general.scan' | translate}}</a>
+                <a class="nav-link" routerLink="/schedule">{{'general.mySchedule' | translate}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/tickets">{{'general.tickets' | translate}}</a>
+                <a class="nav-link" routerLink="/groups">{{'general.groups' | translate}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/createTickets">{{'general.createTickets' | translate}}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/config">{{'general.eventConfig' | translate}}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/editor">{{'general.editor' | translate}}</a>
+                <a class="nav-link" routerLink="/users">{{'general.people' | translate}}</a>
             </li>
         </ul>
         <ul class="navbar-nav mt-2 mt-lg-0 d-none d-sm-none d-md-none d-lg-flex d-xl-flex">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/users"><i class="fas fa-user"></i></a>
+                <a class="nav-link" routerLink="/settings"><i class="fas fa-settings"></i></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
