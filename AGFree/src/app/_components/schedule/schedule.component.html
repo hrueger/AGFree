@@ -1,14 +1,14 @@
-<table class="table table-hover">
+<table class="table table-hover" [class.editMode]="edit">
     <thead>
         <tr>
             <th>Mein Stundenplan</th>
-            <th *ngFor="let day of days">{{day}}</th>
+            <th *ngFor="let day of days">{{day.name}}</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let row of getRows()" [class.isBreak]="isBreak(row)" [class.isLaunchBreak]="isLaunchBreak(row)">
-            <td>{{row[0]}}</td>
-            <td *ngFor="let period of row" [class]="isFree(period) ? 'free' : 'lesson'"></td>
+            <td>{{row[0].name}}</td>
+            <td *ngFor="let period of row" [class]="isFree(period) ? 'free' : 'lesson'" (click)="select(period)"></td>
         </tr>
     </tbody>
 </table>

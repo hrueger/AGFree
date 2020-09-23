@@ -15,6 +15,10 @@ td {
     }
 }
 
+table.editMode td {
+    cursor: pointer;
+}
+
 tr.isBreak {
     background-color: $break;
     &:hover {
