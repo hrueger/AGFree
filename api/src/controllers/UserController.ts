@@ -10,6 +10,16 @@ class UserController {
         res.send(users);
     }
 
+    public static getSchedule = async (req: Request, res: Response): Promise<void> => {
+        const userRepository = getRepository(User);
+        try {
+            const user = await userRepository.findOneOrFail(res.locals.jwtPayload.userId);
+            res.send(user.data);
+        } catch {
+            res.status(404).send("Benutzer nicht gefunden!");
+        }
+    }
+
     public static newUser = async (req: Request, res: Response): Promise<void> => {
         const {
             username, password1, password2, email,
@@ -48,7 +58,7 @@ class UserController {
         } = req.body;
 
         const userRepository = getRepository(User);
-        let user;
+        let user: User;
         try {
             user = await userRepository.createQueryBuilder("user")
                 .addSelect("user.password")
@@ -85,6 +95,32 @@ class UserController {
             await userRepository.save(user);
         } catch (e) {
             res.status(409).send({ message: i18n.__("errors.existingUsername") });
+            return;
+        }
+
+        res.status(200).send({ success: true });
+    }
+
+    public static saveSchedule = async (req: Request, res: Response): Promise<void> => {
+        const id = res.locals.jwtPayload.userId;
+
+        const { data } = req.body;
+
+        const userRepository = getRepository(User);
+        let user: User;
+        try {
+            user = await userRepository.findOneOrFail(id);
+        } catch (error) {
+            res.status(404).send({ message: i18n.__("errors.userNotFound") });
+            return;
+        }
+
+        user.data = data;
+
+        try {
+            await userRepository.save(user);
+        } catch (e) {
+            res.status(409).send({ message: i18n.__("errors.error") });
             return;
         }
 

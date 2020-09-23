@@ -14,41 +14,44 @@ import { Group } from "./Group";
 @Entity()
 @Unique(["username"])
 export class User {
-  @PrimaryGeneratedColumn()
-  public id: number;
+    @PrimaryGeneratedColumn()
+    public id: number;
 
-  @Column()
-  public username: string;
+    @Column()
+    public username: string;
 
-  @Column()
-  public email: string;
+    @Column()
+    public email: string;
 
-@JoinTable()
-@ManyToMany(() => Group, (group) => group.users)
-public groups: Group[];
+    @JoinTable()
+    @ManyToMany(() => Group, (group) => group.users)
+    public groups: Group[];
 
-  @Column({ select: false })
-  public password: string;
+    @Column({ select: false })
+    public password: string;
 
-  // @Column({ select: false, nullable: true })
-  // public passwordResetToken: string;
+    // @Column({ select: false, nullable: true })
+    // public passwordResetToken: string;
 
-  @Column()
-  @CreateDateColumn()
-  public createdAt: Date;
+    @Column("json", { default: "null" })
+    public data: any;
 
-  @Column()
-  @UpdateDateColumn()
-  public updatedAt: Date;
+    @Column()
+    @CreateDateColumn()
+    public createdAt: Date;
 
-  public hashPassword(): void {
-      this.password = bcrypt.hashSync(this.password, 8);
-  }
+    @Column()
+    @UpdateDateColumn()
+    public updatedAt: Date;
 
-  public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {
-      if (unencryptedPassword) {
-          return bcrypt.compareSync(unencryptedPassword, this.password);
-      }
-      return false;
-  }
+    public hashPassword(): void {
+        this.password = bcrypt.hashSync(this.password, 8);
+    }
+
+    public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {
+        if (unencryptedPassword) {
+            return bcrypt.compareSync(unencryptedPassword, this.password);
+        }
+        return false;
+    }
 }
