@@ -161,7 +161,7 @@ export class ScheduleComponent {
             return;
         }
         this.saving = true;
-        this.remoteService.get("post", "/users/schedule", { data: this.userdata }).subscribe(() => {
+        this.remoteService.getNoCache("post", "/users/schedule", { data: this.userdata }).subscribe((d) => {
             this.saving = false;
         }, () => {
             this.saving = false;
