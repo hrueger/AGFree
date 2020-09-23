@@ -12,7 +12,7 @@ import { Group } from "./entity/Group";
 import { User } from "./entity/User";
 import routes from "./routes";
 
-const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
+const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()), "/app/agfree-config.json");
 
 i18n.configure({
     // tslint:disable-next-line: no-bitwise

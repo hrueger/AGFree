@@ -86,8 +86,8 @@
             </div>
         </div>
         <div class="form-label-group">
-            <input [placeholder]="'general.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
-            <label for="inputPassword2">{{'general.repeatPassword' | translate}}</label>
+            <input [placeholder]="'login.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
+            <label for="inputPassword2">{{'login.repeatPassword' | translate}}</label>
             <div *ngIf="cuSubmitted && cuf.password2.errors" class="invalid-feedback">
                 <div *ngIf="cuf.password2.errors.required">
                     {{'errors.fillOutPassword' | translate}}
