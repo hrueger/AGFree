@@ -1,4 +1,16 @@
-<table class="table table-hover" [class.editMode]="edit">
+<div class="mb-5 text-center">
+    <ng-container *ngIf="saving">
+        <div class="spinner-border spinner-sm text-success"></div>
+        <span class="text-success">wird gespeichert...</span>
+    </ng-container>
+
+    <ng-container *ngIf="!saving">
+        <i class="fas fa-tick"></i>
+        <span class="text-success">Erfolgreich gespeichert!</span>
+    </ng-container>
+</div>
+
+<table class="table table-hover" [class.editMode]="edit" *ngIf="userdata">
     <thead>
         <tr>
             <th>Mein Stundenplan</th>

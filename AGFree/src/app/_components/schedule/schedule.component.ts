@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { RemoteService } from "../../_services/remote.service";
 
 type Period = {
     name: string;
@@ -25,7 +26,8 @@ type Userdata = {
 })
 export class ScheduleComponent {
     @Input() public edit: false;
-    @Input() public userdata: Userdata = [];
+    @Input() public userdata: Userdata;
+    public saving = false;
     public days: Day[] = [
         {
             id: 1,
@@ -103,6 +105,15 @@ export class ScheduleComponent {
         },
     ];
 
+    constructor(private remoteService: RemoteService) {}
+
+    public ngOnInit() {
+        this.remoteService.get("get", "/users/schedule").subscribe((d) => {
+            console.log(this.userdata);
+            this.userdata = d || [];
+        });
+    }
+
     public getRows(): Row[] {
         const r: Row[] = [];
         for (let i = 0; i < this.periods.length; i++) {
@@ -137,5 +148,18 @@ export class ScheduleComponent {
             return;
         }
         this.userdata.push({ dayId: period.dayId, periodId: period.id });
+        this.save();
+    }
+
+    public save(): void {
+        if (this.saving) {
+            return;
+        }
+        this.saving = true;
+        this.remoteService.get("post", "/users/schedule", { data: this.userdata }).subscribe(() => {
+            this.saving = false;
+        }, () => {
+            this.saving = false;
+        });
     }
 }
