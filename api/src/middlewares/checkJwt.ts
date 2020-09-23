@@ -20,7 +20,7 @@ export const checkJwt = async (req: Request, res: Response, next: NextFunction):
         jwtPayload = (jwt.verify(token, res.app.locals.config.JWT_SECRET) as any);
         res.locals.jwtPayload = jwtPayload;
         res.locals.jwtPayload.userId = parseInt(res.locals.jwtPayload.userId, undefined);
-        i18n.setLocale(res.app.locals.config.DEFAULT_LANGUAGE);
+        i18n.setLocale(res.app.locals.config.DEFAULT_LANGUAGE || "de");
     } catch (error) {
     // If token is not valid, respond with 401 (unauthorized)
         res.status(401).send({ message: i18n.__("errors.sessionExpired"), logout: true });
