@@ -3,16 +3,55 @@ table.table tbody tr td:not(:first-of-type):not(:last-of-type) {
     border-right: 1px solid grey;
 }
 
+$free:#55efc4;
+$lesson: #ffeaa7;
+$break: rgb(230, 230, 230);
+td {
+    &.free {
+        background-color: $free;
+    }
+    &.lesson {
+        background-color: $lesson;
+    }
+}
+
 tr.isBreak {
-    background-color: rgb(230, 230, 230);
+    background-color: $break;
     &:hover {
-        background-color: rgb(207, 207, 207);
+        background-color: darken($break, 10)
     }
 }
 
 tr.isLaunchBreak {
-    background-color: rgb(189, 189, 189);
+    background-color: darken($break, 20);
     &:hover {
-        background-color: rgb(172, 171, 171);
+        background-color: darken($break, 30);
+    }
+}
+
+tr:hover {
+    td.free {
+        background-color: darken($free, 20);
+    }
+    td.lesson {
+        background-color: darken($lesson, 20);
+    }
+}
+
+tr.isBreak,
+tr.isLaunchBreak {
+    &:hover {
+        td.free {
+            background-color: darken($free, 30);
+        }
+        td.lesson {
+            background-color: darken($lesson, 30);
+        }
+    }
+    td.free {
+        background-color: darken($free, 10);
+    }
+    td.lesson {
+        background-color: darken($lesson, 10);
     }
 }

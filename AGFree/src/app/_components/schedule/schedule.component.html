@@ -8,7 +8,7 @@
     <tbody>
         <tr *ngFor="let row of getRows()" [class.isBreak]="isBreak(row)" [class.isLaunchBreak]="isLaunchBreak(row)">
             <td>{{row[0]}}</td>
-            <td *ngFor="let period of row"></td>
+            <td *ngFor="let period of row" [class]="isFree(period) ? 'free' : 'lesson'"></td>
         </tr>
     </tbody>
 </table>

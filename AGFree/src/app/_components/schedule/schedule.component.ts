@@ -1,15 +1,13 @@
 import { Component } from "@angular/core";
 
-type Period = {
-    name: string;
-};
+type Period = string;
 
 type Day = {
     name: string;
     periods: Period[];
 };
 
-type Row = string[];
+type Row = Period[];
 
 @Component({
     selector: "app-schedule",
@@ -38,5 +36,9 @@ export class ScheduleComponent {
 
     public isLaunchBreak(row: Row): boolean {
         return row[0] == "Mittagspause";
+    }
+
+    public isFree(cell: Period): boolean {
+        return Math.round(Math.random()) == 1;
     }
 }
