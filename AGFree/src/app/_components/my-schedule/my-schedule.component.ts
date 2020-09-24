@@ -6,4 +6,5 @@ import { Component } from "@angular/core";
     styleUrls: ["./my-schedule.component.scss"],
 })
 export class MyScheduleComponent {
+    public editMode = false;
 }

@@ -1,1 +1,10 @@
-<app-schedule [edit]="true"></app-schedule>
+<button class="btn btn-outline-primary float-right" (click)="editMode = !editMode">{{editMode ? "Bearbeiten beenden" : "Stundenplan bearbeiten"}}</button>
+
+<div class="alert alert-primary mt-5 mb-3">
+    <span *ngIf="!editMode">Klicke eine Stunde an, um zu sehen, wer gleichzeitig mit dir dort eine Freistunde hat.</span>
+    <span *ngIf="editMode">Du bist momentan im <b>Bearbeitungsmodus</b>
+        <br>Änderungen, die Du machst, werden automatisch gespeichert. Klicke eine Stunde an, um ihren Status zu ändern. <span class="lesson">Gelb</span> bedeutet, dass Du dort <span class="lesson">Unterricht hast</span>,
+    <span class="free">Grün</span> bedeutet <span class="free">Freistunde</span> bzw. <span class="free">aus ;-)</span>.</span>
+</div>
+
+<app-schedule class="" [edit]="editMode"></app-schedule>

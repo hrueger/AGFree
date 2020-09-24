@@ -1,3 +1,4 @@
+@import "../../variables.scss";
 table.table tbody tr td:not(:first-of-type):not(:last-of-type) {
     border-left: 1px solid grey;
     border-right: 1px solid grey;
@@ -11,8 +12,6 @@ table.table tbody tr td:not(:first-of-type):not(:last-of-type) {
     }
 }
 
-$free:#55efc4;
-$lesson: #ffeaa7;
 $break: rgb(230, 230, 230);
 td {
     &.free {
