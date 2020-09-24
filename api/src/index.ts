@@ -67,7 +67,7 @@ createConnection({
         app.use("*", express.static("/app/dist/frontend/index.html"));
 
         let port = 80;
-        if (process.env.NODE_ENV.trim() == "development") {
+        if (process.env.NODE_ENV?.trim() == "development") {
             port = 3000;
         }
         app.listen(port, () => {
