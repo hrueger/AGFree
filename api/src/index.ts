@@ -34,7 +34,7 @@ createConnection({
         User,
         Group,
     ],
-    host: config.database_host,
+    host: config.DB_HOST,
     logging: false,
     migrations: [],
     migrationsRun: true,
