@@ -50,8 +50,8 @@ export class ScheduleComponent {
     }
     @Input() public small = false;
     public saving = false;
-    public selectedDay: number;
-    public selectedPeriod: number;
+    @Input() public selectedDay: number;
+    @Input() public selectedPeriod: number;
     public days: Day[] = [
         {
             id: 1,
