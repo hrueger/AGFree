@@ -36,7 +36,7 @@
             Keine Personen haben dort eine Freistunde!
         </div>
         <div *ngIf="usersToShow && usersToShow.length > 0">
-            <button class="btn btn-outline-primary" (click)="showSchedules = !showSchedules">{{showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"}}</button>
+            <button class="btn btn-outline-primary" (click)="toggleSchedules()">{{showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"}}</button>
 
             <div class="alert alert-success mt-3">
                 <b>Information</b><br>

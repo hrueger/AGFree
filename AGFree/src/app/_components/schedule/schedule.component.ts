@@ -33,7 +33,7 @@ export class ScheduleComponent {
     public users: any[] = [];
     public usersToShow: any[] = [];
     public myId: number;
-    public showSchedules = false;
+    public showSchedules = localStorage.getItem("showSchedules") == "true";
     @Input() public set edit(m: boolean) {
         this.selectedPeriod = undefined;
         this.selectedDay = undefined;
@@ -178,6 +178,11 @@ export class ScheduleComponent {
             r.push(s);
         }
         return r;
+    }
+
+    public toggleSchedules(): void {
+        this.showSchedules = !this.showSchedules;
+        localStorage.setItem("showSchedules", this.showSchedules ? "true" : "false");
     }
 
     public isBreak(row: Row): boolean {
