@@ -29,6 +29,7 @@ type Userdata = {
 })
 export class ScheduleComponent {
     public _edit = false;
+    public _userdata: Userdata;
     public users: any[] = [];
     public usersToShow: any[] = [];
     public myId: number;
@@ -41,7 +42,12 @@ export class ScheduleComponent {
     public get edit(): boolean {
         return this._edit;
     }
-    @Input() public userdata: Userdata;
+    @Input() public set userdata(u: Userdata) {
+        this._userdata = u && Array.isArray(u) ? u : [];
+    }
+    public get userdata(): Userdata {
+        return this._userdata;
+    }
     @Input() public small = false;
     public saving = false;
     public selectedDay: number;
@@ -151,7 +157,7 @@ export class ScheduleComponent {
     public ngOnInit(): void {
         if (this.edit || !this.userdata) {
             this.remoteService.get("/users/schedule").subscribe((d) => {
-                this.userdata = d && Array.isArray(d) ? d : [];
+                this._userdata = d && Array.isArray(d) ? d : [];
             });
             this.remoteService.get("/users").subscribe((u) => {
                 this.users = u;
