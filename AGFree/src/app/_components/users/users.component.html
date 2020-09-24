@@ -1,4 +1,4 @@
-<button id="editBtn" type="button" (click)="openEditModal(editUserModal)" class="btn btn-outline-primary">
+<button type="button" (click)="openEditModal(editUserModal)" class="float-right btn btn-outline-primary">
     {{'users.changeOwnProfile' | translate}}
 </button>
 
@@ -6,10 +6,10 @@
     <input class="form-control" [(ngModel)]="searchTerm" placeholder="Suchen">
 </div>
 
-<div class="card-deck">
-    <div class="card" *ngFor="let user of searchUsers()">
+<div class="card-deck mt-4">
+    <div class="card p-3" *ngFor="let user of searchUsers()">
+        <p class="text-center mt-1">{{ user.username }}</p>
         <app-schedule [userdata]="user.data" [small]="true"></app-schedule>
-        <p>{{ user.username }}</p>
     </div>
 </div>
 

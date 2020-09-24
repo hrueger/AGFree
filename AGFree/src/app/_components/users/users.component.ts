@@ -43,7 +43,9 @@ export class UsersComponent implements OnInit {
         if (this.searchTerm.trim() == "") {
             return this.users;
         }
-        return this.users.filter((u) => u.username.toLowerCase().indexOf(this.searchTerm.trim().toLowerCase()) !== -1);
+        return this.users.filter(
+            (u) => u.username.toLowerCase().indexOf(this.searchTerm.trim().toLowerCase()) !== -1,
+        );
     }
 
     public async ngOnInit() {
