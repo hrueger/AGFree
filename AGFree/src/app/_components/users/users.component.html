@@ -4,7 +4,7 @@
 <br /><br />
 <div class="card-deck">
     <div class="card" *ngFor="let user of users">
-        <app-schedule [userdata]="user.data"></app-schedule>
+        <app-schedule [userdata]="user.data" [small]="true"></app-schedule>
         <p>{{ user.username }}</p>
     </div>
 </div>
