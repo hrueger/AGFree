@@ -20,7 +20,8 @@
         "username": "Benutzername",
         "people": "Personen",
         "groups": "Gruppen",
-        "mySchedule": "Mein Stundenplan"
+        "mySchedule": "Mein Stundenplan",
+        "search": "Suchen"
     },
     "login": {
         "inputEmail": "Bitte geben Sie Ihre Email-Adresse ein",

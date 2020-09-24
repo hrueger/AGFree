@@ -2,8 +2,11 @@
     {{'users.changeOwnProfile' | translate}}
 </button>
 
-<div class="form-inline">
-    <input class="form-control" [(ngModel)]="searchTerm" placeholder="Suchen">
+<div class="input-group w-50">
+    <input class="form-control" [(ngModel)]="searchTerm" [placeholder]="'general.search' | translate">
+    <div class="input-group-append" *ngIf="searchTerm !== ''">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchTerm = ''"><i class="fas fa-times"></i></button>
+    </div>
 </div>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-4">
