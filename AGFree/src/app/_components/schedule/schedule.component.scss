@@ -15,43 +15,51 @@ td {
     }
 }
 
-table.editMode td {
-    cursor: pointer;
-}
-
 tr.isBreak {
     background-color: $break;
-    &:hover {
-        background-color: darken($break, 10)
+}
+
+.editMode {
+    td {
+        cursor: pointer;
+    }
+    tr.isBreak {
+        &:hover {
+            background-color: darken($break, 10)
+        }
+    }
+    tr.isLaunchBreak {
+        &:hover {
+            background-color: darken($break, 30);
+        }
+    }
+    tr:hover {
+        td.free {
+            background-color: darken($free, 20);
+        }
+        td.lesson {
+            background-color: darken($lesson, 20);
+        }
+    }
+    tr.isBreak,
+    tr.isLaunchBreak {
+        &:hover {
+            td.free {
+                background-color: darken($free, 30);
+            }
+            td.lesson {
+                background-color: darken($lesson, 30);
+            }
+        }
     }
 }
 
 tr.isLaunchBreak {
     background-color: darken($break, 20);
-    &:hover {
-        background-color: darken($break, 30);
-    }
-}
-
-tr:hover {
-    td.free {
-        background-color: darken($free, 20);
-    }
-    td.lesson {
-        background-color: darken($lesson, 20);
-    }
 }
 
 tr.isBreak,
 tr.isLaunchBreak {
-    &:hover {
-        td.free {
-            background-color: darken($free, 30);
-        }
-        td.lesson {
-            background-color: darken($lesson, 30);
-        }
-    }
     td.free {
         background-color: darken($free, 10);
     }
