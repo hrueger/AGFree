@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({
@@ -10,7 +10,7 @@ export class FastTranslateService {
     public t(key: string): Promise<string> {
         return this.translateService.get(key).toPromise();
     }
-    public setLang(lang: string) {
+    public setLang(lang: string): void {
         this.translateService.use(lang);
     }
 }

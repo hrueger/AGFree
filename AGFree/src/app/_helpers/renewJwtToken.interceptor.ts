@@ -7,8 +7,8 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable, throwError } from "rxjs";
-import { catchError, filter, tap } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { filter, tap } from "rxjs/operators";
 import { AuthenticationService } from "../_services/authentication.service";
 
 @Injectable()
@@ -22,6 +22,7 @@ export class RenewJwtTokenInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             // There may be other events besides the response.
             filter((event) => event instanceof HttpResponse),
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             tap((event: HttpResponse<any>) => {
                 // console.log(event.headers);
             }),

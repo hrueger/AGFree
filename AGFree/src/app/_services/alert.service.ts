@@ -13,23 +13,23 @@ export class AlertService {
   constructor(private toastr: ToastrService, private fts: FastTranslateService) {
   }
 
-  public async success(message: string) {
+  public async success(message: string): Promise<void> {
       this.toastr.success(message, `${await this.fts.t("general.colors.success")}!`, { timeOut: this.timeouts.success });
   }
 
-  public async error(message: string) {
+  public async error(message: string): Promise<void> {
       this.toastr.error(message, `${await this.fts.t("general.error")}!`, { timeOut: this.timeouts.error });
   }
 
-  public async info(message: string) {
+  public async info(message: string): Promise<void> {
       this.toastr.info(message, `${await this.fts.t("general.colors.info")}:`, { timeOut: this.timeouts.info });
   }
 
-  public async warning(message: string) {
+  public async warning(message: string): Promise<void> {
       this.toastr.warning(message, `${await this.fts.t("general.colors.warning")}!`, { timeOut: this.timeouts.warning });
   }
 
-  public snackbar(message) {
+  public snackbar(message: string): void {
       this.info(message);
   }
 }

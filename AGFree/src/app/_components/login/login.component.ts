@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(["/"]);
             return;
@@ -76,20 +76,20 @@ export class LoginComponent implements OnInit {
     }
 
     // convenience getter for easy access to form fields
-    get f() {
+    get f(): any {
         return this.loginForm.controls;
     }
-    get rpf() {
+    get rpf(): any {
         return this.resetPasswordForm.controls;
     }
-    get inpf() {
+    get inpf(): any {
         return this.inputNewPasswordForm.controls;
     }
-    get cuf() {
+    get cuf(): any {
         return this.createUserForm.controls;
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.submitted = true;
 
         // stop here if form is invalid
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
             .login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
-                (data) => {
+                () => {
                     this.router.navigate([this.returnUrl]);
                     // this.router.navigate(['dashboard'], { skipLocationChange: false });
                     // location.reload();
@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
             );
     }
 
-    public onSubmitResetPassword() {
+    public onSubmitResetPassword(): void {
         this.rpSubmitted = true;
 
         // stop here if form is invalid
@@ -131,7 +131,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    public onSubmitNewPassword() {
+    public onSubmitNewPassword(): void {
         this.rpSubmitted = true;
 
         // stop here if form is invalid
@@ -151,7 +151,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    public onSubmitCreateUser() {
+    public onSubmitCreateUser(): void {
         this.cuSubmitted = true;
 
         // stop here if form is invalid

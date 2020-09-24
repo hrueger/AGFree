@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { environment } from "../../environments/environment";
 import { getApiUrl } from "../_helpers/utils";
 
 const httpOptions = {
@@ -23,15 +22,11 @@ export class AuthenticationService {
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public resetPassword(arg0: string) {
-        return new Observable<boolean>();
-    }
-
     public get currentUserValue(): any {
         return this.currentUserSubject.value;
     }
 
-    public login(username: string, password: string) {
+    public login(username: string, password: string): Observable<any> {
         return this.http
             .post<any>(
                 `${getApiUrl()}auth/login`,
@@ -60,11 +55,11 @@ export class AuthenticationService {
             );
     }
 
-    public saveJwtToken(user: any) {
+    public saveJwtToken(user: Record<string, any>): void {
         sessionStorage.setItem("jwt_token", user.token);
     }
 
-    public logout() {
+    public logout(): void {
         // remove user from local storage to log user out
         sessionStorage.removeItem("currentUser");
         this.currentUserSubject.next(null);

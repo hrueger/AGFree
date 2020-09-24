@@ -25,28 +25,15 @@ export class AppComponent {
     ) {
         translateService.setDefaultLang(translateService.getBrowserLang());
         this.authenticationService.currentUser.subscribe(
-            (x) => (this.currentUser = x),
+            (x) => { this.currentUser = x; },
         );
     }
 
-    public logout() {
+    public logout(): void {
         this.authenticationService.logout();
         this.router.navigate(["/login"]);
     }
-    public ngOnInit() {
-        const userId = Math.round(Math.random() * 10000);
-        // this.pushService.requestPermission(userId);
-        // this.pushService.receiveMessage();
-        // this.pushMessage = this.pushService.currentMessage;
-        this.router.events.subscribe((event: any) => {
-            if (event.url) {
-                if (event.url.startsWith("/share/")) {
-                    this.isShare = true;
-                } else {
-                    this.isShare = false;
-                }
-            }
-        });
+    public ngOnInit(): void {
         this.translateService.setDefaultLang(
             localStorage.getItem("language")
                 ? localStorage.getItem("language")

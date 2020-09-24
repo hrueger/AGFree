@@ -20,11 +20,11 @@ export class NavbarComponent {
         private router: Router,
         private authenticationService: AuthenticationService,
     ) { }
-    public logout() {
+    public logout(): void {
         this.authenticationService.logout();
         this.router.navigate(["/login"]);
     }
-    public toggleNavOnMobile(event) {
+    public toggleNavOnMobile(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
         this.toggleNav.emit(Math.random());

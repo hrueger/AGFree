@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             catchError((err) => {
-                // tslint:disable-next-line: no-console
+                // eslint-disable-next-line no-console
                 console.error("Error in error.interceptor.ts: ", err, err.stack);
 
                 if (err && err.error && err.error.logout) {

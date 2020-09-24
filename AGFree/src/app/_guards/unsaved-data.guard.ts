@@ -1,5 +1,5 @@
 import { CanDeactivate } from "@angular/router";
-import { Injectable, HostListener } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { FastTranslateService } from "../_services/fast-translate.service";
 
@@ -12,9 +12,10 @@ export interface ComponentCanDeactivate {
 export class UnsavedDataGuard implements CanDeactivate<ComponentCanDeactivate> {
     constructor(private fts: FastTranslateService) {}
     canDeactivate(component: ComponentCanDeactivate): Promise<boolean> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (component.hasUnsavedData) {
                 this.fts.t("general.unsavedDataWarning").then((v) => {
+                    // eslint-disable-next-line
                     resolve(confirm(v));
                 });
             } else {

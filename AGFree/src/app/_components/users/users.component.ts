@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
         );
     }
 
-    public async ngOnInit() {
+    public async ngOnInit(): Promise<void> {
         this.remoteService.get("users/").subscribe((data) => {
             this.users = data;
         });
@@ -77,11 +77,11 @@ export class UsersComponent implements OnInit {
             .setValue(this.authService.currentUserValue.email);
     }
 
-    public openNewModal(content) {
+    public openNewModal(content: unknown): void {
         this.modalService
             .open(content, { ariaLabelledBy: "modal-basic-title" })
             .result.then(
-                (result) => {
+                () => {
                     this.invalidMessage = false;
 
                     this.remoteService
@@ -105,11 +105,11 @@ export class UsersComponent implements OnInit {
                 },
             );
     }
-    public openEditModal(content) {
+    public openEditModal(content: unknown): void {
         this.modalService
             .open(content, { ariaLabelledBy: "modal-basic-title" })
             .result.then(
-                (result) => {
+                () => {
                     this.invalidMessage = false;
                     let pwnew1val = "";
                     if (this.editUserForm.get("editUserPassword1")) {
@@ -145,7 +145,8 @@ export class UsersComponent implements OnInit {
             );
     }
 
-    public async deleteUser(user: any) {
+    public async deleteUser(user: Record<string, any>): Promise<void> {
+        // eslint-disable-next-line
         if (confirm(await this.fts.t("users.confirmDelete")) == true) {
             this.remoteService
                 .delete(`users/${user.id}`)
