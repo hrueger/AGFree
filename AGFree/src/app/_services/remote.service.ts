@@ -4,7 +4,6 @@ import { Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { getApiUrl } from "../_helpers/utils";
 import { AlertService } from "./alert.service";
-import { CacheService } from "./cache.service";
 
 @Injectable({
     providedIn: "root",
@@ -13,7 +12,6 @@ export class RemoteService {
     constructor(
         private http: HttpClient,
         private alertService: AlertService,
-        private cacheService: CacheService,
     ) { }
 
     public get(path: string): Observable<any> {
