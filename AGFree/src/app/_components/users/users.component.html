@@ -1,9 +1,13 @@
 <button id="editBtn" type="button" (click)="openEditModal(editUserModal)" class="btn btn-outline-primary">
     {{'users.changeOwnProfile' | translate}}
 </button>
-<br /><br />
+
+<div class="form-inline">
+    <input class="form-control" [(ngModel)]="searchTerm" placeholder="Suchen">
+</div>
+
 <div class="card-deck">
-    <div class="card" *ngFor="let user of users">
+    <div class="card" *ngFor="let user of searchUsers()">
         <app-schedule [userdata]="user.data" [small]="true"></app-schedule>
         <p>{{ user.username }}</p>
     </div>

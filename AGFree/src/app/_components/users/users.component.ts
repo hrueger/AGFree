@@ -14,6 +14,8 @@ import { RemoteService } from "../../_services/remote.service";
 export class UsersComponent implements OnInit {
     public users: any[] = [];
 
+    public searchTerm = "";
+
     public newUserForm: FormGroup;
     public editUserForm: FormGroup;
     public name: string;
@@ -36,6 +38,13 @@ export class UsersComponent implements OnInit {
         private authService: AuthenticationService,
         private fts: FastTranslateService,
     ) { }
+
+    public searchUsers(): any[] {
+        if (this.searchTerm.trim() == "") {
+            return this.users;
+        }
+        return this.users.filter((u) => u.username.toLowerCase().indexOf(this.searchTerm.trim().toLowerCase()) !== -1);
+    }
 
     public async ngOnInit() {
         this.remoteService.get("users/").subscribe((data) => {
