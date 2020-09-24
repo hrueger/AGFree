@@ -3,6 +3,13 @@ table.table tbody tr td:not(:first-of-type):not(:last-of-type) {
     border-right: 1px solid grey;
 }
 
+.small {
+    td {
+        padding: 0.1rem;
+        text-align: center;
+    }
+}
+
 $free:#55efc4;
 $lesson: #ffeaa7;
 $break: rgb(230, 230, 230);
