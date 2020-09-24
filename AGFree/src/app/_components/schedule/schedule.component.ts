@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
 
 type Period = {
@@ -27,10 +28,24 @@ type Userdata = {
     styleUrls: ["./schedule.component.scss"],
 })
 export class ScheduleComponent {
-    @Input() public edit: false;
+    public _edit = false;
+    public users: any[] = [];
+    public usersToShow: any[] = [];
+    public myId: number;
+    public showSchedules = false;
+    @Input() public set edit(m: boolean) {
+        this.selectedPeriod = undefined;
+        this.selectedDay = undefined;
+        this._edit = m;
+    }
+    public get edit(): boolean {
+        return this._edit;
+    }
     @Input() public userdata: Userdata;
     @Input() public small = false;
     public saving = false;
+    public selectedDay: number;
+    public selectedPeriod: number;
     public days: Day[] = [
         {
             id: 1,
@@ -126,12 +141,20 @@ export class ScheduleComponent {
         },
     ];
 
-    constructor(private remoteService: RemoteService) {}
+    constructor(
+        private remoteService: RemoteService,
+        private authenticationService: AuthenticationService,
+    ) {
+        this.myId = this.authenticationService.currentUserValue.id;
+    }
 
     public ngOnInit(): void {
         if (this.edit || !this.userdata) {
             this.remoteService.get("/users/schedule").subscribe((d) => {
                 this.userdata = d && Array.isArray(d) ? d : [];
+            });
+            this.remoteService.get("/users").subscribe((u) => {
+                this.users = u;
             });
         }
     }
@@ -167,6 +190,14 @@ export class ScheduleComponent {
 
     public select(period: Period): void {
         if (!this.edit) {
+            if (!this.small) {
+                this.selectedDay = period.dayId;
+                this.selectedPeriod = period.id;
+                this.usersToShow = this.users.filter((u) => (
+                    (u.data && Array.isArray(u.data) ? u.data : []) as Userdata).findIndex(
+                    (d) => d.dayId === this.selectedDay && d.periodId === this.selectedPeriod,
+                ) === -1 && u.id !== this.myId);
+            }
             return;
         }
         if (this.isFree(period)) {

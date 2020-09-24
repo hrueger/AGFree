@@ -26,10 +26,11 @@ tr.isBreak {
     background-color: $break;
 }
 
+table:not(.small) td {
+    cursor: pointer;
+}
+
 .editMode {
-    td {
-        cursor: pointer;
-    }
     tr.isBreak {
         &:hover {
             background-color: darken($break, 10)
@@ -73,4 +74,8 @@ tr.isLaunchBreak {
     td.lesson {
         background-color: darken($lesson, 10);
     }
+}
+
+td.selected {
+    border: 3px solid rgb(3, 124, 172) !important;
 }
