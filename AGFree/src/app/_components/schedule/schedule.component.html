@@ -37,10 +37,12 @@
         </div>
         <div *ngIf="usersToShow && usersToShow.length > 0">
             <button class="btn btn-outline-primary" (click)="showSchedules = !showSchedules">{{showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"}}</button>
-            <div class="card-deck mt-4">
-                <div class="card p-3" *ngFor="let user of usersToShow">
-                    <p class="text-center mt-1">{{ user.username }}</p>
-                    <app-schedule *ngIf="showSchedules" [userdata]="user.data" [small]="true"></app-schedule>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-4">
+                <div class="col mb-4" *ngFor="let user of usersToShow">
+                    <div class="card p-3">
+                        <h6 class="text-center mb-2">{{ user.username }}</h6>
+                        <app-schedule *ngIf="showSchedules" [userdata]="user.data" [small]="true"></app-schedule>
+                    </div>
                 </div>
             </div>
         </div>
