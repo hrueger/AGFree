@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
     ) { }
 
     public async ngOnInit() {
-        this.remoteService.get("get", "users/").subscribe((data) => {
+        this.remoteService.get("users/").subscribe((data) => {
             this.users = data;
         });
         this.newUserForm = this.fb.group({
@@ -78,7 +78,7 @@ export class UsersComponent implements OnInit {
                     this.invalidMessage = false;
 
                     this.remoteService
-                        .getNoCache("post", "users/", {
+                        .post("users/", {
                             email: this.newUserForm.get("email").value,
                             pw: this.newUserForm.get("password1").value,
                             pw2: this.newUserForm.get("password2").value,
@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
                             if (data && data.status == true) {
                                 this.alertService.success(await this.fts.t("users.userCreatedSuccessfully"));
                                 this.remoteService
-                                    .get("get", "users/")
+                                    .get("users/")
                                     .subscribe((res) => {
                                         this.users = res;
                                     });
@@ -114,22 +114,21 @@ export class UsersComponent implements OnInit {
                         pwnew2val = this.editUserForm.get("editUserPassword2")
                             .value;
                     }
-                    this.remoteService
-                        .getNoCache("post", "users/editCurrent", {
-                            email: this.editUserForm.get("editUserEmail").value,
-                            pwNew: pwnew1val,
-                            pwNew2: pwnew2val,
-                            pwOld: this.editUserForm.get(
-                                "editUserPasswordOld",
-                            ).value,
-                            username: this.editUserForm.get("editUserName")
-                                .value,
-                        })
+                    this.remoteService.post("users/editCurrent", {
+                        email: this.editUserForm.get("editUserEmail").value,
+                        pwNew: pwnew1val,
+                        pwNew2: pwnew2val,
+                        pwOld: this.editUserForm.get(
+                            "editUserPasswordOld",
+                        ).value,
+                        username: this.editUserForm.get("editUserName")
+                            .value,
+                    })
                         .subscribe(async (data) => {
                             if (data && data.status == true) {
                                 this.alertService.success(await this.fts.t("users.currentUserUpdatedSuccessfully"));
                                 this.remoteService
-                                    .get("get", "users/")
+                                    .get("users/")
                                     .subscribe((res) => {
                                         this.users = res;
                                     });
@@ -142,12 +141,12 @@ export class UsersComponent implements OnInit {
     public async deleteUser(user: any) {
         if (confirm(await this.fts.t("users.confirmDelete")) == true) {
             this.remoteService
-                .getNoCache("delete", `users/${user.id}`)
+                .delete(`users/${user.id}`)
                 .subscribe(async (data) => {
                     if (data && data.status == true) {
                         this.alertService.success(await this.fts.t("users.userDeletedSuccessfully"));
                         this.remoteService
-                            .get("get", "users/")
+                            .get("users/")
                             .subscribe((res) => {
                                 this.users = res;
                             });

@@ -123,7 +123,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.remoteService.getNoCache("get", `auth/passwordReset/${this.rpf.email.value}`).subscribe((data) => {
+        this.remoteService.get(`auth/passwordReset/${this.rpf.email.value}`).subscribe((data) => {
             this.loading = false;
             if (data.status == true) {
                 this.passwordResetSucceeded = true;
@@ -140,11 +140,10 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.remoteService.getNoCache("post",
-            `auth/passwordReset/${this.route.snapshot.params.resetPasswordToken}`, {
-                password1: this.inpf.password1.value,
-                password2: this.inpf.password2.value,
-            }).subscribe((data) => {
+        this.remoteService.post(`auth/passwordReset/${this.route.snapshot.params.resetPasswordToken}`, {
+            password1: this.inpf.password1.value,
+            password2: this.inpf.password2.value,
+        }).subscribe((data) => {
             this.loading = false;
             if (data.status == true) {
                 this.inputNewPasswordSucceeded = true;
@@ -161,7 +160,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.remoteService.getNoCache("post", "users", {
+        this.remoteService.post("users", {
             password1: this.cuf.password.value,
             password2: this.cuf.password2.value,
             username: this.cuf.username.value,

@@ -1,8 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { catchError, first, tap } from "rxjs/operators";
-import { environment } from "../../environments/environment";
+import { Observable, of } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
 import { getApiUrl } from "../_helpers/utils";
 import { AlertService } from "./alert.service";
 import { CacheService } from "./cache.service";
@@ -17,108 +16,35 @@ export class RemoteService {
         private cacheService: CacheService,
     ) { }
 
-    public get(type: "get" | "post" | "put" | "delete", path: string, args?: any): Observable<any> {
-        const subject = new BehaviorSubject(null);
-        let cacheData = null;
-        let echtDaten = false;
-        const req = this.getRequest(type, path, args);
-        req.pipe(
-            tap((_) => this.log(
-                `fetched ${
-                    path
-                } with data ${
-                    JSON.stringify(args)}`,
-            )),
+    public get(path: string): Observable<any> {
+        return this.http.get<any>(`${getApiUrl()}${path}`).pipe(
+            tap(() => undefined),
             catchError(this.handleError<any>(path, false)),
-        )
-            .subscribe((data) => {
-                // console.log("internetdaten bekommen");
-                if (cacheData == null || !this.isEquivalent(cacheData, data)) {
-                    // console.log("Cache Daten: " + cacheData);
-                    // console.log("Echte Daten: " + data);
-                    if (data) {
-                        subject.next(data);
-                        this.cacheService.put(data, path, args);
-                    } else {
-                        // ToDo this.alertService
-                        // .snackbar("Offline-Modus (Daten können veraltet sein)");
-                    }
-
-                    // console.log("cache updated and new data served: " + data);
-                } else {
-                    // console.log("cache the same as internet");
-                }
-                echtDaten = true;
-                subject.complete();
-            });
-        // console.log("hole cachedaten");
-        this.cacheService
-            .get(path, args)
-
-            .subscribe((d) => {
-                // console.log("cacheDaten bekommen");
-                if (echtDaten == false) {
-                    subject.next(d);
-                    cacheData = d;
-                    // console.log("served from cache:" + cacheData);
-                }
-            });
-        return subject.asObservable();
-    }
-
-    public getNoCache(type, path: string, args?: any): Observable<any> {
-        this.log(
-            `fetching ${
-                path
-            } with data ${
-                JSON.stringify(args)}`,
         );
-        return this.getRequest(type, path, args)
-            .pipe(
-                tap((_) => this.log(
-                    `fetched ${
-                        path
-                    } with data ${
-                        JSON.stringify(args)}`,
-                )),
-                catchError(this.handleError<any>(path, false)),
-            );
     }
 
-    private getRequest(type: string, path: string, args: any) {
-        let req;
-        if (type == "get") {
-            req = this.http
-                .get<any>(`${getApiUrl()}${path}`, {
-                    ...args,
-                });
-        } else if (type == "post") {
-            req = this.http
-                .post<any>(`${getApiUrl()}${path}`, {
-                    ...args,
-                });
-        } else if (type == "put") {
-            req = this.http
-                .put<any>(`${getApiUrl()}${path}`, {
-                    ...args,
-                });
-        } else if (type == "delete") {
-            req = this.http
-                .delete<any>(`${getApiUrl()}${path}`, {
-                    ...args,
-                });
-        }
-        return req;
+    public post(path: string, data: Record<string, any>): Observable<any> {
+        return this.http.post<any>(`${getApiUrl()}${path}`, data).pipe(
+            tap(() => undefined),
+            catchError(this.handleError<any>(path, false)),
+        );
+    }
+
+    public delete(path: string): Observable<any> {
+        return this.http.delete<any>(`${getApiUrl()}${path}`).pipe(
+            tap(() => undefined),
+            catchError(this.handleError<any>(path, false)),
+        );
     }
 
     private handleError<T>(operation = "operation", result?: T) {
         return (error: any): Observable<T> => {
-            // tslint:disable-next-line: no-console
+            // eslint-disable-next-line no-console
             console.error("Error occured in remote.service.ts:", error);
 
             if (!error.startsWith("java.net.UnknownHostException")) {
                 this.log(`${operation} failed: ${error.message}`);
-                // tslint:disable-next-line: no-console
+                // eslint-disable-next-line no-console
                 console.log(result);
 
                 this.alertService.error(error);
@@ -129,37 +55,7 @@ export class RemoteService {
     }
 
     private log(message: string) {
-        // tslint:disable-next-line: no-console
+        // eslint-disable-next-line no-console
         console.log(`RemoteService Log: ${message}`);
-    }
-    private isEquivalent(a, b) {
-        // console.log("a");
-        // console.log(a);
-        // console.log("b");
-        // console.log(b);
-        // Create arrays of property names
-        const aProps = Object.getOwnPropertyNames(a);
-        const bProps = Object.getOwnPropertyNames(b);
-
-        // If number of properties is different,
-        // objects are not equivalent
-        if (aProps.length != bProps.length) {
-            return false;
-        }
-
-        // tslint:disable-next-line: prefer-for-of
-        for (let i = 0; i < aProps.length; i++) {
-            const propName = aProps[i];
-
-            // If values of same property are not equal,
-            // objects are not equivalent
-            if (a[propName] !== b[propName]) {
-                return false;
-            }
-        }
-
-        // If we made it this far, objects
-        // are considered equivalent
-        return true;
     }
 }

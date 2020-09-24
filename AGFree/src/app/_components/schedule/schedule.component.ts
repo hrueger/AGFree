@@ -108,7 +108,7 @@ export class ScheduleComponent {
     constructor(private remoteService: RemoteService) {}
 
     public ngOnInit(): void {
-        this.remoteService.getNoCache("get", "/users/schedule").subscribe((d) => {
+        this.remoteService.get("/users/schedule").subscribe((d) => {
             this.userdata = d && Array.isArray(d) ? d : [];
         });
     }
@@ -161,7 +161,7 @@ export class ScheduleComponent {
             return;
         }
         this.saving = true;
-        this.remoteService.getNoCache("post", "/users/schedule", { data: this.userdata }).subscribe((d) => {
+        this.remoteService.post("/users/schedule", { data: this.userdata }).subscribe((d) => {
             this.saving = false;
         }, () => {
             this.saving = false;
