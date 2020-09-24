@@ -66,10 +66,6 @@ export class UsersComponent implements OnInit {
             .setValue(this.authService.currentUserValue.email);
     }
 
-    public mailToAll() {
-        location.href = `mailto:${this.users.map((user) => user.email).join(",")}`;
-    }
-
     public openNewModal(content) {
         this.modalService
             .open(content, { ariaLabelledBy: "modal-basic-title" })
