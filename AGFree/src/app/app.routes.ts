@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { HomeComponent } from "./_components/home/home.component";
+import { GroupsComponent } from "./_components/groups/groups.component";
 import { LoginComponent } from "./_components/login/login.component";
 import { UsersComponent } from "./_components/users/users.component";
 import { AuthGuard } from "./_guards/auth.guard";
@@ -20,12 +20,12 @@ export const routes: Routes = [
     },
     {
         canActivate: [AuthGuard],
-        component: HomeComponent,
-        path: "home",
+        component: GroupsComponent,
+        path: "groups",
     },
     /* Authentication paths */
     { path: "login", component: LoginComponent },
     { path: "resetPassword/:resetPasswordToken", component: LoginComponent },
     // otherwise redirect to home
-    { path: "**", redirectTo: "/home" },
+    { path: "**", redirectTo: "/schedule" },
 ];

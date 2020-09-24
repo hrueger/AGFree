@@ -16,7 +16,7 @@ import { NgbModule, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ToastrModule } from "ngx-toastr";
-import { HomeComponent } from "./_components/home/home.component";
+import { GroupsComponent } from "./_components/groups/groups.component";
 import { LoginComponent } from "./_components/login/login.component";
 import { NavbarComponent } from "./_components/navbar/navbar.component";
 import { UsersComponent } from "./_components/users/users.component";
@@ -38,7 +38,7 @@ registerLocaleData(localeDe);
         LoginComponent,
         UsersComponent,
         NavbarComponent,
-        HomeComponent,
+        GroupsComponent,
         MyScheduleComponent,
         ScheduleComponent,
     ],
