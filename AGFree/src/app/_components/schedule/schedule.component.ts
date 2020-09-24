@@ -108,9 +108,11 @@ export class ScheduleComponent {
     constructor(private remoteService: RemoteService) {}
 
     public ngOnInit(): void {
-        this.remoteService.get("/users/schedule").subscribe((d) => {
-            this.userdata = d && Array.isArray(d) ? d : [];
-        });
+        if (this.edit || !this.userdata) {
+            this.remoteService.get("/users/schedule").subscribe((d) => {
+                this.userdata = d && Array.isArray(d) ? d : [];
+            });
+        }
     }
 
     public getRows(): Row[] {
