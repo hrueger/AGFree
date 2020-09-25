@@ -38,6 +38,42 @@
             "description": "The JWT secret, just choose a random string",
             "default": "rwiuerslixalsdkxaxsdjxald",
             "type": "string"
+        },
+        {
+            "name": "MAIL_SERVER_HOST",
+            "description": "The host of the SMTP Server to use",
+            "default": "localhost",
+            "type": "string"
+        },
+        {
+            "name": "MAIL_SERVER_PORT",
+            "description": "The port of the SMTP Server to use",
+            "default": "25",
+            "type": "number"
+        },
+        {
+            "name": "MAIL_SERVER_USER",
+            "description": "The user of the SMTP Server to use",
+            "default": "",
+            "type": "string"
+        },
+        {
+            "name": "MAIL_SERVER_PASSWORD",
+            "description": "The password of the SMTP Server to use",
+            "default": "",
+            "type": "string"
+        },
+        {
+            "name": "MAIL_SENDER_ADDRESS",
+            "description": "The sender address to use for sending emails.",
+            "default": "no-reply.agfree@hrueger.github.io",
+            "type": "string"
+        },
+        {
+            "name": "URL",
+            "description": "The url where AGFree will be available. It must end with a slash.",
+            "default": "http://localhost:4200/",
+            "type": "string"
         }
     ]
 }

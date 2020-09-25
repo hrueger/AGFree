@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import * as i18n from "i18n";
 import * as jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
+import { v4 as uuid } from "uuid";
 import { User } from "../entity/User";
+import { sendMail } from "../utils/mailer";
 
 class AuthController {
     public static login = async (req: Request, res: Response): Promise<void> => {
@@ -47,11 +49,10 @@ class AuthController {
         res.send(response);
     }
 
-    /*
     public static sendPasswordResetMail = async (req: Request, res: Response): Promise<void> => {
         const userRepository = getRepository(User);
         let user: User;
-        const token = genID(32);
+        const token = uuid();
         try {
             user = await userRepository.createQueryBuilder("user")
                 .addSelect("user.passwordResetToken")
@@ -68,8 +69,9 @@ class AuthController {
             res.status(500).send({ message: i18n.__("errors.errorWhileSavingToken") });
             return;
         }
-        const link = `${config.url}resetPassword/${token}`;
-        sendMail(req.params.email, {
+        const link = `${res.app.locals.config.URL}resetPassword/${token}`;
+        const d = new Date();
+        sendMail(res, req.params.email, {
             btnText: i18n.__("resetPassword.resetPassword"),
             btnUrl: link,
             cardSubtitle: "",
@@ -77,7 +79,7 @@ class AuthController {
             content: i18n.__("resetPassword.message").replace("%s", user.username),
             secondTitle: "",
             subject: i18n.__("resetPassword.resetPassword"),
-            subtitle: i18n.__("resetPassword.at").replace("%s", new Date().toLocaleString()),
+            subtitle: i18n.__("resetPassword.at").replace("%s", `${d.getDate()}.${d.getMonth()}.${d.getFullYear()}, ${d.getHours()}:${d.getMinutes() == 0 ? "00" : d.getMinutes()}`),
             summary: i18n.__("resetPassword.message").replace("%s", user.username),
             title: i18n.__("resetPassword.resetPassword"),
         }).then(() => {
@@ -85,8 +87,7 @@ class AuthController {
         }).catch((err) => {
             // eslint-disable-next-line no-console
             console.log(err);
-            res.status(500).send({
-                message: `${i18n.__("errors.errorWhileSendingEmail")}: ${err.toString()}` });
+            res.status(500).send({ message: `${i18n.__("errors.errorWhileSendingEmail")}: ${err.toString()}` });
         });
     }
     public static resetPassword = async (req: Request, res: Response): Promise<void> => {
@@ -103,8 +104,7 @@ class AuthController {
             user = await userRepository.createQueryBuilder("user")
                 .addSelect("user.password")
                 .addSelect("user.passwordResetToken")
-                .where("user.passwordResetToken =
-                :passwordResetToken", { passwordResetToken: req.params.resetToken })
+                .where("user.passwordResetToken = :passwordResetToken", { passwordResetToken: req.params.resetToken })
                 .getOne();
         } catch (id) {
             res.status(404).send({ message: i18n.__("errors.userNotFoundWrongLink") });
@@ -115,15 +115,10 @@ class AuthController {
         }
         user.password = password2;
         user.passwordResetToken = "";
-        const errors = await validate(user);
-        if (errors.length > 0) {
-            res.status(400).send(errors);
-            return;
-        }
         user.hashPassword();
         userRepository.save(user);
 
         res.send({ success: true });
-    } */
+    }
 }
 export default AuthController;
