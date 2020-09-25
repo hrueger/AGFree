@@ -44,6 +44,10 @@
     </div>
 </div>
 
-<div *ngIf="(!groups || groups.length === 0) && !newGroupMode" class="alert alert-info text-center mt-4">
+<div class="text-center" *ngIf="!groups">
+    <div class="spinner-border text-primary"></div>
+</div>
+
+<div *ngIf="(groups && groups.length === 0) && !newGroupMode" class="alert alert-info text-center mt-4">
     Du bist in keiner Gruppe dabei! Klicke auf den Button oben, um eine neue Gruppe zu erstellen.
 </div>

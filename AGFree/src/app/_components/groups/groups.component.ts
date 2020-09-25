@@ -14,7 +14,7 @@ export class GroupsComponent {
     public newGroupMode = false;
     public newGroupName = "";
     public users: User[] = [];
-    public groups: Group[] = [];
+    public groups: Group[];
     public searchTerm = "";
     noGroupNameWarning: boolean;
     noUsersSelectedWarning: boolean;
