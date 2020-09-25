@@ -27,6 +27,9 @@
 /* do not edit */     public groups: Group[];
 /* do not edit */
 /* do not edit */     
+/* do not edit */     public createdGroups: Group[];
+/* do not edit */
+/* do not edit */     
 /* do not edit */     public password: string;
 /* do not edit */
 /* do not edit */     // 
@@ -49,5 +52,6 @@
 /* do not edit */
 /* do not edit */     public noPreviousPeriods?: boolean;
 /* do not edit */     public noFollowingPeriods?: boolean;
+/* do not edit */     public selected?: boolean;
 /* do not edit */ }
 /* do not edit */

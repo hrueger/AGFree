@@ -1,4 +1,43 @@
-<div class="alert alert-warning">
-    <i class="fas fa-wrench fa-4x float-left mr-5"></i>
-    <p class="my-4">Diese Seite befindet sich noch in der Entwicklung!</p>
+<button class="btn btn-outline-primary float-right mb-3" [class.btn-outline-success]="newGroupMode" (click)="newGroupMode ? createGroup() : (newGroupMode = true)">{{newGroupMode ? "Gruppe erstellen" : "Neue Gruppe erstellen"}}</button>
+
+<div *ngIf="newGroupMode" class="clearfix">
+    <div class="inline-form row">
+        <div class="col-12 col-md-4 col-lg-2">
+            <label for="inputName">Gruppenname: </label>
+        </div>
+        <div class="col-12 col-md-8 col-lg-10">
+            <input class="form-control" id="inputName" placeholder="Gruppenname" [(ngModel)]="newGroupName">
+        </div>
+    </div>
+    <div class="mt-4">
+        <div *ngIf="!newGroupUsers || newGroupUsers.length == 0" class="alert alert-primary">Keine Personen ausgewählt. Klicke eine Person an, um sie auszuwählen und der Gruppe hinzuzufügen. Du kannst auch das Suchfeld benutzen.</div>
+        <div class="input-group">
+            <input class="form-control" [(ngModel)]="searchTerm" [placeholder]="'general.search' | translate">
+            <div class="input-group-append" *ngIf="searchTerm !== ''">
+                <button class="btn btn-outline-secondary" type="button" (click)="searchTerm = ''"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="users clearfix">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-4">
+                <div class="col mb-4" *ngFor="let user of getUsers()" (click)="toggleUser(user)">
+                    <div class="card p-3 pointer" [class.alert-success]="user.selected">
+                        <h6 class="text-center mb-2"><i *ngIf="user.selected" class="fas fa-check text-success mr-2"></i>{{user.username}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-4">
+    <div class="col mb-4" *ngFor="let group of groups">
+        <div class="card p-3">
+            <h6 class="text-center mb-2">{{ group.name }}</h6>
+            <span class="mx-2" *ngFor="let user of group.user">{{user.username}}</span>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="(!groups || groups.length === 0) && !newGroupMode" class="alert alert-info text-center mt-4">
+    Du bist in keiner Gruppe dabei! Klicke auf den Button oben, um eine neue Gruppe zu erstellen.
 </div>

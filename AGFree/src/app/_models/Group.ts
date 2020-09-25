@@ -19,5 +19,8 @@
 /* do not edit */
 /* do not edit */     
 /* do not edit */     public users: User[];
+/* do not edit */
+/* do not edit */     
+/* do not edit */     public creator: User;
 /* do not edit */ }
 /* do not edit */
