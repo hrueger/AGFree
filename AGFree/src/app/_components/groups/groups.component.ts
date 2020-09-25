@@ -25,6 +25,7 @@ export class GroupsComponent {
     ) { }
 
     public ngOnInit(): void {
+        this.groups = undefined;
         this.remoteService.get("groups").subscribe((groups: Group[]) => {
             this.groups = groups;
         });
