@@ -7,6 +7,6 @@ const router = Router();
 router.get("/", [checkJwt], GroupController.listAll);
 router.get("/:id", [checkJwt], GroupController.getGroup);
 router.post("/", [checkJwt], GroupController.newGroup);
-router.post("/delete", [checkJwt], GroupController.deleteGroup);
+router.delete("/:id", [checkJwt], GroupController.deleteGroup);
 
 export default router;

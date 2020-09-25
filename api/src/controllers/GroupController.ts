@@ -56,7 +56,6 @@ class GroupController {
             group.users.push(group.creator);
             await groupRepository.save(group);
         } catch (e) {
-            console.log(e);
             res.status(500).send({ message: `${i18n.__("errors.error")}` });
             return;
         }
@@ -68,6 +67,11 @@ class GroupController {
         const { id } = req.params;
         const groupRepository = getRepository(Group);
         try {
+            const g = await groupRepository.findOneOrFail(id, { relations: ["creator"] });
+            if (g.creator.id !== res.locals.jwtPayload.userId) {
+                res.status(401).send({ message: "Nur die Person, die eine Gruppe erstellt hat, kann sie auch löschen!" });
+                return;
+            }
             groupRepository.delete(id);
         } catch (error) {
             res.status(404).send({ message: i18n.__("errors.groupNotFound") });
