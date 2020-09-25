@@ -18,24 +18,6 @@ class GroupController {
         res.send(groups);
     }
 
-    public static editGroup = async (req: Request, res: Response): Promise<void> => {
-        const groupRepository = getRepository(Group);
-        const { name } = req.body;
-        if (name == undefined) {
-            res.status(400).send(i18n.__("errors.notAllFieldsProvided"));
-            return;
-        }
-        try {
-            const group = await groupRepository.findOne({ where: { guid: req.params.guid } });
-            group.name = name;
-            groupRepository.save(group);
-        } catch (err) {
-            res.status(500).send({ message: err });
-            return;
-        }
-        res.send({ success: true });
-    }
-
     public static newGroup = async (req: Request, res: Response): Promise<void> => {
         const groupRepository = getRepository(Group);
         const userIds = req.body.users;
