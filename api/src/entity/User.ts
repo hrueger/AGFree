@@ -37,7 +37,7 @@ export class User {
     @Column({ select: false, nullable: true })
     public passwordResetToken: string;
 
-    @Column("simple-json")
+    @Column("simple-json", { default: null })
     public data: any;
 
     @Column()
