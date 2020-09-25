@@ -76,4 +76,8 @@ export class GroupsComponent {
             }
         });
     }
+
+    public getUsersList(group: Group): string {
+        return group.users.map((u) => u.username).join(", ");
+    }
 }

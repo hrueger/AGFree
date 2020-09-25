@@ -39,9 +39,7 @@
     <div class="col mb-4" *ngFor="let group of groups">
         <div class="card p-3">
             <h6 class="text-center mb-2">{{ group.name }}</h6>
-            <div>
-                <span class="mx-2" *ngFor="let user of group.users">{{user.username}}</span>
-            </div>
+            <span>{{getUsersList(group)}}</span>
         </div>
     </div>
 </div>
