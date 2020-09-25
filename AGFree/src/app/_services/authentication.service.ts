@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { getApiUrl } from "../_helpers/utils";
+import { User } from "../_models/User";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -12,21 +13,21 @@ const httpOptions = {
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    public currentUser: Observable<any>;
-    private currentUserSubject: BehaviorSubject<any>;
+    public currentUser: Observable<User>;
+    private currentUserSubject: BehaviorSubject<User>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<any>(
+        this.currentUserSubject = new BehaviorSubject<User>(
             JSON.parse(sessionStorage.getItem("currentUser")),
         );
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): any {
+    public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
 
-    public login(username: string, password: string): Observable<any> {
+    public login(username: string, password: string): Observable<User> {
         return this.http
             .post<any>(
                 `${getApiUrl()}auth/login`,

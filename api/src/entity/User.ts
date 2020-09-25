@@ -54,4 +54,7 @@ export class User {
         }
         return false;
     }
+
+    public noPreviousPeriods?: boolean;
+    public noFollowingPeriods?: boolean;
 }

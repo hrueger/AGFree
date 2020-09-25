@@ -46,5 +46,8 @@
 /* do not edit */     
 /* do not edit */
 /* do not edit */     
+/* do not edit */
+/* do not edit */     public noPreviousPeriods?: boolean;
+/* do not edit */     public noFollowingPeriods?: boolean;
 /* do not edit */ }
 /* do not edit */

@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { User } from "../../_models/User";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
 
@@ -30,8 +31,8 @@ type Userdata = {
 export class ScheduleComponent {
     public _edit = false;
     public _userdata: Userdata;
-    public users: any[] = [];
-    public usersToShow: any[] = [];
+    public users: User[] = [];
+    public usersToShow: User[] = [];
     public myId: number;
     public showSchedules = localStorage.getItem("showSchedules") == "true";
     @Input() public set edit(m: boolean) {
@@ -156,10 +157,10 @@ export class ScheduleComponent {
 
     public ngOnInit(): void {
         if (this.edit || !this.userdata) {
-            this.remoteService.get("/users/schedule").subscribe((d) => {
+            this.remoteService.get("/users/schedule").subscribe((d: Userdata) => {
                 this._userdata = d && Array.isArray(d) ? d : [];
             });
-            this.remoteService.get("/users").subscribe((u) => {
+            this.remoteService.get("/users").subscribe((u: User[]) => {
                 this.users = u;
             });
         }
@@ -199,7 +200,7 @@ export class ScheduleComponent {
         ).length == 0;
     }
 
-    public getUserdata(u: Record<string, any>): Userdata {
+    public getUserdata(u: User): Userdata {
         return u.data && Array.isArray(u.data) ? u.data : [];
     }
 
