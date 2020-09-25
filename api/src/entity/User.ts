@@ -5,7 +5,6 @@ import {
     Entity,
     JoinTable,
     ManyToMany,
-    ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
     Unique,
