@@ -1,0 +1,10 @@
+{
+    "version": 1,
+    "files": [{
+        "src": "api/src/entity/*",
+        "dest": "AGFree/src/app/_models",
+        "removeDecorators": true,
+        "removeMethods": ["hashPassword", "checkIfUnencryptedPasswordIsValid"],
+        "removeImports": ["bcryptjs", "typeorm"]
+    }]
+}
