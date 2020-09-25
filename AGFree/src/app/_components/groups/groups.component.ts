@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { User } from "../../_models/User";
 import { Group } from "../../_models/Group";
 import { RemoteService } from "../../_services/remote.service";
+import { AlertService } from "../../_services/alert.service";
+import { AuthenticationService } from "../../_services/authentication.service";
 
 @Component({
     selector: "app-groups",
@@ -10,17 +12,26 @@ import { RemoteService } from "../../_services/remote.service";
 })
 export class GroupsComponent {
     public newGroupMode = false;
+    public newGroupName = "";
     public users: User[] = [];
     public groups: Group[] = [];
     public searchTerm = "";
-    constructor(private remoteService: RemoteService) { }
+    noGroupNameWarning: boolean;
+    noUsersSelectedWarning: boolean;
+    constructor(
+        private remoteService: RemoteService,
+        private alertService: AlertService,
+        private authenticationService: AuthenticationService,
+    ) { }
 
     public ngOnInit(): void {
         this.remoteService.get("groups").subscribe((groups: Group[]) => {
             this.groups = groups;
         });
         this.remoteService.get("users").subscribe((users: User[]) => {
-            this.users = users;
+            this.users = users.filter(
+                (u) => u.id !== this.authenticationService.currentUserValue.id,
+            );
         });
     }
 
@@ -41,5 +52,28 @@ export class GroupsComponent {
         return this.users.filter(
             (u) => u.username.toLowerCase().indexOf(this.searchTerm.trim().toLowerCase()) !== -1,
         );
+    }
+
+    public createGroup(): void {
+        this.noGroupNameWarning = false;
+        this.noUsersSelectedWarning = false;
+        if (!this.newGroupName) {
+            this.noGroupNameWarning = true;
+            return;
+        }
+        if (this.users.filter((u) => u.selected).length === 0) {
+            this.noUsersSelectedWarning = true;
+            return;
+        }
+        this.remoteService.post("groups", {
+            users: this.users.filter((u) => u.selected).map((u) => u.id),
+            name: this.newGroupName,
+        }).subscribe((d) => {
+            if (d?.success) {
+                this.newGroupMode = false;
+                this.ngOnInit();
+                this.alertService.success("Gruppe erfolgreich erstellt!");
+            }
+        });
     }
 }

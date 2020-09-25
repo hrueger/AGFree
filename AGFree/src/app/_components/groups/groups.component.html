@@ -8,9 +8,15 @@
         <div class="col-12 col-md-8 col-lg-10">
             <input class="form-control" id="inputName" placeholder="Gruppenname" [(ngModel)]="newGroupName">
         </div>
+        <div *ngIf="noGroupNameWarning" class="text-danger">
+            {{'errors.fillOutUsername' | translate}}
+        </div>
     </div>
     <div class="mt-4">
         <div *ngIf="!newGroupUsers || newGroupUsers.length == 0" class="alert alert-primary">Keine Personen ausgewählt. Klicke eine Person an, um sie auszuwählen und der Gruppe hinzuzufügen. Du kannst auch das Suchfeld benutzen.</div>
+        <div *ngIf="noUsersSelectedWarning" class="text-danger">
+            Du musst mindestens eine Person auswählen!
+        </div>
         <div class="input-group">
             <input class="form-control" [(ngModel)]="searchTerm" [placeholder]="'general.search' | translate">
             <div class="input-group-append" *ngIf="searchTerm !== ''">
