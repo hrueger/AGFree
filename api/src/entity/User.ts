@@ -5,6 +5,8 @@ import {
     Entity,
     JoinTable,
     ManyToMany,
+    ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     Unique,
     UpdateDateColumn,
@@ -26,6 +28,9 @@ export class User {
     @JoinTable()
     @ManyToMany(() => Group, (group) => group.users)
     public groups: Group[];
+
+    @OneToMany(() => Group, (group) => group.creator)
+    public createdGroups: Group[];
 
     @Column({ select: false })
     public password: string;
@@ -57,4 +62,5 @@ export class User {
 
     public noPreviousPeriods?: boolean;
     public noFollowingPeriods?: boolean;
+    public selected?: boolean;
 }

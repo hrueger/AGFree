@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
-import { isArray } from "util";
 import { Group } from "../entity/Group";
+import { User } from "../entity/User";
 
 class GroupController {
     public static listAll = async (req: Request, res: Response): Promise<void> => {
         const groupRepository = getRepository(Group);
-        const groups = await groupRepository.find();
-        res.send(groups);
+        const groups = await groupRepository.find({ relations: ["creator", "users"] });
+        res.send(groups
+            .filter((g) => g.users.findIndex((u) => u.id == res.locals.jwtPayload.userId) !== -1));
     }
 
     public static getGroup = async (req: Request, res: Response): Promise<void> => {
@@ -37,21 +38,26 @@ class GroupController {
 
     public static newGroup = async (req: Request, res: Response): Promise<void> => {
         const groupRepository = getRepository(Group);
-        let { groups } = req.body;
-        if (!(groups && isArray(groups) && groups.length > 0)) {
+        const userIds = req.body.users;
+        const { name }: { name: string } = req.body;
+        if (!(userIds && Array.isArray(userIds) && userIds.length > 0 && name)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
         }
-        groups = groups.map((t) => ({
-            activated: false,
-            guid: t.guid,
-            name: t.name,
-        }));
 
+        const group = new Group();
+        group.name = name;
         try {
-            await groupRepository.save(groups);
+            group.creator = await getRepository(User).findOneOrFail(res.locals.jwtPayload.userId);
+            group.users = [];
+            for (const userId of userIds) {
+                group.users.push(await getRepository(User).findOneOrFail(userId));
+            }
+            group.users.push(group.creator);
+            await groupRepository.save(group);
         } catch (e) {
-            res.status(500).send({ message: `${i18n.__("errors.error")} ${e.toString()}` });
+            console.log(e);
+            res.status(500).send({ message: `${i18n.__("errors.error")}` });
             return;
         }
 

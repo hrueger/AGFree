@@ -2,6 +2,8 @@ import {
     Column,
     Entity,
     ManyToMany,
+    ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
@@ -16,4 +18,7 @@ export class Group {
 
     @ManyToMany(() => User, (user) => user.groups)
     public users: User[];
+
+    @ManyToOne(() => User, (user) => user.createdGroups)
+    public creator: User;
 }
