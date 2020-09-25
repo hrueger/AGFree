@@ -44,6 +44,8 @@ class UserController {
         try {
             await userRepository.save(user);
         } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log(e);
             res.status(409).send({ message: i18n.__("errors.existingUsername") });
             return;
         }
