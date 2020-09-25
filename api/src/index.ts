@@ -16,7 +16,7 @@ const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../
 
 i18n.configure({
     // tslint:disable-next-line: no-bitwise
-    defaultLocale: config.DEFAULT_LANGUAGE ? config.DEFAULT_LANGUAGE : "en",
+    defaultLocale: config.DEFAULT_LANGUAGE ? config.DEFAULT_LANGUAGE : "de",
     directory: path.join(__dirname, "../assets/i18n"),
     objectNotation: true,
 });
