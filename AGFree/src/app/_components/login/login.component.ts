@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.remoteService.get(`auth/passwordReset/${this.rpf.email.value}`).subscribe((data) => {
             this.loading = false;
-            if (data.status == true) {
+            if (data.success == true) {
                 this.passwordResetSucceeded = true;
             }
         });
@@ -145,7 +145,7 @@ export class LoginComponent implements OnInit {
             password2: this.inpf.password2.value,
         }).subscribe((data) => {
             this.loading = false;
-            if (data.status == true) {
+            if (data.success == true) {
                 this.inputNewPasswordSucceeded = true;
             }
         });

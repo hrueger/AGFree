@@ -1,178 +1,177 @@
-<form [formGroup]="loginForm" class="form-signin mt-4 border border-primary" (ngSubmit)="onSubmit()" *ngIf="!resetPassword && !inputNewPassword && !createUser">
-    <div class="text-center mb-4">
-        <img src="assets/logo/AGFree.png" alt="Logo" height="120">
-        <h1 class="h3 mb-3 font-weight-normal">AGFree</h1>
-    </div>
-    <div class="form-label-group">
-        <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && f.username.errors}" required autofocus id="inputUsername" />
-        <label for="inputUsername">{{'general.username' | translate}}</label>
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">
-                {{'errors.fillOutUsername' | translate}}
-            </div>
-        </div>
-    </div>
-    <div class="form-label-group">
-        <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': submitted && f.password.errors}" id="inputPassword" />
-        <label for="inputPassword">{{'general.password' | translate}}</label>
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">
-                {{'errors.fillOutPassword' | translate}}
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <!--<button [disabled]="loading" type="button" (click)="resetPassword = true; $event.preventDefault" class="btn btn-link">
-            {{'login.lostPassword' | translate}}
-        </button>-->
-        <button [disabled]="loading" class="float-right btn btn-outline-primary">
-            {{'login.login' | translate}}
-            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
-        </button>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" type="button" (click)="createUser = true; $event.preventDefault" class="btn btn-link w-100 mt-2">
-            {{'login.createAccount' | translate}}
-        </button>
-    </div>
-</form>
-
-<form [formGroup]="createUserForm" class="form-signin mt-4 border border-primary" (ngSubmit)="onSubmitCreateUser()" *ngIf="createUser">
-
+<div class="form-signin mt-4 border border-primary">
     <div class="text-center mb-4">
         <img src="assets/logo/AGFree.png" alt="Logo" height="120">
         <h1 class="h3 mb-3 font-weight-normal">AGFree</h1>
     </div>
 
-    <ng-container *ngIf="createUserSucceeded">
-        <div class="alert alert-success">
-            <b>Erfolg!</b><br> Der Benutzer wurde erfolgreich erstellt!
-        </div>
-        <button class="btn btn-outline-primary w-100" (click)="createUser = false; createUserSucceeded = false; $event.preventDefault">Zum Login</button>
-    </ng-container>
 
-    <ng-container *ngIf="!createUserSucceeded">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!resetPassword && !inputNewPassword && !createUser">
         <div class="form-label-group">
-            <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.username.errors}" required autofocus id="inputUsername" />
+            <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': submitted && f.username.errors}" required autofocus id="inputUsername" />
             <label for="inputUsername">{{'general.username' | translate}}</label>
-            <div *ngIf="cuSubmitted && cuf.username.errors" class="invalid-feedback">
-                <div *ngIf="cuf.username.errors.required">
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">
                     {{'errors.fillOutUsername' | translate}}
                 </div>
-                <div *ngIf="cuf.username.errors.pattern">
-                    {{'errors.pattern' | translate}}
-                </div>
             </div>
         </div>
         <div class="form-label-group">
-            <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.email.errors}" required id="inputEmail" />
-            <label for="inputEmail">{{'general.email' | translate}}</label>
-            <div *ngIf="cuSubmitted && cuf.email.errors" class="invalid-feedback">
-                <div *ngIf="cuf.email.errors.required">
-                    {{'errors.fillOutEmail' | translate}}
-                </div>
-                <div *ngIf="cuf.email.errors.email">
-                    {{'errors.email' | translate}}
-                </div>
-            </div>
-        </div>
-        <div class="form-label-group">
-            <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password.errors}" id="inputPassword" />
+            <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': submitted && f.password.errors}" id="inputPassword" />
             <label for="inputPassword">{{'general.password' | translate}}</label>
-            <div *ngIf="cuSubmitted && cuf.password.errors" class="invalid-feedback">
-                <div *ngIf="cuf.password.errors.required">
-                    {{'errors.fillOutPassword' | translate}}
-                </div>
-            </div>
-        </div>
-        <div class="form-label-group">
-            <input [placeholder]="'login.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
-            <label for="inputPassword2">{{'login.repeatPassword' | translate}}</label>
-            <div *ngIf="cuSubmitted && cuf.password2.errors" class="invalid-feedback">
-                <div *ngIf="cuf.password2.errors.required">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">
                     {{'errors.fillOutPassword' | translate}}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <button [disabled]="loading" type="button" (click)="createUser = false; $event.preventDefault" class="btn btn-link">
-            {{'general.back' | translate}}
-        </button>
+            <button [disabled]="loading" type="button" (click)="resetPassword = true; $event.preventDefault" class="btn btn-link">
+                {{'login.lostPassword' | translate}}
+            </button>
             <button [disabled]="loading" class="float-right btn btn-outline-primary">
-            {{'login.createAccount' | translate}}
-            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
-        </button>
+                {{'login.login' | translate}}
+                <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
+            </button>
         </div>
-    </ng-container>
-</form>
+        <div class="form-group">
+            <button [disabled]="loading" type="button" (click)="createUser = true; $event.preventDefault" class="btn btn-link w-100 mt-2">
+                {{'login.createAccount' | translate}}
+            </button>
+        </div>
+    </form>
 
-<!--<form [formGroup]="resetPasswordForm" class="form-signin" (ngSubmit)="onSubmitResetPassword()" *ngIf="resetPassword && !passwordResetSucceeded">
-    <div class="form-group">
-        <label>{{'login.inputEmail' | translate}}:</label>
-        <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{
-                                'is-invalid': rpSubmitted && rpf.email.errors
-                            }" />
-        <div *ngIf="rpSubmitted && rpf.email.errors" class="invalid-feedback">
-            <div *ngIf="rpf.email.errors.required">
-                {{'errors.requiredFieldMissing' | translate}}
+    <form [formGroup]="createUserForm" (ngSubmit)="onSubmitCreateUser()" *ngIf="createUser">
+
+        <ng-container *ngIf="createUserSucceeded">
+            <div class="alert alert-success">
+                <b>Erfolg!</b><br> Der Benutzer wurde erfolgreich erstellt!
+            </div>
+            <button class="btn btn-outline-primary w-100" (click)="createUser = false; createUserSucceeded = false; $event.preventDefault">Zum Login</button>
+        </ng-container>
+
+        <ng-container *ngIf="!createUserSucceeded">
+            <div class="form-label-group">
+                <input [placeholder]="'general.username' | translate" type="text" formControlName="username" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.username.errors}" required autofocus id="inputUsername" />
+                <label for="inputUsername">{{'general.username' | translate}}</label>
+                <div *ngIf="cuSubmitted && cuf.username.errors" class="invalid-feedback">
+                    <div *ngIf="cuf.username.errors.required">
+                        {{'errors.fillOutUsername' | translate}}
+                    </div>
+                    <div *ngIf="cuf.username.errors.pattern">
+                        {{'errors.pattern' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-label-group">
+                <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{'is-invalid': cuSubmitted && cuf.email.errors}" required id="inputEmail" />
+                <label for="inputEmail">{{'general.email' | translate}}</label>
+                <div *ngIf="cuSubmitted && cuf.email.errors" class="invalid-feedback">
+                    <div *ngIf="cuf.email.errors.required">
+                        {{'errors.fillOutEmail' | translate}}
+                    </div>
+                    <div *ngIf="cuf.email.errors.email">
+                        {{'errors.email' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-label-group">
+                <input [placeholder]="'general.password' | translate" type="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password.errors}" id="inputPassword" />
+                <label for="inputPassword">{{'general.password' | translate}}</label>
+                <div *ngIf="cuSubmitted && cuf.password.errors" class="invalid-feedback">
+                    <div *ngIf="cuf.password.errors.required">
+                        {{'errors.fillOutPassword' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-label-group">
+                <input [placeholder]="'login.repeatPassword' | translate" type="password" formControlName="password2" class="form-control" required [ngClass]="{'is-invalid': cuSubmitted && cuf.password2.errors}" id="inputPassword2" />
+                <label for="inputPassword2">{{'login.repeatPassword' | translate}}</label>
+                <div *ngIf="cuSubmitted && cuf.password2.errors" class="invalid-feedback">
+                    <div *ngIf="cuf.password2.errors.required">
+                        {{'errors.fillOutPassword' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" type="button" (click)="createUser = false; $event.preventDefault" class="btn btn-link">
+                    {{'general.back' | translate}}
+                </button>
+                <button [disabled]="loading" class="float-right btn btn-outline-primary">
+                    {{'login.createAccount' | translate}}
+                    <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
+                </button>
+            </div>
+        </ng-container>
+    </form>
+
+    <form [formGroup]="resetPasswordForm" class="form-signin" (ngSubmit)="onSubmitResetPassword()" *ngIf="resetPassword && !passwordResetSucceeded">
+        <div class="form-group">
+            <label>{{'login.inputEmail' | translate}}:</label>
+            <input [placeholder]="'general.email' | translate" type="text" formControlName="email" class="form-control" [ngClass]="{
+                'is-invalid': rpSubmitted && rpf.email.errors
+            }" />
+            <div *ngIf="rpSubmitted && rpf.email.errors" class="invalid-feedback">
+                <div *ngIf="rpf.email.errors.required">
+                    {{'errors.requiredFieldMissing' | translate}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" type="button" (click)="resetPassword = false; $event.preventDefault" class="btn btn-link">
+        <div class="form-group">
+            <button [disabled]="loading" type="button" (click)="resetPassword = false; $event.preventDefault" class="btn btn-link">
+                {{'general.back' | translate}}
+            </button>
+            <button [disabled]="loading" class="btn btn-outline-primary float-right">
+                {{'general.reset' | translate}}
+                <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
+            </button>
+        </div>
+    </form>
+    <div *ngIf="resetPassword && passwordResetSucceeded" class="form-signin">
+        <div class="alert alert-success">
+            Die Email wurde erfolgreich versandt. Bitte schauen Sie nun in Ihrem Posteingang nach und klicken Sie dann auf den gesendeten Link.
+        </div>
+        <button [disabled]="loading" type="button" (click)="resetPassword = false; passwordResetSucceeded = false; $event.preventDefault" class="btn btn-link">
             {{'general.back' | translate}}
         </button>
-        <button [disabled]="loading" class="btn btn-outline-primary float-right">
-            {{'general.reset' | translate}}
-            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
-        </button>
     </div>
-</form>
-<div *ngIf="resetPassword && passwordResetSucceeded" class="form-signin">
-    <div class="alert alert-success">
-        Die Email wurde erfolgreich versandt. Bitte schauen Sie nun in Ihrem Posteingang nach und klicken Sie dann auf den gesendeten Link.
-    </div>
-    <button [disabled]="loading" type="button" (click)="resetPassword = false; passwordResetSucceeded = false; $event.preventDefault" class="btn btn-link">
-        {{'general.back' | translate}}
-    </button>
-</div>-->
 
 
-<!--<form [formGroup]="inputNewPasswordForm" (ngSubmit)="onSubmitNewPassword()" *ngIf="inputNewPassword && !inputNewPasswordSucceeded" class="form-signin">
-    <div class="form-group">
-        <label>{{'login.inputNewPassword' | translate}}:</label>
-        <input [placeholder]="'general.password' | translate" type="password" formControlName="password1" class="form-control" [ngClass]="{'is-invalid': inpSubmitted && inp.password1.errors}" />
-        <div *ngIf="inpSubmitted && inp.password1.errors" class="invalid-feedback">
-            <div *ngIf="rpf.password2.errors.required">
-                {{'errors.requiredFieldMissing' | translate}}
+    <form [formGroup]="inputNewPasswordForm" (ngSubmit)="onSubmitNewPassword()" *ngIf="inputNewPassword && !inputNewPasswordSucceeded" class="form-signin">
+        <div class="form-group">
+            <label>{{'login.inputNewPassword' | translate}}:</label>
+            <input [placeholder]="'general.password' | translate" type="password" formControlName="password1" class="form-control" [ngClass]="{'is-invalid': inpSubmitted && inp.password1.errors}" />
+            <div *ngIf="inpSubmitted && inp.password1.errors" class="invalid-feedback">
+                <div *ngIf="rpf.password2.errors.required">
+                    {{'errors.requiredFieldMissing' | translate}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>{{'login.repeatNewPassword' | translate}}:</label>
-        <input [placeholder]="'general.password' | translate" type="password" formControlName="password2" class="form-control" [ngClass]="{'is-invalid': inpSubmitted && inp.password2.errors}" />
-        <div *ngIf="inpSubmitted && inp.password2.errors" class="invalid-feedback">
-            <div *ngIf="rpf.password2.errors.required">
-                {{'errors.requiredFieldMissing' | translate}}
+        <div class="form-group">
+            <label>{{'login.repeatNewPassword' | translate}}:</label>
+            <input [placeholder]="'general.password' | translate" type="password" formControlName="password2" class="form-control" [ngClass]="{'is-invalid': inpSubmitted && inp.password2.errors}" />
+            <div *ngIf="inpSubmitted && inp.password2.errors" class="invalid-feedback">
+                <div *ngIf="rpf.password2.errors.required">
+                    {{'errors.requiredFieldMissing' | translate}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" type="button" (click)="inputNewPassword = false; $event.preventDefault" class="btn btn-link">
-            {{'general.back' | translate}}
-        </button>
-        <button [disabled]="loading" class="btn btn-outline-primary float-right">
-            {{'general.save' | translate}}
-            <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
-        </button>
-    </div>
-</form>-->
+        <div class="form-group">
+            <button [disabled]="loading" type="button" (click)="inputNewPassword = false; $event.preventDefault" class="btn btn-link">
+                {{'general.back' | translate}}
+            </button>
+            <button [disabled]="loading" class="btn btn-outline-primary float-right">
+                {{'general.save' | translate}}
+                <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
+            </button>
+        </div>
+    </form>
 
-<!--<div *ngIf="inputNewPassword && inputNewPasswordSucceeded" class="form-signin">
-    <div class="alert alert-success">
-        {{'login.passwordResetSuccessful' | translate}}
+    <div *ngIf="inputNewPassword && inputNewPasswordSucceeded" class="form-signin">
+        <div class="alert alert-success">
+            {{'login.passwordResetSuccessful' | translate}}
+        </div>
+        <button [disabled]="loading" type="button" (click)="inputNewPassword = false; inputNewPasswordSucceeded = false; $event.preventDefault" class="btn btn-link">
+            {{'login.toLogin' | translate}}
+        </button>
     </div>
-    <button [disabled]="loading" type="button" (click)="inputNewPassword = false; inputNewPasswordSucceeded = false; $event.preventDefault" class="btn btn-link">
-        {{'login.toLogin' | translate}}
-    </button>
-</div>-->
+</div>

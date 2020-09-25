@@ -24,7 +24,8 @@
         "people": "Personen",
         "groups": "Gruppen",
         "mySchedule": "Mein Stundenplan",
-        "search": "Suchen"
+        "search": "Suchen",
+        "reset": "Zurücksetzen"
     },
     "login": {
         "inputEmail": "Bitte geben Sie Ihre Email-Adresse ein",
