@@ -6,6 +6,9 @@
         "requiredFieldsMissing": "Bitte füllen Sie alle Pflichtfelder aus!"
     },
     "general": {
+        "warning": "Warnung",
+        "info": "Info",
+        "success": "Erfolg",
         "back": "Zurück",
         "delete": "Löschen",
         "email": "Email",

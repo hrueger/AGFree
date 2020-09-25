@@ -14,7 +14,7 @@ export class AlertService {
   }
 
   public async success(message: string): Promise<void> {
-      this.toastr.success(message, `${await this.fts.t("general.colors.success")}!`, { timeOut: this.timeouts.success });
+      this.toastr.success(message, `${await this.fts.t("general.success")}!`, { timeOut: this.timeouts.success });
   }
 
   public async error(message: string): Promise<void> {
@@ -22,11 +22,11 @@ export class AlertService {
   }
 
   public async info(message: string): Promise<void> {
-      this.toastr.info(message, `${await this.fts.t("general.colors.info")}:`, { timeOut: this.timeouts.info });
+      this.toastr.info(message, `${await this.fts.t("general.info")}:`, { timeOut: this.timeouts.info });
   }
 
   public async warning(message: string): Promise<void> {
-      this.toastr.warning(message, `${await this.fts.t("general.colors.warning")}!`, { timeOut: this.timeouts.warning });
+      this.toastr.warning(message, `${await this.fts.t("general.warning")}!`, { timeOut: this.timeouts.warning });
   }
 
   public snackbar(message: string): void {
