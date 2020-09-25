@@ -19,9 +19,9 @@ export class GroupsComponent {
     noGroupNameWarning: boolean;
     noUsersSelectedWarning: boolean;
     constructor(
+        public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
         private alertService: AlertService,
-        private authenticationService: AuthenticationService,
     ) { }
 
     public ngOnInit(): void {
@@ -79,5 +79,17 @@ export class GroupsComponent {
 
     public getUsersList(group: Group): string {
         return group.users.map((u) => u.username).join(", ");
+    }
+
+    public deleteGroup(group: Group): void {
+        // eslint-disable-next-line
+        if (confirm(`Willst Du die Gruppe "${group.name}" wirklich löschen? Dies kann nicht rückgängig gemacht werden!`)) {
+            this.remoteService.delete(`groups/${group.id}`).subscribe((d) => {
+                if (d?.success) {
+                    this.alertService.success("Die Gruppe wurde gelöscht.");
+                    this.ngOnInit();
+                }
+            });
+        }
     }
 }
