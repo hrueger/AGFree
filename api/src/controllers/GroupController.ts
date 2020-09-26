@@ -12,12 +12,6 @@ class GroupController {
             .filter((g) => g.users.findIndex((u) => u.id == res.locals.jwtPayload.userId) !== -1));
     }
 
-    public static getGroup = async (req: Request, res: Response): Promise<void> => {
-        const groupRepository = getRepository(Group);
-        const groups = await groupRepository.findOne(req.params.id);
-        res.send(groups);
-    }
-
     public static newGroup = async (req: Request, res: Response): Promise<void> => {
         const groupRepository = getRepository(Group);
         const userIds = req.body.users;
