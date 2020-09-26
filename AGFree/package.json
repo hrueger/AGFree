@@ -30,6 +30,7 @@
         "@ngx-translate/http-loader": "^6.0.0",
         "bootstrap": "^4.5.2",
         "core-js": "^3.6.5",
+        "nativescript-feedback": "^2.0.0",
         "ngx-toastr": "^13.0.0",
         "reflect-metadata": "~0.1.13",
         "rxjs": "^6.6.3",
