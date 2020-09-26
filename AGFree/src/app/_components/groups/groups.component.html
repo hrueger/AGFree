@@ -62,6 +62,10 @@
 <div *ngIf="currentGroup">
     <button class="btn btn-outline-secondary mb-3" (click)="currentGroup = undefined">{{"general.back" | translate}}</button>
 
+    <div class="alert alert-primary">
+        Das ist der gemeinsame Stundenplan aller Gruppenmitglieder. Je nachdem, wie eine Stunde eingefärbt ist, kannst Du erkennen, wie viele Mitglieder dort eine Freistunde haben. Klicke eine Zelle an, um die genauen Stundenpläne der Mitglieder anzuschauen.
+    </div>
+
     <div>
         <app-schedule [group]="currentGroup"></app-schedule>
     </div>
