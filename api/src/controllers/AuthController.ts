@@ -106,19 +106,18 @@ class AuthController {
                 .addSelect("user.passwordResetToken")
                 .where("user.passwordResetToken = :passwordResetToken", { passwordResetToken: req.params.resetToken })
                 .getOne();
-        } catch (id) {
+            if (password1 != password2) {
+                res.status(401).send({ message: i18n.__("errors.passwordsDontMatch") });
+                return;
+            }
+            user.password = password2;
+            user.passwordResetToken = "";
+            user.hashPassword();
+            userRepository.save(user);
+            res.send({ success: true });
+        } catch {
             res.status(404).send({ message: i18n.__("errors.userNotFoundWrongLink") });
         }
-        if (password1 != password2) {
-            res.status(401).send({ message: i18n.__("errors.passwordsDontMatch") });
-            return;
-        }
-        user.password = password2;
-        user.passwordResetToken = "";
-        user.hashPassword();
-        userRepository.save(user);
-
-        res.send({ success: true });
     }
 }
 export default AuthController;
