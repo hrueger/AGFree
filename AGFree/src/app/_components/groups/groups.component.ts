@@ -16,8 +16,9 @@ export class GroupsComponent {
     public users: User[] = [];
     public groups: Group[];
     public searchTerm = "";
-    noGroupNameWarning: boolean;
-    noUsersSelectedWarning: boolean;
+    public noGroupNameWarning: boolean;
+    public noUsersSelectedWarning: boolean;
+    public currentGroup: Group;
     constructor(
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
@@ -36,13 +37,17 @@ export class GroupsComponent {
         });
     }
 
+    public showGroup(group: Group): void {
+        this.currentGroup = group;
+    }
+
     public toggleUser(user: User): void {
         this.users = this.users.map((u) => {
             if (u.id == user.id) {
                 u.selected = !u.selected;
             }
             return u;
-        }).sort((u) => (u.selected ? -1 : 1));
+        }).sort((a, b) => (a.selected == b.selected ? 0 : a.selected ? -1 : 1));
         this.searchTerm = "";
     }
 
@@ -82,7 +87,9 @@ export class GroupsComponent {
         return group.users.map((u) => u.username).join(", ");
     }
 
-    public deleteGroup(group: Group): void {
+    public deleteGroup(event: Event, group: Group): void {
+        event.preventDefault();
+        event.stopPropagation();
         // eslint-disable-next-line
         if (confirm(`Willst Du die Gruppe "${group.name}" wirklich löschen? Dies kann nicht rückgängig gemacht werden!`)) {
             this.remoteService.delete(`groups/${group.id}`).subscribe((d) => {

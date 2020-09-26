@@ -1,8 +1,8 @@
-<div class="text-center" *ngIf="!userdata">
+<div class="text-center" *ngIf="!userdata && !group">
     <div class="spinner-border text-primary"></div>
 </div>
 
-<div *ngIf="userdata">
+<div *ngIf="userdata || group">
     <div class="mb-5 text-center" *ngIf="edit">
         <ng-container *ngIf="saving">
             <div class="spinner-border spinner-border-sm text-success mr-2"></div>
@@ -25,7 +25,7 @@
         <tbody>
             <tr *ngFor="let row of getRows()" [class.isBreak]="isBreak(row)" [class.isLaunchBreak]="isLaunchBreak(row)">
                 <td>{{small ? row[0].nameShort : row[0].name}}</td>
-                <td *ngFor="let period of row" [class]="isFree(period) ? 'free' : 'lesson'" (click)="select(period)" [class.selected]="selectedDay == period.dayId && selectedPeriod == period.id"></td>
+                <td *ngFor="let period of row" [style.background-color]="group ? getLessonColor(period) : null" [class]="group ? '' : isFree(period) ? 'free' : 'lesson'" (click)="select(period)" [class.selected]="selectedDay == period.dayId && selectedPeriod == period.id"></td>
             </tr>
         </tbody>
     </table>

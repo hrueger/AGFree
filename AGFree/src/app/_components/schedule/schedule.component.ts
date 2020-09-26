@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { Group } from "../../_models/Group";
 import { User } from "../../_models/User";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
@@ -50,6 +51,7 @@ export class ScheduleComponent {
         return this._userdata;
     }
     @Input() public small = false;
+    @Input() public group: Group;
     public saving = false;
     @Input() public selectedDay: number;
     @Input() public selectedPeriod: number;
@@ -156,7 +158,9 @@ export class ScheduleComponent {
     }
 
     public ngOnInit(): void {
-        if (this.edit || !this.userdata) {
+        if (this.group) {
+            this.users = this.group.users;
+        } else if (this.edit || !this.userdata) {
             this.remoteService.get("/users/schedule").subscribe((d: Userdata) => {
                 this._userdata = d && Array.isArray(d) ? d : [];
             });
@@ -194,10 +198,24 @@ export class ScheduleComponent {
         return row[0].name == "Mittagspause";
     }
 
-    public isFree(period: Period): boolean {
-        return this.userdata.filter(
+    public isFree(period: Period, userdata?: Userdata): boolean {
+        return (userdata || this.userdata).filter(
             (u) => u.periodId == period.id && u.dayId == period.dayId,
         ).length == 0;
+    }
+
+    public getLessonColor(period: Period): string {
+        if (!this.group) {
+            return "#ffffff";
+        }
+        let lessonCount = 0;
+        for (const user of this.users) {
+            if (!this.isFree(period, user.data)) {
+                lessonCount++;
+            }
+        }
+        // eslint-disable-next-line no-use-before-define
+        return pickHex("#fcbc53", "#55efc4", lessonCount / this.users.length);
     }
 
     public getUserdata(u: User): Userdata {
@@ -209,31 +227,34 @@ export class ScheduleComponent {
             if (!this.small) {
                 this.selectedDay = period.dayId;
                 this.selectedPeriod = period.id;
-                this.usersToShow = this.users.filter((u) => this.getUserdata(u).findIndex(
-                    (d) => d.dayId === this.selectedDay && d.periodId === this.selectedPeriod,
-                ) === -1 && u.id !== this.myId).map((u) => {
-                    u.noPreviousPeriods = false;
-                    u.noFollowingPeriods = false;
-                    if (this.selectedPeriod === this.periods[0].id) {
+                this.usersToShow = this.group
+                    ? this.users
+                    : this.users.filter((u) => this.getUserdata(u).findIndex(
+                        (d) => d.dayId === this.selectedDay && d.periodId === this.selectedPeriod,
+                    ) === -1 && u.id !== this.myId).map((u) => {
+                        u.noPreviousPeriods = false;
+                        u.noFollowingPeriods = false;
+                        if (this.selectedPeriod === this.periods[0].id) {
                         // the first period is a free period
-                        u.noPreviousPeriods = true;
-                    } else if (this.selectedPeriod === this.periods[this.periods.length - 1].id) {
+                            u.noPreviousPeriods = true;
+                        } else if (this.selectedPeriod === this.periods[this.periods.length - 1]
+                            .id) {
                         // the last period is a free period
-                        u.noFollowingPeriods = true;
-                    } else {
+                            u.noFollowingPeriods = true;
+                        } else {
                         // eslint-disable-next-line no-lonely-if
-                        if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
+                            if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
                                 && d.periodId < this.selectedPeriod).length === 0) {
                             // there are no lessons before this period
-                            u.noPreviousPeriods = true;
-                        } else if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
+                                u.noPreviousPeriods = true;
+                            } else if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
                                 && d.periodId > this.selectedPeriod).length === 0) {
                             // there are no lessons after this period
-                            u.noFollowingPeriods = true;
+                                u.noFollowingPeriods = true;
+                            }
                         }
-                    }
-                    return u;
-                });
+                        return u;
+                    });
             }
             return;
         }
@@ -258,4 +279,32 @@ export class ScheduleComponent {
             this.saving = false;
         });
     }
+}
+
+// from https://stackoverflow.com/a/5624139/13485777
+function rgbToHex(r, g, b) {
+    function componentToHex(c) {
+        const hex = c.toString(16);
+        return hex.length == 1 ? `0${hex}` : hex;
+    }
+    return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+}
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16),
+    ] : null;
+}
+
+// from https://stackoverflow.com/a/30144587/13485777
+function pickHex(color1: string, color2: string, weight: number): string {
+    const c1 = hexToRgb(color1);
+    const c2 = hexToRgb(color2);
+    const w1 = weight;
+    const w2 = 1 - w1;
+    return rgbToHex(Math.round(c1[0] * w1 + c2[0] * w2),
+        Math.round(c1[1] * w1 + c2[1] * w2),
+        Math.round(c1[2] * w1 + c2[2] * w2));
 }
