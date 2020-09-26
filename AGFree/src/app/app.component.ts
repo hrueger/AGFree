@@ -33,17 +33,4 @@ export class AppComponent {
         this.authenticationService.logout();
         this.router.navigate(["/login"]);
     }
-    public ngOnInit(): void {
-        this.translateService.setDefaultLang(
-            localStorage.getItem("language")
-                ? localStorage.getItem("language")
-                : this.translateService.getBrowserLang(),
-        );
-        this.translateService.onLangChange.subscribe(() => {
-            this.showEverything = false;
-            setTimeout(() => {
-                this.showEverything = true;
-            }, 0);
-        });
-    }
 }
