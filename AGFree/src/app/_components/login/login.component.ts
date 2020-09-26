@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
+import Swal from "sweetalert2";
 import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
@@ -159,16 +160,38 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        this.loading = true;
-        this.remoteService.post("users", {
-            password1: this.cuf.password.value,
-            password2: this.cuf.password2.value,
-            username: this.cuf.username.value,
-            email: this.cuf.email.value,
-        }).subscribe((data) => {
-            this.loading = false;
-            if (data.success == true) {
-                this.createUserSucceeded = true;
+        Swal.fire({
+            title: "Datenverarbeitung",
+            icon: "info",
+            html: "Dies ist ein privater Service von Hannes Rüger. Hiermit willigen Sie ein, dass Ihre Daten verarbeitet und gespeichert werden. Sie können diese Einwilligung jederzeit schriftlich durch eine formlose Nachricht an <a href='mailto:ruegerhannes@gmail.com'>ruegerhannes@gmail.com</a> widerrufen, dann werden alle Ihre Daten gelöscht.",
+            showConfirmButton: true,
+            confirmButtonText: "Einverstanden",
+            focusConfirm: false,
+        }).then((r) => {
+            if (r.isConfirmed) {
+                Swal.fire({
+                    title: "Datenschutz",
+                    icon: "info",
+                    html: "Ich akzeptiere die <a target=\"_blank\" href=\"/privacy-policy\">Datenschutzvereinbarung</a>.",
+                    showConfirmButton: true,
+                    confirmButtonText: "Einverstanden",
+                    focusConfirm: false,
+                }).then((s) => {
+                    if (s.isConfirmed) {
+                        this.loading = true;
+                        this.remoteService.post("users", {
+                            password1: this.cuf.password.value,
+                            password2: this.cuf.password2.value,
+                            username: this.cuf.username.value,
+                            email: this.cuf.email.value,
+                        }).subscribe((data) => {
+                            this.loading = false;
+                            if (data.success == true) {
+                                this.createUserSucceeded = true;
+                            }
+                        });
+                    }
+                });
             }
         });
     }
