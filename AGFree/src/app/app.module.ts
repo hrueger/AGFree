@@ -5,12 +5,11 @@ import {
 
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from "@angular/common/http";
 import localeDe from "@angular/common/locales/de";
-import { LOCALE_ID, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterModule } from "@angular/router";
 import { NgbModule, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
@@ -24,7 +23,7 @@ import { ErrorInterceptor } from "./_helpers/error.interceptor";
 import { JwtInterceptor } from "./_helpers/jwt.interceptor";
 import { RenewJwtTokenInterceptor } from "./_helpers/renewJwtToken.interceptor";
 import { AppComponent } from "./app.component";
-import { routes } from "./app.routes";
+import { AppRoutingModule } from "./app-routing.module";
 import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { ScheduleComponent } from "./_components/schedule/schedule.component";
 import { PrivacyPolicyComponent } from "./_components/privacy-policy/privacy-policy.component";
@@ -44,7 +43,7 @@ registerLocaleData(localeDe);
         PrivacyPolicyComponent,
     ],
     imports: [
-        RouterModule.forRoot(routes),
+        AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
         NgbModule,

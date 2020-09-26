@@ -3,10 +3,12 @@
     "compilerOptions": {
         "module": "esnext",
         "outDir": "./dist/out-tsc",
+        "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "skipLibCheck": true,
         "target": "es5",
         "typeRoots": [
             "node_modules/@types"
@@ -14,27 +16,20 @@
         "lib": [
             "es2017",
             "dom",
-            "es6",
-            "es2015.iterable"
+            "es6"
         ],
         "baseUrl": ".",
         "paths": {
-            "~/*": [
-                "src/*"
-            ],
-            "*": [
-                "./node_modules/tns-core-modules/*",
-                "./node_modules/*"
+            "@src/*": [
+                "src/*.android.ts",
+                "src/*.ios.ts",
+                "src/*.tns.ts",
+                "src/*.web.ts",
+                "src/*.ts"
             ]
         }
     },
-    "exclude": [
-        "**/*.tns.ts",
-        "**/*.android.ts",
-        "**/*.ios.ts",
-        "**/*.spec.ts"
-    ],
-    "angularCompilerOptions": {
-        "enableIvy": false
-    }
+    "files": [
+        "./src/main.ts",
+    ]
 }
