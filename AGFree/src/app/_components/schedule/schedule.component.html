@@ -18,7 +18,7 @@
     <table class="table table-hover" [class.editMode]="edit" [class.small]="small">
         <thead>
             <tr>
-                <th>{{small ? "" : "Mein Stundenplan"}}</th>
+                <th>{{small ? "" : group && group.name ? group.name : "Mein Stundenplan"}}</th>
                 <th *ngFor="let day of days">{{small ? day.nameShort : day.name}}</th>
             </tr>
         </thead>
