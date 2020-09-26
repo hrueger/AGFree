@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { getApiUrl } from "../_helpers/utils";
 import { User } from "../_models/User";
+import { StorageService } from "./storage.service";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -16,9 +17,9 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
     private currentUserSubject: BehaviorSubject<User>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private storageService: StorageService) {
         this.currentUserSubject = new BehaviorSubject<User>(
-            JSON.parse(sessionStorage.getItem("currentUser")),
+            JSON.parse(this.storageService.getTemp("currentUser") || "null"),
         );
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -43,7 +44,7 @@ export class AuthenticationService {
                     if (user && user.token) {
                         // store user details and jwt token in local storage to
                         // keep user logged in between page refreshes
-                        sessionStorage.setItem(
+                        this.storageService.setTemp(
                             "currentUser",
                             JSON.stringify(user),
                         );
@@ -57,12 +58,12 @@ export class AuthenticationService {
     }
 
     public saveJwtToken(user: Record<string, any>): void {
-        sessionStorage.setItem("jwt_token", user.token);
+        this.storageService.setTemp("jwt_token", user.token);
     }
 
     public logout(): void {
         // remove user from local storage to log user out
-        sessionStorage.removeItem("currentUser");
+        this.storageService.removeTemp("currentUser");
         this.currentUserSubject.next(null);
     }
 }

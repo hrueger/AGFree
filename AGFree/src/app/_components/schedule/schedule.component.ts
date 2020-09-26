@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { StorageService } from "../../_services/storage.service";
 import { Group } from "../../_models/Group";
 import { User } from "../../_models/User";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -35,7 +36,7 @@ export class ScheduleComponent {
     public users: User[] = [];
     public usersToShow: User[] = [];
     public myId: number;
-    public showSchedules = localStorage.getItem("showSchedules") == "true";
+    public showSchedules = false;
     @Input() public set edit(m: boolean) {
         this.selectedPeriod = undefined;
         this.selectedDay = undefined;
@@ -153,7 +154,9 @@ export class ScheduleComponent {
     constructor(
         private remoteService: RemoteService,
         private authenticationService: AuthenticationService,
+        private storageService: StorageService,
     ) {
+        this.showSchedules = this.storageService.getPersistent("showSchedules") == "true";
         this.myId = this.authenticationService.currentUserValue.id;
     }
 
@@ -187,7 +190,7 @@ export class ScheduleComponent {
 
     public toggleSchedules(): void {
         this.showSchedules = !this.showSchedules;
-        localStorage.setItem("showSchedules", this.showSchedules ? "true" : "false");
+        this.storageService.setPersistent("showSchedules", this.showSchedules ? "true" : "false");
     }
 
     public isBreak(row: Row): boolean {
