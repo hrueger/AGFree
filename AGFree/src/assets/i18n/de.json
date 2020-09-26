@@ -3,7 +3,10 @@
         "fillOutPassword": "Das Passwordfeld muss ausgefüllt werden!",
         "fillOutUsername": "Das Benutzernamefeld muss ausgefüllt werden!",
         "requiredFieldMissing": "Dieses Feld muss ausgefüllt werden!",
-        "requiredFieldsMissing": "Bitte füllen Sie alle Pflichtfelder aus!"
+        "requiredFieldsMissing": "Bitte füllen Sie alle Pflichtfelder aus!",
+        "pattern": "Bitte gib einen gültigen Namen im Format \"Vorname Nachname\" ein!",
+        "email": "Bitte gib eine gültige Email-Adresse ein!",
+        "fillOutEmail": "Das Emailfeld muss ausgefüllt werden!"
     },
     "general": {
         "warning": "Warnung",
