@@ -11,9 +11,9 @@ export class AppComponentCommon {
     public isShare: boolean;
     public showEverything = true;
     constructor(
+        public authenticationService: AuthenticationService,
         public router: Router,
         public routerExtensions: RouterExtensions,
-        private authenticationService: AuthenticationService,
     ) {
         this.authenticationService.currentUser.subscribe(
             (x) => { this.currentUser = x; },

@@ -31,6 +31,12 @@ export class AppComponent extends AppComponentCommon {
             });
     }
 
+    public logout(): void {
+        this.closeSidedrawer();
+        this.authenticationService.logout();
+        this.router.navigate(["/login"]);
+    }
+
     get sideDrawerTransition(): DrawerTransitionBase {
         return this._sideDrawerTransition;
     }
@@ -46,6 +52,10 @@ export class AppComponent extends AppComponentCommon {
             },
         });
 
+        this.closeSidedrawer();
+    }
+
+    private closeSidedrawer() {
         const sideDrawer = Application.getRootView() as RadSideDrawer;
         sideDrawer.closeDrawer();
     }

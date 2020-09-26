@@ -25,6 +25,13 @@
 
                 <StackLayout class="hr"></StackLayout>
 
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" (tap)="logout()">
+                    <Label col="0" text="&#xf2f5;" class="nt-icon fas"></Label>
+                    <Label col="1" text="Abmelden" class="p-r-10"></Label>
+                </GridLayout>
+
+                <StackLayout class="hr"></StackLayout>
+
                 <GridLayout columns="auto, *" class="nt-drawer__list-item" (tap)="goToGitHub()">
                     <Label col="0" text="&#xf09b;" class="nt-icon fab"></Label>
                     <Label col="1" text="Projekt auf GitHub" class="p-r-10"></Label>
