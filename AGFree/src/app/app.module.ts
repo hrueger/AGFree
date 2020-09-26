@@ -5,7 +5,7 @@ import {
 
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from "@angular/common/http";
 import localeDe from "@angular/common/locales/de";
-import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from "@angular/core";
+import { LOCALE_ID, NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 import { BrowserModule } from "@angular/platform-browser";
