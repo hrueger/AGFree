@@ -21,7 +21,6 @@
         "password": "Passwort",
         "save": "Speichern",
         "savedSuccessfully": "Erfolgreich gespeichert!",
-        "unsavedDataWarning": "Möchten Sie diese Seite wirklich verlassen? Dann gehen Ihre Änderungen verloren. Möchten Sie Ihre Arbeit vorher speichern, klicken Sie auf \"Abbrechen\".",
         "update": "Aktualisieren",
         "updated": "Aktualisiert",
         "username": "Benutzername",
@@ -43,7 +42,7 @@
         "createAccount": "Account erstellen",
         "repeatPassword": "Password wiederholen",
         "domain": "Domain",
-        "domainInfo": "Gib hier die Domain im Format \"https://agfree.example.com\"ein."
+        "domainInfo": "Gib hier die Domain im Format \"https://agfree.example.com\" ein."
     },
     "users": {
         "changeOwnProfile": "Eigene Daten ändern",
