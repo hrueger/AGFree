@@ -6,7 +6,8 @@
         "requiredFieldsMissing": "Bitte füllen Sie alle Pflichtfelder aus!",
         "pattern": "Bitte gib einen gültigen Namen im Format \"Vorname Nachname\" ein!",
         "email": "Bitte gib eine gültige Email-Adresse ein!",
-        "fillOutEmail": "Das Emailfeld muss ausgefüllt werden!"
+        "fillOutEmail": "Das Emailfeld muss ausgefüllt werden!",
+        "fillOutDomain": "Das Domainfeld muss ausgefüllt werden!"
     },
     "general": {
         "warning": "Warnung",
@@ -28,7 +29,8 @@
         "groups": "Gruppen",
         "mySchedule": "Mein Stundenplan",
         "search": "Suchen",
-        "reset": "Zurücksetzen"
+        "reset": "Zurücksetzen",
+        "next": "Weiter"
     },
     "login": {
         "inputEmail": "Bitte geben Sie Ihre Email-Adresse ein",
@@ -39,7 +41,9 @@
         "repeatNewPassword": "Neues Password wiederholen",
         "toLogin": "Zum Login",
         "createAccount": "Account erstellen",
-        "repeatPassword": "Password wiederholen"
+        "repeatPassword": "Password wiederholen",
+        "domain": "Domain",
+        "domainInfo": "Gib hier die Domain im Format \"https://agfree.example.com\"ein."
     },
     "users": {
         "changeOwnProfile": "Eigene Daten ändern",
