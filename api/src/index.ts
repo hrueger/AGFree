@@ -62,15 +62,15 @@ createConnection({
         // Set all routes from routes folder
         app.use("/api", routes);
 
-        // Set routes for static built frontend
-        app.use("/", express.static("/app/dist/frontend"));
-        app.use("*", express.static("/app/dist/frontend/index.html"));
-
         app.use("/config.json", (req, res) => {
             res.send({
                 agfree: "1.0.0",
             });
         });
+
+        // Set routes for static built frontend
+        app.use("/", express.static("/app/dist/frontend"));
+        app.use("*", express.static("/app/dist/frontend/index.html"));
 
         let port = 80;
         if (process.env.NODE_ENV?.trim() == "development") {
