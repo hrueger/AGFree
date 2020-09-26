@@ -1,5 +1,36 @@
+@import "../../variables.scss";
 .logo {
     margin-top: -25px;
     margin-bottom: -30px;
     margin-left: -10px;
+}
+
+nav.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.nav-link {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    border-bottom: 4px solid transparent;
+    &.active {
+        border-bottom: 4px solid $primary;
+    }
+}
+
+.show {
+    .nav-link {
+        padding-bottom: .5rem;
+        padding-top: .5rem;
+        border-left: 4px solid transparent;
+        border-bottom: none;
+        padding-left: 1rem;
+        &.active {
+            border-left: 4px solid $primary;
+        }
+    }
+    .nav-item:last-of-type {
+        margin-bottom: 1rem;
+    }
 }
