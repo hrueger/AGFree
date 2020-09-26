@@ -4,6 +4,7 @@ import { LoginComponent } from "./_components/login/login.component";
 import { UsersComponent } from "./_components/users/users.component";
 import { AuthGuard } from "./_guards/auth.guard";
 import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
+import { PrivacyPolicyComponent } from "./_components/privacy-policy/privacy-policy.component";
 
 export const routes: Routes = [
     {
@@ -21,6 +22,7 @@ export const routes: Routes = [
         component: GroupsComponent,
         path: "groups",
     },
+    { path: "privacy-policy", component: PrivacyPolicyComponent },
     /* Authentication paths */
     { path: "login", component: LoginComponent },
     { path: "resetPassword/:resetPasswordToken", component: LoginComponent },

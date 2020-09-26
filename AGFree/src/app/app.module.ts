@@ -27,6 +27,7 @@ import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
 import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { ScheduleComponent } from "./_components/schedule/schedule.component";
+import { PrivacyPolicyComponent } from "./_components/privacy-policy/privacy-policy.component";
 
 registerLocaleData(localeDe);
 
@@ -40,6 +41,7 @@ registerLocaleData(localeDe);
         GroupsComponent,
         MyScheduleComponent,
         ScheduleComponent,
+        PrivacyPolicyComponent,
     ],
     imports: [
         RouterModule.forRoot(routes),
