@@ -11,6 +11,7 @@ import {
 } from "@nativescript/angular";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
+import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { GroupsComponent } from "./_components/groups/groups.component";
@@ -41,6 +42,7 @@ function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
     ],
     imports: [
         NativeScriptModule,
+        NativeScriptUISideDrawerModule,
         AppRoutingModule,
         NativeScriptFormsModule,
         ReactiveFormsModule,

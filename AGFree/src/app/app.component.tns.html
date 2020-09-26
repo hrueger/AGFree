@@ -1,3 +1,40 @@
-<GridLayout>
-    <page-router-outlet></page-router-outlet>
-</GridLayout>
+<RadSideDrawer [drawerTransition]="sideDrawerTransition">
+    <GridLayout tkDrawerContent rows="auto, *, auto" class="nt-drawer nt-drawer-left">
+        <StackLayout row="0" class="nt-drawer__header">
+            <Image class="nt-drawer__header-image" src="~/assets/logo/AGFree.png"></Image>
+            <Label color="#ffffff" text="AGView"></Label>
+            <Label class="footnote" [text]="'Version ' + version"></Label>
+        </StackLayout>
+
+        <ScrollView row="1">
+            <StackLayout class="nt-drawer-content">
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.selected]="isComponentSelected('/schedule')" (tap)="onNavItemTap('/schedule')">
+                    <Label col="0" text="&#xf015;" class="nt-icon fas"></Label>
+                    <Label col="1" [text]="'general.mySchedule' | translate" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.selected]="isComponentSelected('/groups')" (tap)="onNavItemTap('/groups')">
+                    <Label col="0" text="&#xf015;" class="nt-icon fas"></Label>
+                    <Label col="1" [text]="'general.groups' | translate" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.selected]="isComponentSelected('/users')" (tap)="onNavItemTap('/users')">
+                    <Label col="0" text="&#xf015;" class="nt-icon fas"></Label>
+                    <Label col="1" [text]="'general.people' | translate" class="p-r-10"></Label>
+                </GridLayout>
+
+                <StackLayout class="hr"></StackLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" (tap)="goToGitHub()">
+                    <Label col="0" text="&#xf09b;" class="nt-icon fab"></Label>
+                    <Label col="1" text="Projekt auf GitHub" class="p-r-10"></Label>
+                </GridLayout>
+            </StackLayout>
+        </ScrollView>
+        <StackLayout row="2" verticalAlignment="bottom">
+            <Label class="footer p-5" text="© Hannes Rüger, 2019 - {{currentYear}}"></Label>
+        </StackLayout>
+    </GridLayout>
+
+    <page-router-outlet tkMainContent></page-router-outlet>
+</RadSideDrawer>
