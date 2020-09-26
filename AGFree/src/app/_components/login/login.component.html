@@ -156,13 +156,11 @@
             </div>
         </div>
         <div class="form-group">
-            <button [disabled]="loading" type="button" (click)="inputNewPassword = false; $event.preventDefault" class="btn btn-link">
-                {{'general.back' | translate}}
-            </button>
             <button [disabled]="loading" class="btn btn-outline-primary float-right">
                 {{'general.save' | translate}}
                 <div *ngIf="loading" class="ml-2 spinner-border-sm spinner-border"></div>
             </button>
+            <div class="d-block mb-3">&nbsp;</div>
         </div>
     </form>
 
