@@ -11,6 +11,7 @@ import { getConfig } from "container-env";
 import { Group } from "./entity/Group";
 import { User } from "./entity/User";
 import routes from "./routes";
+import { createAdminUser1574018391679 } from "./migration/1574018391679-createAdminUser";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()), "/app/agfree-config.json");
 
@@ -36,7 +37,9 @@ createConnection({
     ],
     host: config.DB_HOST,
     logging: false,
-    migrations: [],
+    migrations: [
+        createAdminUser1574018391679,
+    ],
     migrationsRun: true,
     password: config.DB_PASSWORD,
     port: config.DB_PORT,
