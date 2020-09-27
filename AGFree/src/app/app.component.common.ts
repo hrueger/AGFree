@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { RouterExtensions } from "@nativescript/angular";
 import { AuthenticationService } from "./_services/authentication.service";
 
 @Component({ template: "" })
@@ -13,7 +12,6 @@ export class AppComponentCommon {
     constructor(
         public authenticationService: AuthenticationService,
         public router: Router,
-        public routerExtensions: RouterExtensions,
     ) {
         this.authenticationService.currentUser.subscribe(
             (x) => { this.currentUser = x; },

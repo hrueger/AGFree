@@ -1,10 +1,12 @@
 import { Component } from "@angular/core";
 import { Application, Utils } from "@nativescript/core";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
-import { NavigationEnd } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { filter } from "rxjs/operators";
 import * as appversion from "nativescript-appversion";
+import { RouterExtensions } from "@nativescript/angular";
 import { AppComponentCommon } from "./app.component.common";
+import { AuthenticationService } from "./_services/authentication.service";
 
 @Component({
     selector: "app-root",
@@ -16,6 +18,14 @@ export class AppComponent extends AppComponentCommon {
     private _sideDrawerTransition: DrawerTransitionBase;
     public version = "";
     public currentYear = new Date().getFullYear().toString();
+
+    constructor(
+        authenticationService: AuthenticationService,
+        router: Router,
+        private routerExtensions: RouterExtensions,
+    ) {
+        super(authenticationService, router);
+    }
 
     ngOnInit(): void {
         appversion.getVersionName().then((v: string) => {
