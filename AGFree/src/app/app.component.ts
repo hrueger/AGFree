@@ -16,6 +16,6 @@ export class AppComponent extends AppComponentCommon {
         translateService: TranslateService,
     ) {
         super(authenticationService, router);
-        translateService.setDefaultLang(translateService.getBrowserLang());
+        translateService.setDefaultLang("de");
     }
 }
