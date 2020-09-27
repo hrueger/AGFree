@@ -350,7 +350,11 @@ export class ScheduleComponent {
     }
 
     public getGridLayoutColumns(): string {
-        return new Array(this.days.length + 1).fill("*").join(",");
+        const columnsArray = new Array(this.days.length + 1).fill("*");
+        if (!this.small) {
+            columnsArray[0] = "2*";
+        }
+        return columnsArray.join(",");
     }
 }
 
