@@ -52,6 +52,22 @@ class UserController {
         res.status(200).send({ success: true });
     }
 
+    public static changeAdminStatus = async (req: Request, res: Response): Promise<void> => {
+        const { id } = req.params;
+        const { admin } = req.body;
+
+        const userRepository = getRepository(User);
+        try {
+            const user = await userRepository.findOne(id);
+            user.isAdmin = admin;
+            await userRepository.save(user);
+        } catch (e) {
+            res.status(500).send({ message: "Konnte den Adminstatus nicht ändern!" });
+            return;
+        }
+        res.status(200).send({ success: true });
+    }
+
     public static editCurrent = async (req: Request, res: Response): Promise<void> => {
         const id = res.locals.jwtPayload.userId;
 
