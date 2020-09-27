@@ -36,7 +36,7 @@
         <form [formGroup]="editUserForm">
             <div class="form-group">
                 <label for="name">{{'general.username' | translate}}: </label>
-                <input type="text" class="form-control" id="name" formControlName="editUserName" [placeholder]="'general.username' | translate" />
+                <input type="text" class="form-control" id="name" ngbAutofocus formControlName="editUserName" [placeholder]="'general.username' | translate" />
             </div>
             <br />
             <div class="form-group">

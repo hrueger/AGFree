@@ -80,7 +80,7 @@ export class UsersComponent implements OnInit {
 
     public openEditModal(content: unknown): void {
         this.modalService
-            .open(content, { ariaLabelledBy: "modal-basic-title" })
+            .open(content)
             .result.then(
                 () => {
                     this.invalidMessage = false;
@@ -94,7 +94,7 @@ export class UsersComponent implements OnInit {
                         pwnew2val = this.editUserForm.get("editUserPassword2")
                             .value;
                     }
-                    this.remoteService.post("users/editCurrent", {
+                    this.remoteService.post("users/edit", {
                         email: this.editUserForm.get("editUserEmail").value,
                         pwNew: pwnew1val,
                         pwNew2: pwnew2val,
