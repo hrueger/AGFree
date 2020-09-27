@@ -1,1 +1,66 @@
-<Label text="schedule"></Label>
+<StackLayout>
+
+    <ActivityIndicator [busy]="true" *ngIf="!userdata && !group"></ActivityIndicator>
+
+    <StackLayout *ngIf="userdata || group">
+
+        <StackLayout class="mb-5 text-center" *ngIf="edit">
+            <StackLayout *ngIf="saving">
+                <ActivityIndicator [busy]="true"></ActivityIndicator>
+                <Label text="Wird gespeichert..."></Label>
+            </StackLayout>
+
+            <StackLayout *ngIf="!saving">
+                <Label>
+                    <FormattedString>
+                        <Span text="&#x;"></Span>
+                        <Span text="Erfolgreich gespeichert!"></Span>
+                    </FormattedString>
+                </Label>
+            </StackLayout>
+        </StackLayout>
+        <GridLayout [class.editMode]="edit" [class.small]="small" [rows]="getGridLayoutRows()" [columns]="getGridLayoutColumns()">
+            <Label row="0" col="0" [text]='small ? "" : group && group.name ? group.name : "Mein Stundenplan"'></Label>
+            <Label *ngFor="let day of days; index as index" row="0" [col]="index + 1" [text]="small ? day.nameShort : day.name"></Label>
+
+            <Label [row]="rowIndex + 1" *ngFor="let row of getRows(); index as rowIndex" col="0" [text]='small ? row[0].nameShort : row[0].name'></Label>
+            <Label [text]="period.selected" *ngFor="let period of mobilePeriodCache" [class]="period.class" [row]="period.row" [col]="period.col" (tap)="selectMobile(period)" [class.selected]="period.selected"></Label>
+
+
+        </GridLayout>
+    </StackLayout>
+
+    <div *ngIf="selectedDay && selectedPeriod">
+        <div *ngIf="(!usersToShow || usersToShow.length === 0) && !small" class="alert alert-info text-center">
+            Keine Personen haben dort eine Freistunde!
+        </div>
+        <div *ngIf="usersToShow && usersToShow.length > 0">
+            <button class="btn btn-outline-primary" (click)="toggleSchedules()">{{showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"}}</button>
+
+            <div class="alert alert-success mt-3">
+                <b>Information</b><br>
+                <i class="fas fa-exclamation-triangle mr-2 text-warning"></i><i class="fas fa-bed text-warning"></i> bedeutet, dass diese Person <b>vor</b> der ausgewählten Freistunde noch keinen Unterricht hat, <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
+                <i class="fas fa-utensils text-warning"></i> bedeutet, dass diese Person <b>nach</b> der ausgewählten Freistunde keinen Unterricht mehr hat.
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-4">
+                <div class="col mb-4" *ngFor="let user of usersToShow">
+                    <div class="card p-3">
+                        <h6 class="text-center mb-2">
+                            <div *ngIf="user.noPreviousPeriods" class="text-warning float-left">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <i class="fas fa-bed"></i>
+                            </div>
+                            <div *ngIf="user.noFollowingPeriods" class="text-warning float-left">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            {{ user.username }}</h6>
+                        <app-schedule *ngIf="showSchedules" [selectedDay]="selectedDay" [selectedPeriod]="selectedPeriod" [userdata]="user.data" [small]="true"></app-schedule>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</StackLayout>

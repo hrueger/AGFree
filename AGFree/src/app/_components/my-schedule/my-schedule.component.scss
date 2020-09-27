@@ -1,5 +1,6 @@
 @import "../../variables.scss";
-span {
+span,
+Span {
     &.free {
         background-color: $free;
     }

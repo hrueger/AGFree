@@ -25,6 +25,14 @@ type Userdata = {
     periodId: number,
 }[];
 
+type MobileCachedPeriod = {
+    row: number;
+    col: number;
+    class: string;
+    selected: boolean;
+    period: Period,
+};
+
 @Component({
     selector: "app-schedule",
     templateUrl: "./schedule.component.html",
@@ -56,6 +64,7 @@ export class ScheduleComponent {
     public saving = false;
     @Input() public selectedDay: number;
     @Input() public selectedPeriod: number;
+    public mobilePeriodCache: MobileCachedPeriod[] = [];
     public days: Day[] = [
         {
             id: 1,
@@ -166,10 +175,30 @@ export class ScheduleComponent {
         } else if (this.edit || !this.userdata) {
             this.remoteService.get("/users/schedule").subscribe((d: Userdata) => {
                 this._userdata = d && Array.isArray(d) ? d : [];
+                this.buildMobileCache();
             });
             this.remoteService.get("/users").subscribe((u: User[]) => {
                 this.users = u;
             });
+        } else if (this.userdata) {
+            this.buildMobileCache();
+        }
+    }
+
+    private buildMobileCache() {
+        for (const period of this.periods) {
+            for (const day of this.days) {
+                this.mobilePeriodCache.push({
+                    row: period.id,
+                    col: day.id,
+                    class: this.isFree({ ...period, dayId: day.id }) ? "free" : "lesson",
+                    selected: false,
+                    period: {
+                        ...period,
+                        dayId: day.id,
+                    },
+                });
+            }
         }
     }
 
@@ -225,39 +254,26 @@ export class ScheduleComponent {
         return u.data && Array.isArray(u.data) ? u.data : [];
     }
 
-    public select(period: Period): void {
+    public select(period: Period, mobile = false): void {
         if (!this.edit) {
             if (!this.small) {
+                if (mobile) {
+                    this.mobilePeriodCache = this.mobilePeriodCache.map((p: MobileCachedPeriod) => {
+                        if ((period as unknown as MobileCachedPeriod).period.id == p.period.id
+                            && (period as unknown as MobileCachedPeriod)
+                                .period.dayId == p.period.dayId) {
+                            p.selected = true;
+                        } else {
+                            p.selected = false;
+                        }
+                        return p;
+                    });
+                }
                 this.selectedDay = period.dayId;
                 this.selectedPeriod = period.id;
-                this.usersToShow = this.group
-                    ? this.users
-                    : this.users.filter((u) => this.getUserdata(u).findIndex(
-                        (d) => d.dayId === this.selectedDay && d.periodId === this.selectedPeriod,
-                    ) === -1 && u.id !== this.myId).map((u) => {
-                        u.noPreviousPeriods = false;
-                        u.noFollowingPeriods = false;
-                        if (this.selectedPeriod === this.periods[0].id) {
-                        // the first period is a free period
-                            u.noPreviousPeriods = true;
-                        } else if (this.selectedPeriod === this.periods[this.periods.length - 1]
-                            .id) {
-                        // the last period is a free period
-                            u.noFollowingPeriods = true;
-                        } else {
-                        // eslint-disable-next-line no-lonely-if
-                            if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
-                                && d.periodId < this.selectedPeriod).length === 0) {
-                            // there are no lessons before this period
-                                u.noPreviousPeriods = true;
-                            } else if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
-                                && d.periodId > this.selectedPeriod).length === 0) {
-                            // there are no lessons after this period
-                                u.noFollowingPeriods = true;
-                            }
-                        }
-                        return u;
-                    });
+                setTimeout(() => {
+                    this.updateUsersToShow();
+                }, 10);
             }
             return;
         }
@@ -271,6 +287,41 @@ export class ScheduleComponent {
         this.save();
     }
 
+    public selectMobile(period: Period): void {
+        this.select(period, true);
+    }
+
+    private updateUsersToShow() {
+        this.usersToShow = this.group
+            ? this.users
+            : this.users.filter((u) => this.getUserdata(u).findIndex(
+                (d) => d.dayId === this.selectedDay && d.periodId === this.selectedPeriod,
+            ) === -1 && u.id !== this.myId).map((u) => {
+                u.noPreviousPeriods = false;
+                u.noFollowingPeriods = false;
+                if (this.selectedPeriod === this.periods[0].id) {
+                    // the first period is a free period
+                    u.noPreviousPeriods = true;
+                } else if (this.selectedPeriod === this.periods[this.periods.length - 1]
+                    .id) {
+                    // the last period is a free period
+                    u.noFollowingPeriods = true;
+                } else {
+                    // eslint-disable-next-line no-lonely-if
+                    if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
+                        && d.periodId < this.selectedPeriod).length === 0) {
+                        // there are no lessons before this period
+                        u.noPreviousPeriods = true;
+                    } else if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
+                        && d.periodId > this.selectedPeriod).length === 0) {
+                        // there are no lessons after this period
+                        u.noFollowingPeriods = true;
+                    }
+                }
+                return u;
+            });
+    }
+
     public save(): void {
         if (this.saving) {
             return;
@@ -281,6 +332,14 @@ export class ScheduleComponent {
         }, () => {
             this.saving = false;
         });
+    }
+
+    public getGridLayoutRows(): string {
+        return new Array(this.periods.length + 1).fill("auto").join(",");
+    }
+
+    public getGridLayoutColumns(): string {
+        return new Array(this.days.length + 1).fill("*").join(",");
     }
 }
 

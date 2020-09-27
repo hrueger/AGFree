@@ -1,2 +1,26 @@
 <navbar [title]="'general.mySchedule' | translate"></navbar>
-<Label text="my schedule"></Label>
+
+<StackLayout>
+    <Button class="" (tap)="editMode = !editMode" [text]='editMode ? "Bearbeiten beenden" : "Stundenplan bearbeiten"'></Button>
+    <Label *ngIf="!editMode" text="Klicke eine Stunde an, um zu sehen, wer gleichzeitig mit dir dort eine Freistunde hat." textWrap="true"></Label>
+    <Label *ngIf="editMode" textWrap="true">
+        <FormattedString>
+            <Span text="Du bist momentan im "></Span>
+            <Span text="Bearbeitungsmodus"></Span>
+            <Span text="."></Span>
+            <Span text="Änderungen, die Du machst, werden automatisch gespeichert. Klicke eine Stunde an, um ihren Status zu ändern. "></Span>
+            <Span text="Gelb" class="lesson"></Span>
+            <Span text=" bedeutet, dass Du dort "></Span>
+            <Span text="Unterricht hast" class="lesson"></Span>
+            <Span text=", "></Span>
+            <Span text="Grün" class="free"></Span>
+            <Span text=" bedeutet "></Span>
+            <Span text="Freistunde" class="free"></Span>
+            <Span text=" bzw. "></Span>
+            <Span text="aus ;-)" class="free"></Span>
+            <Span text="."></Span>
+        </FormattedString>
+    </Label>
+
+    <app-schedule [edit]="editMode"></app-schedule>
+</StackLayout>

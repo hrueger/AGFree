@@ -1,0 +1,33 @@
+@import "../../variables.scss";
+$break: rgb(230, 230, 230);
+.free {
+    background-color: $free;
+}
+
+.lesson {
+    background-color: $lesson;
+}
+
+.isBreak {
+    background-color: $break;
+}
+
+.isLaunchBreak {
+    background-color: darken($break, 20);
+}
+
+.isBreak,
+.isLaunchBreak {
+    &.free {
+        background-color: darken($free, 10);
+    }
+    &.lesson {
+        background-color: darken($lesson, 10);
+    }
+}
+
+.selected {
+    border-width: 3;
+    border-style: solid;
+    border-color: rgb(3, 124, 172);
+}
