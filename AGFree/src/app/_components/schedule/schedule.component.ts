@@ -273,9 +273,7 @@ export class ScheduleComponent {
                 }
                 this.selectedDay = period.dayId;
                 this.selectedPeriod = period.id;
-                setTimeout(() => {
-                    this.updateUsersToShow();
-                }, 10);
+                this.updateUsersToShow();
             }
             return;
         }
