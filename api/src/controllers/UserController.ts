@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
+import { sendMail } from "../utils/mailer";
 
 class UserController {
     public static listAll = async (req: Request, res: Response): Promise<void> => {
@@ -49,6 +50,19 @@ class UserController {
             res.status(409).send({ message: i18n.__("errors.existingUsername") });
             return;
         }
+        const d = new Date();
+        sendMail(res, email, {
+            btnText: i18n.__("welcomeMail.editSchedule"),
+            btnUrl: res.app.locals.config.URL,
+            cardSubtitle: i18n.__("welcomeMail.clickTheButton"),
+            cardTitle: i18n.__("welcomeMail.startNow"),
+            content: i18n.__("welcomeMail.content"),
+            secondTitle: i18n.__("welcomeMail.helloUser").replace("%s", user.username),
+            subject: i18n.__("welcomeMail.subject").replace("%s", user.username),
+            subtitle: i18n.__("welcomeMail.at").replace("%s", `${d.getDate()}.${d.getMonth()}.${d.getFullYear()}, ${d.getHours()}:${d.getMinutes() == 0 ? "00" : d.getMinutes()}`),
+            summary: i18n.__("welcomeMail.summary").replace("%s", user.username),
+            title: i18n.__("welcomeMail.welcome"),
+        });
         res.status(200).send({ success: true });
     }
 
