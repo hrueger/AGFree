@@ -24,6 +24,9 @@ export class User {
     @Column()
     public email: string;
 
+    @Column({ default: false })
+    public isAdmin: boolean;
+
     @JoinTable()
     @ManyToMany(() => Group, (group) => group.users)
     public groups: Group[];

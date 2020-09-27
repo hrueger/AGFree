@@ -23,6 +23,9 @@
 /* do not edit */     public email: string;
 /* do not edit */
 /* do not edit */     
+/* do not edit */     public isAdmin: boolean;
+/* do not edit */
+/* do not edit */     
 /* do not edit */     
 /* do not edit */     public groups: Group[];
 /* do not edit */
@@ -32,8 +35,8 @@
 /* do not edit */     
 /* do not edit */     public password: string;
 /* do not edit */
-/* do not edit */     // 
-/* do not edit */     // public passwordResetToken: string;
+/* do not edit */     
+/* do not edit */     public passwordResetToken: string;
 /* do not edit */
 /* do not edit */     
 /* do not edit */     public data: any;
