@@ -30,37 +30,29 @@
         </GridLayout>
     </StackLayout>
 
-    <div *ngIf="selectedDay && selectedPeriod">
-        <div *ngIf="(!usersToShow || usersToShow.length === 0) && !small" class="alert alert-info text-center">
-            Keine Personen haben dort eine Freistunde!
-        </div>
-        <div *ngIf="usersToShow && usersToShow.length > 0">
-            <button class="btn btn-outline-primary" (click)="toggleSchedules()">{{showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"}}</button>
+    <StackLayout *ngIf="mobilePeriodSelected">
+        <Label *ngIf="(!usersToShow || usersToShow.length === 0) && !small" class="alert alert-info text-center" text="Keine Personen haben dort eine Freistunde!"></Label>
+        <StackLayout *ngIf="usersToShow && usersToShow.length > 0">
+            <Button class="btn btn-outline-primary" (tap)="toggleSchedules()" [text]='showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"'></Button>
 
-            <div class="alert alert-success mt-3">
-                <b>Information</b><br>
-                <i class="fas fa-exclamation-triangle mr-2 text-warning"></i><i class="fas fa-bed text-warning"></i> bedeutet, dass diese Person <b>vor</b> der ausgewählten Freistunde noch keinen Unterricht hat, <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
-                <i class="fas fa-utensils text-warning"></i> bedeutet, dass diese Person <b>nach</b> der ausgewählten Freistunde keinen Unterricht mehr hat.
-            </div>
+            <Label class="alert alert-success mt-3" textWrap="true">
+                <FormattedString>
+                    <Span text="Information"></Span>
+                    <Span text="&#xf071; &#xf236;" class="fas"></Span>
+                    <Span text=" bedeutet, dass diese Person "></Span>
+                    <Span text="vor"></Span>
+                    <Span text=" der ausgewählten Freistunde noch keinen Unterricht hat, "></Span>
+                    <Span text="&#xf071; &#xf2e7;" class="fas"></Span>
+                    <Span text=" bedeutet, dass diese Person "></Span>
+                    <Span text="nach"></Span>
+                    <Span text=" der ausgewählten Freistunde keinen Unterricht mehr hat."></Span>
+                </FormattedString>
+            </Label>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-4">
-                <div class="col mb-4" *ngFor="let user of usersToShow">
-                    <div class="card p-3">
-                        <h6 class="text-center mb-2">
-                            <div *ngIf="user.noPreviousPeriods" class="text-warning float-left">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <i class="fas fa-bed"></i>
-                            </div>
-                            <div *ngIf="user.noFollowingPeriods" class="text-warning float-left">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <i class="fas fa-utensils"></i>
-                            </div>
-                            {{ user.username }}</h6>
-                        <app-schedule *ngIf="showSchedules" [selectedDay]="selectedDay" [selectedPeriod]="selectedPeriod" [userdata]="user.data" [small]="true"></app-schedule>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
+            <GridLayout rows="auto, auto" columns="auto, *" *ngFor="let user of usersToShow">
+                <Label row="0" col="0" class="fas" *ngIf="user.noPreviousPeriods || user.noFollowingPeriods" [text]="'&#xf071; ' + (user.noPreviousPeriods ? '&#xf236;' : '&#xf2e7;')"></Label>
+                <Label [text]="user.username" row="0" col="1"></Label>
+            </GridLayout>
+        </StackLayout>
+    </StackLayout>
 </StackLayout>

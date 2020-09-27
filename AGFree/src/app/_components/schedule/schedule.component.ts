@@ -48,6 +48,7 @@ export class ScheduleComponent {
     @Input() public set edit(m: boolean) {
         this.selectedPeriod = undefined;
         this.selectedDay = undefined;
+        this.mobilePeriodSelected = false;
         this._edit = m;
     }
     public get edit(): boolean {
@@ -159,6 +160,7 @@ export class ScheduleComponent {
             nameShort: "10.",
         },
     ];
+    public mobilePeriodSelected = false;
 
     constructor(
         private remoteService: RemoteService,
@@ -289,6 +291,7 @@ export class ScheduleComponent {
 
     public selectMobile(period: Period): void {
         this.select(period, true);
+        this.mobilePeriodSelected = true;
     }
 
     private updateUsersToShow() {
