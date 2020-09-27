@@ -135,4 +135,16 @@ export class UsersComponent implements OnInit {
                 });
         }
     }
+
+    public changeAdminStatus(user: User, willBeAdmin: boolean): void {
+        // eslint-disable-next-line
+        if (confirm(willBeAdmin ? `Soll" ${user.username}" wirklich zum Administrator gemacht werden?` : `Soll "${user.username}" wirklich kein Administrator mehr sein?`)) {
+            this.remoteService.post(`users/${user.id}/admin`, { admin: willBeAdmin }).subscribe((data) => {
+                if (data && data.success) {
+                    this.alertService.success(willBeAdmin ? "Benutzer erfolgreich zum Admin gemacht!" : "Adminstatus erfolgreich entfernt!");
+                    this.ngOnInit();
+                }
+            });
+        }
+    }
 }
