@@ -3,18 +3,12 @@
 [![Avalible on Docker Hub](https://img.shields.io/badge/avalible_on-Docker_Hub-blue?logo=docker)](https://hub.docker.com/repository/docker/hrueger/agfree)
 [![Production build](https://github.com/hrueger/AGFree/workflows/Build/badge.svg)](https://github.com/hrueger/AGFree/actions)
 [![Lint](https://github.com/hrueger/AGFree/workflows/Lint/badge.svg)](https://github.com/hrueger/AGFree/actions)
-[![Greenkeeper badge](https://badges.greenkeeper.io/hrueger/AGFree.svg)](https://greenkeeper.io/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE.md)
 [![GitHub last commit](https://img.shields.io/github/last-commit/hrueger/AGFree?color=brightgreen)](https://github.com/hrueger/AGFree/commits)
 [![Maintenance](https://img.shields.io/maintenance/yes/2020)](https://github.com/hrueger/AGFree/commits)
 
-> *Warning!* AGFree is still in development and can't be used as of now.
-
 ## What is it?
-A complete solution for event ticketing.
-
-## Roadmap
-ToDo
+A simple tool for students to check for common free periods.
 
 ## I want to contribute
 1. Clone this repository by typing `git clone https://github.com/hrueger/AGFree` in your command prompt
