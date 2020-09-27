@@ -270,10 +270,16 @@ export class ScheduleComponent {
                         }
                         return p;
                     });
+                    this.selectedDay = (period as unknown as MobileCachedPeriod).period.dayId;
+                    this.selectedPeriod = (period as unknown as MobileCachedPeriod).period.id;
+                    setTimeout(() => {
+                        this.updateUsersToShow();
+                    }, 0);
+                } else {
+                    this.selectedDay = period.dayId;
+                    this.selectedPeriod = period.id;
+                    this.updateUsersToShow();
                 }
-                this.selectedDay = period.dayId;
-                this.selectedPeriod = period.id;
-                this.updateUsersToShow();
             }
             return;
         }
