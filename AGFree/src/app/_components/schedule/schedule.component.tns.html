@@ -13,18 +13,18 @@
             <StackLayout *ngIf="!saving">
                 <Label>
                     <FormattedString>
-                        <Span text="&#x;"></Span>
+                        <Span text="check" class="fas"></Span>
                         <Span text="Erfolgreich gespeichert!"></Span>
                     </FormattedString>
                 </Label>
             </StackLayout>
         </StackLayout>
-        <GridLayout [class.editMode]="edit" [class.small]="small" [rows]="getGridLayoutRows()" [columns]="getGridLayoutColumns()">
-            <Label row="0" col="0" [text]='small ? "" : group && group.name ? group.name : "Mein Stundenplan"'></Label>
-            <Label *ngFor="let day of days; index as index" row="0" [col]="index + 1" [text]="small ? day.nameShort : day.name"></Label>
+        <GridLayout class="schedule" [class.editMode]="edit" [class.small]="small" [rows]="getGridLayoutRows()" [columns]="getGridLayoutColumns()">
+            <Label row="0" col="0" [text]='small ? "" : group && group.name ? group.name : ""'></Label>
+            <Label *ngFor="let day of days; index as index" row="0" [col]="index + 1" [text]="day.nameShort"></Label>
 
             <Label [row]="rowIndex + 1" *ngFor="let row of getRows(); index as rowIndex" col="0" [text]='small ? row[0].nameShort : row[0].name'></Label>
-            <Label [text]="period.selected" *ngFor="let period of mobilePeriodCache" [class]="period.class" [row]="period.row" [col]="period.col" (tap)="selectMobile(period)" [class.selected]="period.selected"></Label>
+            <Label text="" *ngFor="let period of mobilePeriodCache" [class]="period.class" [row]="period.row" [col]="period.col" (tap)="selectMobile(period)" [class.selected]="period.selected"></Label>
 
 
         </GridLayout>
