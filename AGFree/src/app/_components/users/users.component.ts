@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { User } from "../../_models/User";
 import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { FastTranslateService } from "../../_services/fast-translate.service";
@@ -35,7 +36,7 @@ export class UsersComponent implements OnInit {
         private modalService: NgbModal,
         private fb: FormBuilder,
         private alertService: AlertService,
-        private authService: AuthenticationService,
+        private authenticationService: AuthenticationService,
         private fts: FastTranslateService,
     ) { }
 
@@ -70,41 +71,13 @@ export class UsersComponent implements OnInit {
         this.editUserForm
             .get("editUserName")
             .setValue(
-                this.authService.currentUserValue.username,
+                this.authenticationService.currentUserValue.username,
             );
         this.editUserForm
             .get("editUserEmail")
-            .setValue(this.authService.currentUserValue.email);
+            .setValue(this.authenticationService.currentUserValue.email);
     }
 
-    public openNewModal(content: unknown): void {
-        this.modalService
-            .open(content, { ariaLabelledBy: "modal-basic-title" })
-            .result.then(
-                () => {
-                    this.invalidMessage = false;
-
-                    this.remoteService
-                        .post("users/", {
-                            email: this.newUserForm.get("email").value,
-                            pw: this.newUserForm.get("password1").value,
-                            pw2: this.newUserForm.get("password2").value,
-                            isAdmin: this.newUserForm.get("isAdmin").value,
-                            username: this.newUserForm.get("name").value,
-                        })
-                        .subscribe(async (data) => {
-                            if (data && data.status == true) {
-                                this.alertService.success(await this.fts.t("users.userCreatedSuccessfully"));
-                                this.remoteService
-                                    .get("users/")
-                                    .subscribe((res) => {
-                                        this.users = res;
-                                    });
-                            }
-                        });
-                },
-            );
-    }
     public openEditModal(content: unknown): void {
         this.modalService
             .open(content, { ariaLabelledBy: "modal-basic-title" })
@@ -132,7 +105,7 @@ export class UsersComponent implements OnInit {
                             .value,
                     })
                         .subscribe(async (data) => {
-                            if (data && data.status == true) {
+                            if (data && data.success == true) {
                                 this.alertService.success(await this.fts.t("users.currentUserUpdatedSuccessfully"));
                                 this.remoteService
                                     .get("users/")
@@ -145,13 +118,13 @@ export class UsersComponent implements OnInit {
             );
     }
 
-    public async deleteUser(user: Record<string, any>): Promise<void> {
+    public async deleteUser(user: User): Promise<void> {
         // eslint-disable-next-line
         if (confirm(await this.fts.t("users.confirmDelete")) == true) {
             this.remoteService
                 .delete(`users/${user.id}`)
                 .subscribe(async (data) => {
-                    if (data && data.status == true) {
+                    if (data && data.success == true) {
                         this.alertService.success(await this.fts.t("users.userDeletedSuccessfully"));
                         this.remoteService
                             .get("users/")
