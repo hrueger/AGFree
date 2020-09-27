@@ -233,7 +233,11 @@ export class ScheduleComponent {
     }
 
     public isFree(period: Period, userdata?: Userdata): boolean {
-        return (userdata || this.userdata).filter(
+        let ud = (userdata || this.userdata);
+        if (!ud || !Array.isArray(ud)) {
+            ud = [];
+        }
+        return ud.filter(
             (u) => u.periodId == period.id && u.dayId == period.dayId,
         ).length == 0;
     }
