@@ -303,34 +303,38 @@ export class ScheduleComponent {
     }
 
     private updateUsersToShow() {
-        this.usersToShow = this.group
+        this.usersToShow = this.checkForPreviousAndFollowingPeriods(this.group
             ? this.users
             : this.users.filter((u) => this.getUserdata(u).findIndex(
                 (d) => d.dayId === this.selectedDay && d.periodId === this.selectedPeriod,
-            ) === -1 && u.id !== this.myId).map((u) => {
-                u.noPreviousPeriods = false;
-                u.noFollowingPeriods = false;
-                if (this.selectedPeriod === this.periods[0].id) {
-                    // the first period is a free period
+            ) === -1 && u.id !== this.myId));
+    }
+
+    private checkForPreviousAndFollowingPeriods(users: User[]): User[] {
+        return users.map((u) => {
+            u.noPreviousPeriods = false;
+            u.noFollowingPeriods = false;
+            if (this.selectedPeriod === this.periods[0].id) {
+                // the first period is a free period
+                u.noPreviousPeriods = true;
+            } else if (this.selectedPeriod === this.periods[this.periods.length - 1]
+                .id) {
+                // the last period is a free period
+                u.noFollowingPeriods = true;
+            } else {
+                // eslint-disable-next-line no-lonely-if
+                if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
+                    && d.periodId < this.selectedPeriod).length === 0) {
+                    // there are no lessons before this period
                     u.noPreviousPeriods = true;
-                } else if (this.selectedPeriod === this.periods[this.periods.length - 1]
-                    .id) {
-                    // the last period is a free period
+                } else if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
+                    && d.periodId > this.selectedPeriod).length === 0) {
+                    // there are no lessons after this period
                     u.noFollowingPeriods = true;
-                } else {
-                    // eslint-disable-next-line no-lonely-if
-                    if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
-                        && d.periodId < this.selectedPeriod).length === 0) {
-                        // there are no lessons before this period
-                        u.noPreviousPeriods = true;
-                    } else if (this.getUserdata(u).filter((d) => d.dayId == this.selectedDay
-                        && d.periodId > this.selectedPeriod).length === 0) {
-                        // there are no lessons after this period
-                        u.noFollowingPeriods = true;
-                    }
                 }
-                return u;
-            });
+            }
+            return u;
+        });
     }
 
     public save(): void {
