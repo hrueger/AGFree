@@ -56,6 +56,11 @@ class UserController {
         const { id } = req.params;
         const { admin } = req.body;
 
+        if (id == res.locals.jwtPayload.userId) {
+            res.status(500).send({ message: "Du kannst dir nicht selbst den Admin-Status entfernen!" });
+            return;
+        }
+
         const userRepository = getRepository(User);
         try {
             const user = await userRepository.findOne(id);
