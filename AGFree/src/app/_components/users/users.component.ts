@@ -31,12 +31,14 @@ export class UsersComponent implements OnInit {
     public editUserPassword1: any;
     public editUserPassword2: any;
 
+    public sendingMail: boolean;
+
     constructor(
+        public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
         private modalService: NgbModal,
         private fb: FormBuilder,
         private alertService: AlertService,
-        private authenticationService: AuthenticationService,
         private fts: FastTranslateService,
     ) { }
 
@@ -116,6 +118,19 @@ export class UsersComponent implements OnInit {
                         });
                 },
             );
+    }
+
+    public sendCompleteProfileMail(): void {
+        // eslint-disable-next-line
+        if (confirm("Möchstest du wirklich eine Erinnerungsmail an alle Benutzer mit ohne ausgefüllten Stundenplan verschicken, dass sie ihr Profil vervollständigen sollen?")) {
+            this.sendingMail = true;
+            this.remoteService.post("users/sendCompleteProfileMail", {}).subscribe((d) => {
+                this.sendingMail = false;
+                if (d && d.success) {
+                    this.alertService.success("Mail erfolgreich verschickt");
+                }
+            });
+        }
     }
 
     public async deleteUser(user: User): Promise<void> {

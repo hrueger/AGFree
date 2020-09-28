@@ -1,6 +1,10 @@
 <button type="button" (click)="openEditModal(editUserModal)" class="float-right btn btn-outline-primary">
     {{'users.changeOwnProfile' | translate}}
 </button>
+<button type="button" (click)="sendCompleteProfileMail()" [disabled]="sendingMail ? 'disabled' : null" *ngIf="authenticationService.currentUserValue.isAdmin" class="mr-2 float-right btn btn-outline-primary">
+    {{'users.sendCompleteProfileMail' | translate}}
+    <i class="fas fa-spinner fa-spin ml-2" *ngIf="sendingMail"></i>
+</button>
 
 <div class="input-group w-50">
     <input class="form-control" [(ngModel)]="searchTerm" [placeholder]="'general.search' | translate">

@@ -57,6 +57,7 @@
         "repeatPassword": "Password wiederholen",
         "userCreatedSuccessfully": "Benutzer erfolgreich erstellt.",
         "userDeletedSuccessfully": "Der Benutzer wurde erfolgreich gelöscht.",
-        "users": "Benutzer"
+        "users": "Benutzer",
+        "sendCompleteProfileMail": "\"Profil vervollständigen\"-Mail senden"
     }
 }
