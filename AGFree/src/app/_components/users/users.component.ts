@@ -13,7 +13,7 @@ import { RemoteService } from "../../_services/remote.service";
     templateUrl: "./users.component.html",
 })
 export class UsersComponent implements OnInit {
-    public users: any[] = [];
+    public users: User[] = [];
 
     public searchTerm = "";
 
@@ -121,8 +121,15 @@ export class UsersComponent implements OnInit {
     }
 
     public sendCompleteProfileMail(): void {
+        const users = this.users.filter((u) => !(u?.data
+            && Array.isArray(u.data) && u.data.length > 0));
+        if (users.length == 0) {
+            // eslint-disable-next-line no-alert
+            alert("Keine Benutzer ohne ausgefüllten Stundenplan!");
+            return;
+        }
         // eslint-disable-next-line
-        if (confirm("Möchstest du wirklich eine Erinnerungsmail an alle Benutzer mit ohne ausgefüllten Stundenplan verschicken, dass sie ihr Profil vervollständigen sollen?")) {
+        if (confirm("Möchstest du wirklich eine Erinnerungsmail an die folgenden Benutzer ohne ausgefüllten Stundenplan verschicken, dass sie ihr Profil vervollständigen sollen?\n\n" + users.map((u) => u.username).join("\n"))) {
             this.sendingMail = true;
             this.remoteService.post("users/sendCompleteProfileMail", {}).subscribe((d) => {
                 this.sendingMail = false;
