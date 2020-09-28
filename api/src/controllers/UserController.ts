@@ -66,6 +66,32 @@ class UserController {
         res.status(200).send({ success: true });
     }
 
+    public static sendCompleteProfileMail = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const users = await getRepository(User).find();
+            for (const user of users) {
+                if (!(user?.data && Array.isArray(user.data) && user.data.length > 0)) {
+                    const d = new Date();
+                    sendMail(res, user.email, {
+                        btnText: i18n.__("completeProfileMail.editSchedule"),
+                        btnUrl: res.app.locals.config.URL,
+                        cardSubtitle: i18n.__("completeProfileMail.clickTheButton"),
+                        cardTitle: i18n.__("completeProfileMail.startNow"),
+                        content: i18n.__("completeProfileMail.content"),
+                        secondTitle: i18n.__("completeProfileMail.helloUser").replace("%s", user.username),
+                        subject: i18n.__("completeProfileMail.subject").replace("%s", user.username),
+                        subtitle: i18n.__("completeProfileMail.at").replace("%s", `${d.getDate()}.${d.getMonth()}.${d.getFullYear()}, ${d.getHours()}:${d.getMinutes() == 0 ? "00" : d.getMinutes()}`),
+                        summary: i18n.__("completeProfileMail.summary").replace("%s", user.username),
+                        title: i18n.__("completeProfileMail.welcome"),
+                    });
+                }
+            }
+            res.send({ success: true });
+        } catch {
+            res.status(500).send({ message: "Internal error" });
+        }
+    }
+
     public static changeAdminStatus = async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
         const { admin } = req.body;

@@ -23,8 +23,8 @@ export function sendMail(res: Response, to: string, data: {summary: string,
         });
         const email = new EmailTemplates({
             message: { from: res.app.locals.config.MAIL_SENDER_ADDRESS },
-            preview: false,
-            send: true,
+            preview: true,
+            send: false,
             transport: transporter,
             views: {
                 options: {
@@ -38,6 +38,7 @@ export function sendMail(res: Response, to: string, data: {summary: string,
                 locals,
                 message: { to },
                 template,
+
             })
             .then((info) => {
                 resolve(info);

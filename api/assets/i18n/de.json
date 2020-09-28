@@ -1,46 +1,57 @@
 {
-	"errors": {
-		"emailNotFound": "Email-Adresse nicht gefunden!",
-		"error": "Fehler!",
-		"errorWhileAddingUser": "Fehler beim Hinzufügen des Benutzers!",
-		"errorWhileDeleting": "Fehler beim Löschen!",
-		"errorWhileDeletingUser": "Fehler beim Löschen des Benutzers!",
-		"errorWhileSavingToken": "Fehler beim Speichern des Tokens!",
-		"existingUsername": "Benutzername bereits vorhanden!",
-		"notAllFieldsProvided": "Nicht alle Daten angegeben!",
-		"notAllowed": "Diese Aktion ist nicht erlaubt!",
-		"oldPasswordWrong": "Altes Passwort stimmt nicht!",
-		"passwordsDontMatch": "Die beiden Passwörter stimmen nicht überein!",
-		"sessionExpired": "Sitzung abgelaufen. Bitte erneut einloggen!",
-		"unauthorized": "Unauthorisiert!",
-		"unknown": "Unbekannter Fehler!",
-		"userNotFound": "Benutzer wurde nicht gefunden!",
-		"userNotFoundWrongLink": "Benutzer nicht gefunden, fehlerhafter Link!",
-		"usergroupDoesNotExist": "Die Benutzergruppe existiert nicht!",
-		"usernameOrPasswordEmpty": "Benutzername oder Passwort leer!",
-		"wrongPassword": "Falsches Passwort!",
-		"wrongUsername": "Falscher Benutzername!",
-		"errorWhileSendingEmail": "Fehler beim Senden der Email!"
-	},
-	"resetPassword": {
-		"resetPassword": "Passwort zurücksetzen",
-		"message": "Wenn Du dein Passwort für den Account von \"%s\" bei AGFree zurücksetzen möchtest, klicke auf den Button unten. Ansonsten kannst Du diese Nachricht einfach ignorieren, dein Passwort wird nicht geändert.",
-		"at": "angefordert am %s"
-	},
-	"mail": {
-		"sentTo": "Diese Email wurde an %s gesendet.",
-		"info": "Wenn Sie diese Mail versehentlich erhalten haben, bitten wir Sie sie zu löschen und nicht weiterzuleiten, da diese Mail vertrauliche Informationen enthalten kann.",
-		"unsubscribe": "mail.unsubscribe"
-	},
-	"welcomeMail": {
-		"welcome": "Willkommen bei AGFree",
-		"subject": "Willkommen, %s",
-		"at": "Angemeldet am %s",
-		"startNow": "Gleich loslegen",
-		"clickTheButton": "Klicke auf den Button, um deinen Stundenplan einzugeben:",
-		"helloUser": "Hallo %s,",
-		"content": "Schön, dass du dich bei AGFree angemeldet hast. Du kannst nun deinen eigenen Stundenplan eingeben, klicke dazu einfach auf den Button unten. Außerdem kannst du Gruppen erstellen, Stundenpläne anderer SchülerInnen ansehen, gemeinsame Freistunden finden und vieles mehr!<br><br>Viel Spaß mit AGFree<br>Hannes Rüger<br><br>Entwickler von AGFree",
-		"summary": "Hallo %s, schön, dass du dich bei AGFree angemeldet hast. Du kannst nun deinen eigenen Stundenplan eingeben, klicke dazu einfach auf den Button unten.",
-		"editSchedule": "Zum Stundenplan"
-	}
+    "errors": {
+        "emailNotFound": "Email-Adresse nicht gefunden!",
+        "error": "Fehler!",
+        "errorWhileAddingUser": "Fehler beim Hinzufügen des Benutzers!",
+        "errorWhileDeleting": "Fehler beim Löschen!",
+        "errorWhileDeletingUser": "Fehler beim Löschen des Benutzers!",
+        "errorWhileSavingToken": "Fehler beim Speichern des Tokens!",
+        "existingUsername": "Benutzername bereits vorhanden!",
+        "notAllFieldsProvided": "Nicht alle Daten angegeben!",
+        "notAllowed": "Diese Aktion ist nicht erlaubt!",
+        "oldPasswordWrong": "Altes Passwort stimmt nicht!",
+        "passwordsDontMatch": "Die beiden Passwörter stimmen nicht überein!",
+        "sessionExpired": "Sitzung abgelaufen. Bitte erneut einloggen!",
+        "unauthorized": "Unauthorisiert!",
+        "unknown": "Unbekannter Fehler!",
+        "userNotFound": "Benutzer wurde nicht gefunden!",
+        "userNotFoundWrongLink": "Benutzer nicht gefunden, fehlerhafter Link!",
+        "usergroupDoesNotExist": "Die Benutzergruppe existiert nicht!",
+        "usernameOrPasswordEmpty": "Benutzername oder Passwort leer!",
+        "wrongPassword": "Falsches Passwort!",
+        "wrongUsername": "Falscher Benutzername!",
+        "errorWhileSendingEmail": "Fehler beim Senden der Email!"
+    },
+    "resetPassword": {
+        "resetPassword": "Passwort zurücksetzen",
+        "message": "Wenn Du dein Passwort für den Account von \"%s\" bei AGFree zurücksetzen möchtest, klicke auf den Button unten. Ansonsten kannst Du diese Nachricht einfach ignorieren, dein Passwort wird nicht geändert.",
+        "at": "angefordert am %s"
+    },
+    "mail": {
+        "sentTo": "Diese Email wurde an %s gesendet.",
+        "info": "Wenn Sie diese Mail versehentlich erhalten haben, bitten wir Sie sie zu löschen und nicht weiterzuleiten, da diese Mail vertrauliche Informationen enthalten kann.",
+        "unsubscribe": "mail.unsubscribe"
+    },
+    "welcomeMail": {
+        "welcome": "Willkommen bei AGFree",
+        "subject": "Willkommen, %s",
+        "at": "Angemeldet am %s",
+        "startNow": "Gleich loslegen",
+        "clickTheButton": "Klicke auf den Button, um deinen Stundenplan einzugeben:",
+        "helloUser": "Hallo %s,",
+        "content": "Schön, dass du dich bei AGFree angemeldet hast. Du kannst nun deinen eigenen Stundenplan eingeben, klicke dazu einfach auf den Button unten. Außerdem kannst du Gruppen erstellen, Stundenpläne anderer SchülerInnen ansehen, gemeinsame Freistunden finden und vieles mehr!<br><br>Viel Spaß mit AGFree<br>Hannes Rüger<br><br>Entwickler von AGFree",
+        "summary": "Hallo %s, schön, dass du dich bei AGFree angemeldet hast. Du kannst nun deinen eigenen Stundenplan eingeben, klicke dazu einfach auf den Button unten.",
+        "editSchedule": "Zum Stundenplan"
+    },
+    "completeProfileMail": {
+        "welcome": "Vervollständige dein Profil",
+        "subject": "Profil vervollständigen",
+        "at": "Nachricht vom %s",
+        "startNow": "Profil vervollständigen",
+        "clickTheButton": "Klicke auf den Button, um deinen Stundenplan einzugeben:",
+        "helloUser": "Hallo %s,",
+        "content": "Schön, dass du dich bei AGFree angemeldet hast. Da das ganze System nur funktioniert, wenn jeder, der mitmacht, auch seinen Stundenplan eingibt, wäre es super, wenn Du das auch noch machen würdest. Klicke dazu einfach auf den Button unten.<br><br>Viel Spaß mit AGFree<br>Hannes Rüger<br><br>Entwickler von AGFree",
+        "summary": "Hallo %s, schön, dass du dich bei AGFree angemeldet hast. Da das ganze System nur funktioniert, wenn jeder, der mitmacht, auch seinen Stundenplan eingibt, wäre es super, wenn Du das auch noch machen würdest. Klicke dazu einfach auf den Button unten.",
+        "editSchedule": "Zum Stundenplan"
+    }
 }
