@@ -1,9 +1,8 @@
-<navbar [title]="'general.mySchedule' | translate"></navbar>
+<navbar [title]="'general.mySchedule' | translate" [navbarItems]="navbarItems" (itemTap)="itemTapped($event)"></navbar>
 
 <ScrollView>
 
     <GridLayout rows="auto, auto, *">
-        <Button row="0" class="" (tap)="editMode = !editMode" [text]='editMode ? "Bearbeiten beenden" : "Stundenplan bearbeiten"'></Button>
         <Label row="1" *ngIf="!editMode" text="Klicke eine Stunde an, um zu sehen, wer gleichzeitig mit dir dort eine Freistunde hat." textWrap="true"></Label>
         <Label row="1" *ngIf="editMode" textWrap="true">
             <FormattedString>
