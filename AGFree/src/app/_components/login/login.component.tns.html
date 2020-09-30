@@ -1,12 +1,13 @@
-<ScrollView>
+<FlexboxLayout class="page">
     <StackLayout class="login-form">
         <ActivityIndicator height="100%" class="spinner" [busy]="true" *ngIf="tryingToAutoLogin || loading"></ActivityIndicator>
-        <StackLayout [formGroup]="loginForm" class="nt-form " *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
+        <StackLayout [formGroup]="loginForm" class="" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
             <Image class="top-img" src="~/assets/logo/AGFree.png"></Image>
+            <Label class="header" text="AGFree"></Label>
 
             <ng-container *ngIf="!domainKnown">
                 <StackLayout class="nt-input">
-                    <TextField keyboardType="url" class="-border -rounded" [hint]="'login.domain' | translate" [(ngModel)]="domain" [ngModelOptions]="{standalone: true}" autofocus></TextField>
+                    <TextField keyboardType="url" class="input" [hint]="'login.domain' | translate" [(ngModel)]="domain" [ngModelOptions]="{standalone: true}" autofocus></TextField>
                     <Label [text]="'login.domainInfo' | translate"></Label>
                 </StackLayout>
 
@@ -14,16 +15,18 @@
             </ng-container>
             <ng-container *ngIf="domainKnown">
                 <StackLayout class="nt-input">
-                    <TextField autocorrect="false" class="-border -rounded" [hint]="'general.username' | translate" formControlName="username" [class.text-danger]="submitted && loginForm.controls.username.invalid"></TextField>
+                    <TextField autocorrect="false" class="input" [hint]="'general.username' | translate" formControlName="username" [class.text-danger]="submitted && loginForm.controls.username.invalid"></TextField>
                     <Label class="text-danger" *ngIf="submitted && loginForm.controls.username.invalid" [text]="'errors.fillOutUsername' | translate"></Label>
                 </StackLayout>
 
                 <StackLayout class="nt-input">
-                    <TextField autocorrect="false" secure="true" class="-border -rounded" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="submitted && loginForm.controls.password.invalid"></TextField>
+                    <TextField autocorrect="false" secure="true" class="input" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="submitted && loginForm.controls.password.invalid"></TextField>
                     <Label class="text-danger" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.fillOutPassword' | translate"></Label>
                 </StackLayout>
                 <Button class="-primary" [disabled]="loading" (tap)="onSubmit()" [text]="'login.login' | translate"></Button>
             </ng-container>
         </StackLayout>
     </StackLayout>
-</ScrollView>
+
+    <Label class="login-label sign-up-label" *ngIf="domainKnown" (tap)="createUser = !createUser" [class.bold]="!createUser" [text]="createUser ? 'Zurück' : 'Account erstellen'"></Label>
+</FlexboxLayout>
