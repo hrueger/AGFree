@@ -1,5 +1,5 @@
 <ActionBar [title]="title">
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <NavigationButton ios:visibility="collapsed" [icon]="modal ? '~/assets/actionIcons/back.png' : 'res://menu'" (tap)="onDrawerButtonTap()"></NavigationButton>
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
     <ActionItem [text]="item.text" [icon]="item.icon" (tap)="itemTap.emit(item.id)" *ngFor="let item of navbarItems" android.position="actionBarIfRoom">
