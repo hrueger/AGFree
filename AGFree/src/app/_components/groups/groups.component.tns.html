@@ -10,3 +10,5 @@
         </GridLayout>
     </ng-template>
 </ListView>
+
+<Label text="Du bist in keiner Gruppe dabei! Klicke auf den Button oben, um eine neue Gruppe zu erstellen." textWrap="true" class="info" *ngIf="groups && groups.length == 0"></Label>
