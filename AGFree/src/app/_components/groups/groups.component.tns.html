@@ -1,10 +1,10 @@
-<navbar [title]="'general.groups' | translate"></navbar>
+<navbar [title]="selectionMode ? selectionModeTitle : ('general.groups' | translate)" [modal]="selectionMode" (modalBack)="endSelectionMode()"></navbar>
 
 <ActivityIndicator [busy]="true" *ngIf="!groups"></ActivityIndicator>
 
-<ListView *ngIf="groups" [items]="groups" (itemTap)="viewGroup($event)" class="list-group">
+<ListView *ngIf="groups" [items]="groups" class="list-group">
     <ng-template let-group="item">
-        <GridLayout rows="auto, auto">
+        <GridLayout rows="auto, auto" (longPress)="longPress(group)" (tap)="tap(group)" [class.selected]="group.selected">
             <Label row="0" class="title" textWrap="true" [text]="group.name"></Label>
             <Label row="1" class="names" textWrap="true" [text]="getUsersList(group)"></Label>
         </GridLayout>

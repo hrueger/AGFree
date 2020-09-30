@@ -22,5 +22,7 @@
 /* do not edit */
 /* do not edit */     
 /* do not edit */     public creator: User;
+/* do not edit */
+/* do not edit */     public selected?: boolean;
 /* do not edit */ }
 /* do not edit */

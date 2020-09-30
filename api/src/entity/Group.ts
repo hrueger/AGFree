@@ -20,4 +20,6 @@ export class Group {
 
     @ManyToOne(() => User, (user) => user.createdGroups)
     public creator: User;
+
+    public selected?: boolean;
 }
