@@ -1,2 +1,12 @@
 <navbar [title]="'general.groups' | translate"></navbar>
-<Label text="groups"></Label>
+
+<ActivityIndicator [busy]="true" *ngIf="!groups"></ActivityIndicator>
+
+<ListView *ngIf="groups" [items]="groups" (itemTap)="viewGroup($event)" class="list-group">
+    <ng-template let-group="item">
+        <GridLayout rows="auto, auto">
+            <Label row="0" class="title" textWrap="true" [text]="group.name"></Label>
+            <Label row="1" class="names" textWrap="true" [text]="getUsersList(group)"></Label>
+        </GridLayout>
+    </ng-template>
+</ListView>
