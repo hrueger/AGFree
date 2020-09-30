@@ -1,2 +1,11 @@
-<navbar [title]="'general.people' | translate"></navbar>
-<Label text="users"></Label>
+<navbar [title]="selectionMode ? selectionModeTitle : ('general.people' | translate)" [modal]="selectionMode" (modalBack)="endSelectionMode()"></navbar>
+
+<ActivityIndicator [busy]="true" *ngIf="!users || users.length == 0"></ActivityIndicator>
+
+<ListView *ngIf="users" [items]="users" class="list-group">
+    <ng-template let-user="item">
+        <GridLayout rows="auto, auto" (longPress)="longPress(user)" (tap)="tap(user)" [class.selected]="user.selected">
+            <Label row="0" class="title" textWrap="true" [text]="user.username"></Label>
+        </GridLayout>
+    </ng-template>
+</ListView>
