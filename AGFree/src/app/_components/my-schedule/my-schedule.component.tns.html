@@ -3,8 +3,8 @@
 <ScrollView>
 
     <GridLayout rows="auto, auto, *">
-        <Label row="1" *ngIf="!editMode" text="Klicke eine Stunde an, um zu sehen, wer gleichzeitig mit dir dort eine Freistunde hat." textWrap="true"></Label>
-        <Label row="1" *ngIf="editMode" textWrap="true">
+        <Label row="1" *ngIf="!editMode" class="info" text="Klicke eine Stunde an, um zu sehen, wer gleichzeitig mit dir dort eine Freistunde hat." textWrap="true"></Label>
+        <Label row="1" *ngIf="editMode" class="info" textWrap="true">
             <FormattedString>
                 <Span text="Du bist momentan im "></Span>
                 <Span text="Bearbeitungsmodus"></Span>
