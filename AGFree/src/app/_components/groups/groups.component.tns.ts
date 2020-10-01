@@ -42,4 +42,10 @@ export class GroupsComponent extends GroupsComponentCommon {
         this.selectionMode = false;
         this.selectionModeTitle = "";
     }
+
+    public ngOnInit(): void {
+        setTimeout(() => {
+            this.loadGroups();
+        }, 500);
+    }
 }

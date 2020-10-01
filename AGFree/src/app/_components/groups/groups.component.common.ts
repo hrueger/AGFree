@@ -22,6 +22,10 @@ export class GroupsComponentCommon {
     ) { }
 
     public ngOnInit(): void {
+        this.loadGroups();
+    }
+
+    public loadGroups(): void {
         this.groups = undefined;
         this.remoteService.get("groups").subscribe((groups: Group[]) => {
             this.groups = groups;
