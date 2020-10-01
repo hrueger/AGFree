@@ -26,12 +26,12 @@ $break: rgb(230, 230, 230);
     }
 }
 
-.schedule Label {
-    border-width: 3;
-    border-style: solid;
-    border-color: rgb(255, 255, 255);
+.schedule Button {
+    margin: 0;
+    padding: 0;
+    height: 40;
 }
 
-.schedule Label.selected {
+.schedule Button.selected {
     border-color: rgb(3, 124, 172);
 }
