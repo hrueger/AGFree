@@ -61,6 +61,7 @@ export class ScheduleComponent {
         return this._userdata;
     }
     @Input() public small = false;
+    @Input() public nonInteractive = false;
     @Input() public group: Group;
     public saving = false;
     @Input() public selectedDay: number;
@@ -262,7 +263,7 @@ export class ScheduleComponent {
 
     public select(period: Period, mobile = false): void {
         if (!this.edit) {
-            if (!this.small) {
+            if (!this.small && !this.nonInteractive) {
                 if (mobile) {
                     this.mobilePeriodCache = this.mobilePeriodCache.map((p: MobileCachedPeriod) => {
                         if ((period as unknown as MobileCachedPeriod).period.id == p.period.id

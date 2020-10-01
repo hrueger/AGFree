@@ -26,7 +26,7 @@
     </GridLayout>
 
     <ng-container *ngIf="mobilePeriodSelected">
-        <Label row="1" *ngIf="(!usersToShow || usersToShow.length === 0) && !small" class="alert alert-info text-center" text="Keine Personen haben dort eine Freistunde!"></Label>
+        <Label row="1" *ngIf="(!usersToShow || usersToShow.length === 0) && !small && !nonInteractive" class="alert alert-info text-center" text="Keine Personen haben dort eine Freistunde!"></Label>
         <GridLayout rows="auto, auto, auto" row="1" *ngIf="usersToShow && usersToShow.length > 0">
             <Button row="0" class="btn btn-outline-primary" (tap)="toggleSchedules()" [text]='showSchedules ? "Stundenpläne verbergen" : "Stundenpläne anzeigen"'></Button>
 
