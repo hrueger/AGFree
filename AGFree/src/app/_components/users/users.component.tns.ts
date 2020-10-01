@@ -1,5 +1,12 @@
 import { Component } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { RouterExtensions } from "@nativescript/angular";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { User } from "../../_models/User";
+import { AlertService } from "../../_services/alert.service";
+import { AuthenticationService } from "../../_services/authentication.service";
+import { FastTranslateService } from "../../_services/fast-translate.service";
+import { RemoteService } from "../../_services/remote.service";
 import { UsersComponentCommon } from "./users.component.common";
 
 @Component({
@@ -11,6 +18,25 @@ export class UsersComponent extends UsersComponentCommon {
     public selectionMode = false;
     public selectionModeTitle = "";
 
+    constructor(
+        authenticationService: AuthenticationService,
+        remoteService: RemoteService,
+        modalService: NgbModal,
+        fb: FormBuilder,
+        alertService: AlertService,
+        fts: FastTranslateService,
+        private router: RouterExtensions,
+    ) {
+        super(
+            authenticationService,
+            remoteService,
+            modalService,
+            fb,
+            alertService,
+            fts,
+        );
+    }
+
     public ngOnInit(): void {
         setTimeout(() => {
             this.loadUsers();
@@ -18,9 +44,9 @@ export class UsersComponent extends UsersComponentCommon {
         this.createForms();
     }
 
-    public tap(group: User): void {
+    public tap(user: User): void {
         if (this.selectionMode) {
-            const u = this.users.filter((h) => h.id == group.id)[0];
+            const u = this.users.filter((h) => h.id == user.id)[0];
             u.selected = !u.selected;
             const l = this.users.filter((h) => h.selected).length;
             if (l == 0) {
@@ -31,8 +57,12 @@ export class UsersComponent extends UsersComponentCommon {
             this.selectionModeTitle = `${l} Person${l < 1 ? "en" : ""}`;
             return;
         }
-        // eslint-disable-next-line no-alert
-        alert(group.username);
+        this.router.navigate(["schedule-modal"], {
+            transition: { name: "slideLeft" },
+            queryParams: {
+                user: JSON.stringify(user),
+            },
+        });
     }
     public longPress(group: User): void {
         this.selectionMode = true;
