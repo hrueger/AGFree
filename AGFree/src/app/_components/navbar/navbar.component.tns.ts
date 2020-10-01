@@ -1,7 +1,7 @@
 import {
     Component, EventEmitter, Input, Output,
 } from "@angular/core";
-import { Application, Page, SearchBar, TextView } from "@nativescript/core";
+import { Application, SearchBar, TextView } from "@nativescript/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 
 @Component({
