@@ -1,4 +1,4 @@
-<navbar [title]="selectionMode ? selectionModeTitle : ('general.people' | translate)" [modal]="selectionMode" (modalBack)="endSelectionMode()"></navbar>
+<navbar [title]="selectionMode ? selectionModeTitle : ('general.people' | translate)" (search)="search($event)" [modal]="selectionMode" [searchAvailable]="true" (modalBack)="endSelectionMode()"></navbar>
 
 <ActivityIndicator [busy]="true" *ngIf="!users || users.length == 0"></ActivityIndicator>
 

@@ -1,7 +1,15 @@
-<ActionBar [title]="title">
-    <NavigationButton ios:visibility="collapsed" [icon]="modal ? '~/assets/actionIcons/back.png' : 'res://menu'" (tap)="onDrawerButtonTap()"></NavigationButton>
+<ActionBar [title]="searchEnabled ? '' : title">
+    <NavigationButton ios:visibility="collapsed" [icon]="modal || searchEnabled ? '~/assets/actionIcons/back.png' : 'res://menu'" (tap)="onDrawerButtonTap()"></NavigationButton>
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
     <ActionItem [text]="item.text" [icon]="item.icon" (tap)="itemTap.emit(item.id)" *ngFor="let item of navbarItems" android.position="actionBarIfRoom">
     </ActionItem>
+    
+    <GridLayout columns="*" *ngIf="searchEnabled">
+        <TextField (loaded)="focusSearch($event)" col="0" class="searchField" hint="Personen suchen..." (textChange)="onTextChanged($event)"></TextField>
+    </GridLayout>
+    
+    <ActionItem text="Suchen" icon="~/assets/actionIcons/search.png" *ngIf="searchAvailable && !searchEnabled" (tap)="searchEnabled = true" android.position="actionBarIfRoom">
+    </ActionItem>
+
 </ActionBar>

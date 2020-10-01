@@ -2,3 +2,11 @@
 ActionBar {
     background-color: $primary;
 }
+
+.searchField {
+    width: 100%;
+    color: #fff;
+    placeholder-color: lighten($primary, 40);
+    border-bottom-color: #fff;
+    font-size: 20;
+}

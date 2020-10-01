@@ -28,6 +28,7 @@ export class UsersComponentCommon implements OnInit {
     public editUserPassword2: any;
 
     public sendingMail: boolean;
+    public allUsers: User[];
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -55,6 +56,7 @@ export class UsersComponentCommon implements OnInit {
     public loadUsers(): void {
         this.remoteService.get("users/").subscribe((data) => {
             this.users = data;
+            this.allUsers = data;
         });
     }
 
