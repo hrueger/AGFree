@@ -44,6 +44,11 @@ export class UsersComponent extends UsersComponentCommon {
         this.createForms();
     }
 
+    public search(term: string | undefined): void {
+        this.users = term ? this.users.filter((u) => u.username.indexOf(term) !== -1)
+            : this.allUsers;
+    }
+
     public tap(user: User): void {
         if (this.selectionMode) {
             const u = this.users.filter((h) => h.id == user.id)[0];
