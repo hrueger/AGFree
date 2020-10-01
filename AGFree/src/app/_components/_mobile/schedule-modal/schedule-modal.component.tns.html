@@ -1,0 +1,3 @@
+<navbar [title]="title" [modal]="true" (modalBack)="back()"></navbar>
+
+<app-schedule class="mt-2" *ngIf="user" [userdata]="user.data" [nonInteractive]="true"></app-schedule>

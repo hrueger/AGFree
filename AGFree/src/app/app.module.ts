@@ -27,6 +27,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { ScheduleComponent } from "./_components/schedule/schedule.component";
 import { PrivacyPolicyComponent } from "./_components/privacy-policy/privacy-policy.component";
+import { ScheduleModalComponent } from "./_components/_mobile/schedule-modal/schedule-modal.component";
 
 registerLocaleData(localeDe);
 
@@ -41,6 +42,7 @@ registerLocaleData(localeDe);
         MyScheduleComponent,
         ScheduleComponent,
         PrivacyPolicyComponent,
+        ScheduleModalComponent,
     ],
     imports: [
         AppRoutingModule,

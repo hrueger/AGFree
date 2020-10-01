@@ -5,6 +5,7 @@ import { UsersComponent } from "./_components/users/users.component";
 import { AuthGuard } from "./_guards/auth.guard";
 import { MyScheduleComponent } from "./_components/my-schedule/my-schedule.component";
 import { PrivacyPolicyComponent } from "./_components/privacy-policy/privacy-policy.component";
+import { ScheduleModalComponent } from "./_components/_mobile/schedule-modal/schedule-modal.component";
 
 export const routes: Routes = [
     {
@@ -21,6 +22,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         component: GroupsComponent,
         path: "groups",
+    },
+    {
+        canActivate: [AuthGuard],
+        component: ScheduleModalComponent,
+        path: "schedule-modal",
     },
     { path: "privacy-policy", component: PrivacyPolicyComponent },
     /* Authentication paths */

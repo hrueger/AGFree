@@ -8,6 +8,7 @@ import {
     NativeScriptModule,
     NativeScriptFormsModule,
     NativeScriptHttpClientModule,
+    ModalDialogService,
 } from "@nativescript/angular";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
@@ -24,6 +25,7 @@ import { UsersComponent } from "./_components/users/users.component";
 import { ErrorInterceptor } from "./_helpers/error.interceptor";
 import { JwtInterceptor } from "./_helpers/jwt.interceptor";
 import { RenewJwtTokenInterceptor } from "./_helpers/renewJwtToken.interceptor";
+import { ScheduleModalComponent } from "./_components/_mobile/schedule-modal/schedule-modal.component";
 
 function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
     return new NativeScriptLoader("./assets/i18n/", ".json");
@@ -39,6 +41,7 @@ function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         LoginComponent,
         NavbarComponent,
         PrivacyPolicyComponent,
+        ScheduleModalComponent,
     ],
     imports: [
         NativeScriptModule,
@@ -65,6 +68,7 @@ function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: RenewJwtTokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        ModalDialogService,
     ],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
