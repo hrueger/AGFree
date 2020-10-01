@@ -47,10 +47,18 @@ export class UsersComponentCommon implements OnInit {
         );
     }
 
-    public async ngOnInit(): Promise<void> {
+    public ngOnInit(): void {
+        this.loadUsers();
+        this.createForms();
+    }
+
+    public loadUsers(): void {
         this.remoteService.get("users/").subscribe((data) => {
             this.users = data;
         });
+    }
+
+    public createForms(): void {
         this.newUserForm = this.fb.group({
             email: [this.email, [Validators.required]],
             name: [this.name, [Validators.required]],
@@ -160,7 +168,7 @@ export class UsersComponentCommon implements OnInit {
             this.remoteService.post(`users/${user.id}/admin`, { admin: willBeAdmin }).subscribe((data) => {
                 if (data && data.success) {
                     this.alertService.success(willBeAdmin ? "Benutzer erfolgreich zum Admin gemacht!" : "Adminstatus erfolgreich entfernt!");
-                    this.ngOnInit();
+                    this.loadUsers();
                 }
             });
         }

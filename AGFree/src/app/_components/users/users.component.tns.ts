@@ -10,6 +10,14 @@ import { UsersComponentCommon } from "./users.component.common";
 export class UsersComponent extends UsersComponentCommon {
     public selectionMode = false;
     public selectionModeTitle = "";
+
+    public ngOnInit(): void {
+        setTimeout(() => {
+            this.loadUsers();
+        }, 500);
+        this.createForms();
+    }
+
     public tap(group: User): void {
         if (this.selectionMode) {
             const u = this.users.filter((h) => h.id == group.id)[0];
