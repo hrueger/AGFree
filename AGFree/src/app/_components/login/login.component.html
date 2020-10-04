@@ -1,4 +1,4 @@
-<div class="form-signin mt-4 border border-primary">
+<div class="form-signin mt-4 border border-primary" *ngIf="!tryingToAutoLogin">
     <div class="text-center mb-4">
         <img src="assets/logo/AGFree.png" alt="Logo" height="120">
         <h1 class="h3 mb-3 font-weight-normal">AGFree</h1>
@@ -176,4 +176,8 @@
             {{'login.toLogin' | translate}}
         </button>
     </div>
+</div>
+
+<div class="text-center mb-5" *ngIf="tryingToAutoLogin">
+    <div class="text-primary spinner-border mt-5"></div>
 </div>
