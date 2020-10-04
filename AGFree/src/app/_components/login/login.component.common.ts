@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { first } from "rxjs/operators";
 import { StorageService } from "../../_services/storage.service";
 import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -124,7 +123,7 @@ export class LoginComponentCommon implements OnInit {
                     // location.reload();
                 },
                 (error) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error || "Error");
                     this.loading = false;
                 },
             );

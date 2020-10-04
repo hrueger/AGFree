@@ -1,14 +1,13 @@
 import {
-    HttpEvent,
     HttpHandler,
     HttpInterceptor,
     HttpRequest,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable, throwError } from "rxjs";
+import { Observable, BehaviorSubject, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { AuthenticationService } from "../_services/authentication.service";
+import { AuthenticationService, NoErrorToastHttpParams } from "../_services/authentication.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -17,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     public intercept(
         request: HttpRequest<any>,
         next: HttpHandler,
-    ): Observable<HttpEvent<any>> {
+    ): Observable<any> {
         return next.handle(request).pipe(
             catchError((err) => {
                 // eslint-disable-next-line no-console
@@ -27,10 +26,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                     this.authenticationService.logout();
                     this.router.navigate(["login"]);
                 }
-                const error = err.error && err.error.error
-                    ? err.error.error : err.error && err.error.message
-                        ? err.error.message : err.statusText ? err.statusText : err || "Unknown error!";
-                return throwError(error);
+                const error = err?.error?.message || err.statusText || "Unknown error!";
+                if (!(request.params instanceof NoErrorToastHttpParams
+                    && request.params.dontShowToast)) {
+                    return throwError(error);
+                }
+                return new BehaviorSubject(null) as any;
             }),
         );
     }

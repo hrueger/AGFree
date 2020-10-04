@@ -2,3 +2,4 @@ node_modules
 dist
 src/app/_models/*
 webpack.config.js
+platforms

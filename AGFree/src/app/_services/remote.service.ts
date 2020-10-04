@@ -46,7 +46,7 @@ export class RemoteService {
                 // eslint-disable-next-line no-console
                 console.log(result);
 
-                this.alertService.error(error);
+                this.alertService.error(error || "error von remote service");
             }
 
             return of(result as T);

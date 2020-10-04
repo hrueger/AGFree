@@ -32,7 +32,7 @@ export class AlertService {
     }
     public async error(msg: string): Promise<void> {
         if (typeof msg !== "string") {
-            console.log(msg);
+            console.log(`AlertService: ${msg}`);
             return;
         }
         this.feedback.error({
