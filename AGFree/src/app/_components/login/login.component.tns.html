@@ -20,7 +20,7 @@
                 </StackLayout>
 
                 <StackLayout class="nt-input">
-                    <TextField autocorrect="false" secure="true" class="input" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="submitted && loginForm.controls.password.invalid"></TextField>
+                    <TextField autocorrect="false" secure="true" class="input" (returnPress)="onSubmit()" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="submitted && loginForm.controls.password.invalid"></TextField>
                     <Label class="text-danger" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.fillOutPassword' | translate"></Label>
                 </StackLayout>
                 <Button class="-primary" [disabled]="loading" (tap)="onSubmit()" [text]="'login.login' | translate"></Button>
@@ -45,7 +45,7 @@
             </StackLayout>
             
             <StackLayout class="nt-input">
-                <TextField autocorrect="false" secure="true" class="input" formControlName="password2" [hint]="'login.repeatPassword' | translate" [class.text-danger]="cuSubmitted && createUserForm.controls.password2.invalid"></TextField>
+                <TextField autocorrect="false" secure="true" class="input" (returnPress)="onSubmitCreateUser()" formControlName="password2" [hint]="'login.repeatPassword' | translate" [class.text-danger]="cuSubmitted && createUserForm.controls.password2.invalid"></TextField>
                 <Label class="text-danger" *ngIf="cuSubmitted && createUserForm.controls.password2.invalid" [text]="'errors.fillOutPassword' | translate"></Label>
             </StackLayout>
             
