@@ -1,7 +1,7 @@
 <FlexboxLayout class="page">
     <StackLayout class="login-form">
         <ActivityIndicator height="100%" class="spinner" [busy]="true" *ngIf="tryingToAutoLogin || loading"></ActivityIndicator>
-        <StackLayout [formGroup]="loginForm" class="" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
+        <StackLayout [formGroup]="loginForm" *ngIf="!tryingToAutoLogin && !createUser" [visibility]="loading ? 'collapse' : 'visible'">
             <Image class="top-img" src="~/assets/logo/AGFree.png"></Image>
             <Label class="header" text="AGFree"></Label>
 
@@ -25,6 +25,32 @@
                 </StackLayout>
                 <Button class="-primary" [disabled]="loading" (tap)="onSubmit()" [text]="'login.login' | translate"></Button>
             </ng-container>
+        </StackLayout>
+        
+        <StackLayout [formGroup]="createUserForm" *ngIf="!tryingToAutoLogin && createUser" [visibility]="loading ? 'collapse' : 'visible'">
+            <Label class="header" text="AGFree"></Label>
+            <StackLayout class="nt-input">
+                <TextField autocorrect="false" class="input" [hint]="'general.username' | translate" formControlName="username" [class.text-danger]="cuSubmitted && createUserForm.controls.username.invalid"></TextField>
+                <Label class="text-danger" *ngIf="cuSubmitted && createUserForm.controls.username.invalid" [text]="'errors.fillOutUsername' | translate"></Label>
+            </StackLayout>
+
+            <StackLayout class="nt-input">
+                <TextField autocorrect="false" class="input" [hint]="'general.email' | translate" keyboardType="email" formControlName="email" [class.text-danger]="cuSubmitted && createUserForm.controls.email.invalid"></TextField>
+                <Label class="text-danger" *ngIf="cuSubmitted && createUserForm.controls.email.invalid" [text]="'errors.fillOutEmail' | translate"></Label>
+            </StackLayout>
+            
+            <StackLayout class="nt-input">
+                <TextField autocorrect="false" secure="true" class="input" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="cuSubmitted && createUserForm.controls.password.invalid"></TextField>
+                <Label class="text-danger" *ngIf="cuSubmitted && createUserForm.controls.password.invalid" [text]="'errors.fillOutPassword' | translate"></Label>
+            </StackLayout>
+            
+            <StackLayout class="nt-input">
+                <TextField autocorrect="false" secure="true" class="input" formControlName="password2" [hint]="'login.repeatPassword' | translate" [class.text-danger]="cuSubmitted && createUserForm.controls.password2.invalid"></TextField>
+                <Label class="text-danger" *ngIf="cuSubmitted && createUserForm.controls.password2.invalid" [text]="'errors.fillOutPassword' | translate"></Label>
+            </StackLayout>
+            
+            <Button class="-primary" [disabled]="loading" (tap)="onSubmitCreateUser()" [text]="'login.createAccount' | translate"></Button>
+            
         </StackLayout>
     </StackLayout>
 

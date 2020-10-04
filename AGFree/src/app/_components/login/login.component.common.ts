@@ -7,7 +7,9 @@ import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
 import { getApiUrl } from "../../_helpers/utils";
 
-export const DATA_INFO = "Dies ist ein privater Service von Hannes Rüger. Hiermit willigen Sie ein, dass Ihre Daten verarbeitet und gespeichert werden. Sie können diese Einwilligung jederzeit schriftlich durch eine formlose Nachricht an <a href='mailto:ruegerhannes@gmail.com'>ruegerhannes@gmail.com</a> widerrufen, dann werden alle Ihre Daten gelöscht.";
+const MAIL = "ruegerhannes@gmail.com";
+export const DATA_INFO_MOBILE = `Dies ist ein privater Service von Hannes Rüger. Hiermit willigen Sie ein, dass Ihre Daten verarbeitet und gespeichert werden. Sie können diese Einwilligung jederzeit schriftlich durch eine formlose Nachricht an ${MAIL} widerrufen, dann werden alle Ihre Daten gelöscht.`;
+export const DATA_INFO = DATA_INFO_MOBILE.replace(MAIL, `<a href="mailto:${MAIL}">${MAIL}</a>`);
 
 @Component({ template: "" })
 export class LoginComponentCommon implements OnInit {
@@ -187,9 +189,14 @@ export class LoginComponentCommon implements OnInit {
                 this.loading = false;
                 if (data.success == true) {
                     this.createUserSucceeded = true;
+                    this.onUserCreationSuccess();
                 }
             });
         }, () => undefined);
+    }
+
+    public onUserCreationSuccess(): void {
+        //
     }
 
     public confirmPrivacyPolicy(): Promise<void> {

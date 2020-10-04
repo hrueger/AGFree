@@ -7,7 +7,7 @@ import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
 import { StorageService } from "../../_services/storage.service";
-import { DATA_INFO, LoginComponentCommon } from "./login.component.common";
+import { DATA_INFO_MOBILE, LoginComponentCommon } from "./login.component.common";
 
 @Component({
     styleUrls: ["./login.component.scss"],
@@ -54,17 +54,22 @@ export class LoginComponent extends LoginComponentCommon {
         }
     }
 
+    public onUserCreationSuccess(): void {
+        this.createUser = false;
+        this.alertService.success("Account erfolgreich erstellt!");
+    }
+
     public confirmPrivacyPolicy(): Promise<void> {
         return new Promise((resolve, reject) => {
             Dialogs.confirm({
                 title: "Datenverarbeitung",
-                message: DATA_INFO,
+                message: DATA_INFO_MOBILE,
                 okButtonText: "Einverstanden",
             }).then((r) => {
                 if (r) {
                     Dialogs.confirm({
                         title: "Datenschutz",
-                        message: "Ich akzeptiere die Datenschutzvereinbarung (zu finden unter domain.tls/privacy-policy).",
+                        message: `Ich akzeptiere die Datenschutzvereinbarung (zu finden unter "${ApplicationSettings.getString("domain")}/privacy-policy").`,
                         okButtonText: "Einverstanden",
                     }).then((s) => {
                         if (s) {
