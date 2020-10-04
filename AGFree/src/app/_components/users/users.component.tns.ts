@@ -59,7 +59,7 @@ export class UsersComponent extends UsersComponentCommon {
                 this.selectionModeTitle = "";
                 return;
             }
-            this.selectionModeTitle = `${l} Person${l < 1 ? "en" : ""}`;
+            this.selectionModeTitle = `${l} Person${l > 1 ? "en" : ""}`;
             return;
         }
         this.router.navigate(["schedule-modal"], {

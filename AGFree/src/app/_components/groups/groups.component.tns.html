@@ -1,8 +1,8 @@
-<navbar [title]="selectionMode ? selectionModeTitle : ('general.groups' | translate)" [modal]="selectionMode" (modalBack)="endSelectionMode()"></navbar>
+<navbar [title]="newGroupMode ? 'Gruppe erstellen' : selectionMode ? selectionModeTitle : ('general.groups' | translate)" [modal]="selectionMode || newGroupMode" (modalBack)="endModalMode()" [navbarItems]="selectionMode ? [] : newGroupMode ? saveItems : navbarItems" (itemTap)="itemTapped($event)"></navbar>
 
-<ActivityIndicator [busy]="true" *ngIf="!groups"></ActivityIndicator>
+<ActivityIndicator [busy]="true" *ngIf="!groups && !newGroupMode"></ActivityIndicator>
 
-<ListView *ngIf="groups" [items]="groups" class="list-group">
+<ListView *ngIf="groups && !newGroupMode" [items]="groups" class="list-group">
     <ng-template let-group="item">
         <GridLayout rows="auto, auto" (longPress)="longPress(group)" (tap)="tap(group)" [class.selected]="group.selected">
             <Label row="0" class="title" textWrap="true" [text]="group.name"></Label>
@@ -11,4 +11,15 @@
     </ng-template>
 </ListView>
 
-<Label text="Du bist in keiner Gruppe dabei! Klicke auf den Button oben, um eine neue Gruppe zu erstellen." textWrap="true" class="info" *ngIf="groups && groups.length == 0"></Label>
+<Label text="Du bist in keiner Gruppe dabei! Klicke auf den Button oben, um eine neue Gruppe zu erstellen." textWrap="true" class="info" *ngIf="groups && groups.length == 0 && !newGroupMode"></Label>
+
+<GridLayout rows="auto, *" *ngIf="newGroupMode">
+    <TextField row="0" hint="Gruppenname" class="input" [(ngModel)]="newGroupName"></TextField>
+    <ListView row="1" *ngIf="users" [items]="users" class="list-group">
+        <ng-template let-user="item">
+            <GridLayout rows="auto, auto" (tap)="toggleUser(user)" [class.selected]="user.selected">
+                <Label row="0" class="title" textWrap="true" [text]="user.username"></Label>
+            </GridLayout>
+        </ng-template>
+    </ListView>
+</GridLayout>

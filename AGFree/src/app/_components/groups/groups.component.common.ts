@@ -12,8 +12,6 @@ export class GroupsComponentCommon {
     public users: User[] = [];
     public groups: Group[];
     public searchTerm = "";
-    public noGroupNameWarning: boolean;
-    public noUsersSelectedWarning: boolean;
     public currentGroup: Group;
     constructor(
         public authenticationService: AuthenticationService,
@@ -61,14 +59,12 @@ export class GroupsComponentCommon {
     }
 
     public createGroup(): void {
-        this.noGroupNameWarning = false;
-        this.noUsersSelectedWarning = false;
         if (!this.newGroupName) {
-            this.noGroupNameWarning = true;
+            this.alertService.error("Kein Gruppenname eingegeben!");
             return;
         }
         if (this.users.filter((u) => u.selected).length === 0) {
-            this.noUsersSelectedWarning = true;
+            this.alertService.error("Keine Personen ausgewählt!");
             return;
         }
         this.remoteService.post("groups", {
