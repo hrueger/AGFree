@@ -33,7 +33,7 @@ class AuthController {
             res.status(401).end(JSON.stringify({ message: i18n.__("errors.wrongPassword") }));
             return;
         }
-        const token = jwt.sign(
+        const jwtToken = jwt.sign(
             { userId: user.id, username: user.username },
             res.app.locals.config.JWT_SECRET,
             { expiresIn: "1h" },
@@ -41,7 +41,7 @@ class AuthController {
 
         const response = {
             ...user,
-            token,
+            jwtToken,
         };
         response.password = undefined;
 

@@ -65,4 +65,6 @@ export class User {
     public noPreviousPeriods?: boolean;
     public noFollowingPeriods?: boolean;
     public selected?: boolean;
+
+    public jwtToken?: string;
 }
