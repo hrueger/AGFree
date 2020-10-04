@@ -49,6 +49,36 @@ class AuthController {
         res.send(response);
     }
 
+    public static async renewToken(req: Request, res: Response): Promise<void> {
+        const { jwtToken } = req.body;
+        if (!(jwtToken)) {
+            res.status(400).end(JSON.stringify({ error: i18n.__("errors.notAllFieldsProvided") }));
+            return;
+        }
+
+        let jwtPayload;
+        try {
+            jwtPayload = (jwt.verify(jwtToken, req.app.locals.config.JWT_SECRET,
+                { ignoreExpiration: true }) as any);
+        } catch (error) {
+            res.status(401).send({ message: i18n.__("errors.unknownError") });
+            return;
+        }
+        const { userId, username } = jwtPayload;
+        const newToken = jwt.sign({ userId, username }, req.app.locals.config.JWT_SECRET, {
+            expiresIn: "1h",
+        });
+
+        // Send the jwt in the response
+        res.send({
+            user: {
+                id: userId,
+                username,
+                jwtToken: newToken,
+            },
+        });
+    }
+
     public static sendPasswordResetMail = async (req: Request, res: Response): Promise<void> => {
         const userRepository = getRepository(User);
         let user: User;

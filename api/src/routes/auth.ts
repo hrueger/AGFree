@@ -7,5 +7,6 @@ const router = Router();
 router.post("/login", AuthController.login);
 router.get("/passwordReset/:email", AuthController.sendPasswordResetMail);
 router.post("/passwordReset/:resetToken", AuthController.resetPassword);
+router.post("/renewToken", AuthController.renewToken);
 
 export default router;
