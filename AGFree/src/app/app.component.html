@@ -1,7 +1,7 @@
-<navbar *ngIf="currentUser"></navbar>
-<div [class.container-fluid]="currentUser">
-    <div [class.row]="currentUser">
-        <main [attr.role]="currentUser ? 'main' : ''" [class]="currentUser ? 'col-10 mx-auto' : 'backgroundPattern'">
+<navbar *ngIf="authenticationService.currentUser"></navbar>
+<div [class.container-fluid]="authenticationService.currentUser">
+    <div [class.row]="authenticationService.currentUser">
+        <main [attr.role]="authenticationService.currentUser ? 'main' : ''" [class]="authenticationService.currentUser ? 'col-10 mx-auto' : 'backgroundPattern'">
             <router-outlet></router-outlet>
         </main>
     </div>

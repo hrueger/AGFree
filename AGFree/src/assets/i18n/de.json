@@ -29,7 +29,8 @@
         "mySchedule": "Mein Stundenplan",
         "search": "Suchen",
         "reset": "Zurücksetzen",
-        "next": "Weiter"
+        "next": "Weiter",
+        "rememberMe": "Eingeloggt bleiben"
     },
     "login": {
         "inputEmail": "Bitte geben Sie Ihre Email-Adresse ein",

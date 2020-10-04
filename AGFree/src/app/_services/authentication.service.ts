@@ -1,10 +1,17 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { getApiUrl } from "../_helpers/utils";
 import { User } from "../_models/User";
+import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
+
+export class NoErrorToastHttpParams extends HttpParams {
+    constructor(public dontShowToast: boolean) {
+        super();
+    }
+}
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -14,21 +21,15 @@ const httpOptions = {
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-    public currentUser: Observable<User>;
-    private currentUserSubject: BehaviorSubject<User>;
+    public currentUser: User = null;
 
-    constructor(private http: HttpClient, private storageService: StorageService) {
-        this.currentUserSubject = new BehaviorSubject<User>(
-            JSON.parse(this.storageService.getTemp("currentUser") || "null"),
-        );
-        this.currentUser = this.currentUserSubject.asObservable();
-    }
+    constructor(
+        private http: HttpClient,
+        private storageService: StorageService,
+        private remoteService: RemoteService,
+    ) {}
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
-    }
-
-    public login(username: string, password: string): Observable<User> {
+    public login(username: string, password: string, rememberMe: boolean): Observable<User> {
         return this.http
             .post<any>(
                 `${getApiUrl()}auth/login`,
@@ -39,31 +40,41 @@ export class AuthenticationService {
                 httpOptions,
             )
             .pipe(
-                map((user) => {
-                    // login successful if there's a jwt token in the response
-                    if (user && user.token) {
-                        // store user details and jwt token in local storage to
-                        // keep user logged in between page refreshes
-                        this.storageService.setTemp(
-                            "currentUser",
-                            JSON.stringify(user),
-                        );
-                        this.saveJwtToken(user);
-                        this.currentUserSubject.next(user);
-                    }
-
-                    return user;
-                }),
+                map((user) => this.loggedIn(user, rememberMe)),
             );
     }
 
-    public saveJwtToken(user: Record<string, any>): void {
-        this.storageService.setTemp("jwt_token", user.token);
+    private loggedIn(user: User, rememberMe: boolean) {
+        if (user) {
+            this.currentUser = user;
+            if (rememberMe) {
+                this.saveJwtToken(user);
+            }
+        }
+        return user;
+    }
+
+    public autoLogin(jwtToken: string): Subject<any> {
+        const o = new Subject();
+        this.remoteService.post("auth/renewToken", { jwtToken }, { params: new NoErrorToastHttpParams(true) }).subscribe((data) => {
+            if (data && data.user) {
+                this.loggedIn(data.user, true);
+                o.next(true);
+            } else {
+                o.next(false);
+            }
+        }, () => {
+            o.next(false);
+        });
+        return o;
+    }
+
+    public saveJwtToken(user: User): void {
+        this.storageService.set("jwtToken", user.jwtToken);
     }
 
     public logout(): void {
-        // remove user from local storage to log user out
-        this.storageService.removeTemp("currentUser");
-        this.currentUserSubject.next(null);
+        this.storageService.remove("jwtToken");
+        this.currentUser = null;
     }
 }

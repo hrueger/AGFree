@@ -31,6 +31,10 @@ export class AlertService {
         });
     }
     public async error(msg: string): Promise<void> {
+        if (typeof msg !== "string") {
+            console.log(`AlertService: ${msg}`);
+            return;
+        }
         this.feedback.error({
             title: `${await this.fts.t("general.error")}!`,
             message: msg,

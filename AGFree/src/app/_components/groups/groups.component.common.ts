@@ -32,7 +32,7 @@ export class GroupsComponentCommon {
         });
         this.remoteService.get("users").subscribe((users: User[]) => {
             this.users = users.filter(
-                (u) => u.id !== this.authenticationService.currentUserValue.id,
+                (u) => u.id !== this.authenticationService.currentUser.id,
             );
         });
     }

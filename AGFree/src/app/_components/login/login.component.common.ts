@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { first } from "rxjs/operators";
+import { StorageService } from "../../_services/storage.service";
 import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
@@ -41,17 +41,34 @@ export class LoginComponentCommon implements OnInit {
         public alertService: AlertService,
         private remoteService: RemoteService,
         private route: ActivatedRoute,
-    ) {}
+        private storageService: StorageService,
+    ) {
+        const jwtToken = this.storageService.get("jwtToken");
+        const apiUrl = this.storageService.get("apiUrl");
+        if (jwtToken && apiUrl) {
+            this.tryingToAutoLogin = true;
+            this.authenticationService.autoLogin(jwtToken).subscribe((success) => {
+                if (success) {
+                    if (this.route.snapshot.queryParams.returnUrl) {
+                        this.router.navigate([this.route.snapshot.queryParams.returnUrl]);
+                    } else {
+                        this.router.navigate(["home"]);
+                    }
+                }
+                this.tryingToAutoLogin = false;
+            });
+        }
+    }
 
     public ngOnInit(): void {
-        if (this.authenticationService.currentUserValue) {
+        if (this.authenticationService.currentUser) {
             this.router.navigate(["/"]);
             return;
         }
         this.loginForm = this.formBuilder.group({
-            domain: [""],
             password: ["", Validators.required],
             username: ["", Validators.required],
+            rememberMe: [true],
         });
         this.createUserForm = this.formBuilder.group({
             username: ["", [Validators.required, Validators.pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+ [a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+/)]],
@@ -98,8 +115,7 @@ export class LoginComponentCommon implements OnInit {
 
         this.loading = true;
         this.authenticationService
-            .login(this.f.username.value, this.f.password.value)
-            .pipe(first())
+            .login(this.f.username.value, this.f.password.value, this.f.rememberMe.value)
             .subscribe(
                 () => {
                     this.router.navigate([this.returnUrl]);
@@ -107,7 +123,7 @@ export class LoginComponentCommon implements OnInit {
                     // location.reload();
                 },
                 (error) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error || "Error");
                     this.loading = false;
                 },
             );
