@@ -5,6 +5,7 @@ import { StorageService } from "../../_services/storage.service";
 import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
+import { getApiUrl } from "../../_helpers/utils";
 
 export const DATA_INFO = "Dies ist ein privater Service von Hannes Rüger. Hiermit willigen Sie ein, dass Ihre Daten verarbeitet und gespeichert werden. Sie können diese Einwilligung jederzeit schriftlich durch eine formlose Nachricht an <a href='mailto:ruegerhannes@gmail.com'>ruegerhannes@gmail.com</a> widerrufen, dann werden alle Ihre Daten gelöscht.";
 
@@ -44,8 +45,8 @@ export class LoginComponentCommon implements OnInit {
         private storageService: StorageService,
     ) {
         const jwtToken = this.storageService.get("jwtToken");
-        const apiUrl = this.storageService.get("apiUrl");
-        if (jwtToken && apiUrl) {
+        const apiUrl = getApiUrl();
+        if (jwtToken && !apiUrl.startsWith("undefined")) {
             this.tryingToAutoLogin = true;
             this.authenticationService.autoLogin(jwtToken).subscribe((success) => {
                 if (success) {
@@ -54,8 +55,9 @@ export class LoginComponentCommon implements OnInit {
                     } else {
                         this.router.navigate(["home"]);
                     }
+                } else {
+                    this.tryingToAutoLogin = false;
                 }
-                this.tryingToAutoLogin = false;
             });
         }
     }
