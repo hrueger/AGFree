@@ -43,7 +43,7 @@
                 <h6 class="text-center mb-2">{{ group.name }}</h6>
                 <span>{{getUsersList(group)}}</span>
                 <div>
-                    <button class="btn btn-outline-danger float-right" *ngIf="group.creator.id == authenticationService.currentUserValue.id" (click)="deleteGroup($event, group)"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-outline-danger float-right" *ngIf="group.creator.id == authenticationService.currentUser.id" (click)="deleteGroup($event, group)"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         </div>

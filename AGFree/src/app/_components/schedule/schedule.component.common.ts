@@ -164,8 +164,8 @@ export class ScheduleComponentCommon {
         private authenticationService: AuthenticationService,
         private storageService: StorageService,
     ) {
-        this.showSchedules = this.storageService.getPersistent("showSchedules") == "true";
-        this.myId = this.authenticationService.currentUserValue.id;
+        this.showSchedules = this.storageService.get("showSchedules") == "true";
+        this.myId = this.authenticationService.currentUser.id;
     }
 
     public ngOnInit(): void {
@@ -218,7 +218,7 @@ export class ScheduleComponentCommon {
 
     public toggleSchedules(): void {
         this.showSchedules = !this.showSchedules;
-        this.storageService.setPersistent("showSchedules", this.showSchedules ? "true" : "false");
+        this.storageService.set("showSchedules", this.showSchedules ? "true" : "false");
     }
 
     public isBreak(row: Row): boolean {

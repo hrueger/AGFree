@@ -21,8 +21,9 @@ export class RemoteService {
         );
     }
 
-    public post(path: string, data: Record<string, any>): Observable<any> {
-        return this.http.post<any>(`${getApiUrl()}${path}`, data).pipe(
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public post(path: string, data: Record<string, any>, options?: any): Observable<any> {
+        return this.http.post<any>(`${getApiUrl()}${path}`, data, options).pipe(
             tap(() => undefined),
             catchError(this.handleError<any>(path, false)),
         );

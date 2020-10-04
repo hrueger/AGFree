@@ -6,6 +6,7 @@ import { ApplicationSettings, Dialogs, Page } from "@nativescript/core";
 import { AlertService } from "../../_services/alert.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { RemoteService } from "../../_services/remote.service";
+import { StorageService } from "../../_services/storage.service";
 import { DATA_INFO, LoginComponentCommon } from "./login.component.common";
 
 @Component({
@@ -20,10 +21,14 @@ export class LoginComponent extends LoginComponentCommon {
         alertService: AlertService,
         remoteService: RemoteService,
         route: ActivatedRoute,
+        storageService: StorageService,
         private page: Page,
         private httpClient: HttpClient,
     ) {
-        super(formBuilder, router, authenticationService, alertService, remoteService, route);
+        super(
+            formBuilder, router, authenticationService, alertService,
+            remoteService, route, storageService,
+        );
         this.page.actionBarHidden = true;
     }
     public domain: string;

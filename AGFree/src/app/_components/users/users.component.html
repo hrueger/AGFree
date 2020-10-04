@@ -1,7 +1,7 @@
 <button type="button" (click)="openEditModal(editUserModal)" class="float-right btn btn-outline-primary">
     {{'users.changeOwnProfile' | translate}}
 </button>
-<button type="button" (click)="sendCompleteProfileMail()" [disabled]="sendingMail ? 'disabled' : null" *ngIf="authenticationService.currentUserValue.isAdmin" class="mr-2 float-right btn btn-outline-primary">
+<button type="button" (click)="sendCompleteProfileMail()" [disabled]="sendingMail ? 'disabled' : null" *ngIf="authenticationService.currentUser.isAdmin" class="mr-2 float-right btn btn-outline-primary">
     {{'users.sendCompleteProfileMail' | translate}}
     <i class="fas fa-spinner fa-spin ml-2" *ngIf="sendingMail"></i>
 </button>
@@ -20,12 +20,12 @@
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-4">
     <div class="col" *ngFor="let user of searchUsers()">
         <div class="card mb-4 p-3">
-            <h6 class="text-center mb-0" [class.text-warning]="user.isAdmin && authenticationService.currentUserValue.isAdmin">
-                <i *ngIf="user.isAdmin && authenticationService.currentUserValue.isAdmin" class="fas fa-user-shield"></i> {{ user.username }}
-                <button class="btn text-warning p-0 float-right mr-2" *ngIf="authenticationService.currentUserValue.isAdmin" (click)="changeAdminStatus(user, !user.isAdmin)"><i [class]="'fas fa-user' + (user.isAdmin ? '' : '-shield')"></i></button>
-                <button class="btn text-danger p-0 float-right" *ngIf="authenticationService.currentUserValue.isAdmin" (click)="deleteUser(user)"><i class="fas fa-trash"></i></button>
+            <h6 class="text-center mb-0" [class.text-warning]="user.isAdmin && authenticationService.currentUser.isAdmin">
+                <i *ngIf="user.isAdmin && authenticationService.currentUser.isAdmin" class="fas fa-user-shield"></i> {{ user.username }}
+                <button class="btn text-warning p-0 float-right mr-2" *ngIf="authenticationService.currentUser.isAdmin" (click)="changeAdminStatus(user, !user.isAdmin)"><i [class]="'fas fa-user' + (user.isAdmin ? '' : '-shield')"></i></button>
+                <button class="btn text-danger p-0 float-right" *ngIf="authenticationService.currentUser.isAdmin" (click)="deleteUser(user)"><i class="fas fa-trash"></i></button>
             </h6>
-            <span class="text-center" *ngIf="authenticationService.currentUserValue.isAdmin">{{user.email}}</span>
+            <span class="text-center" *ngIf="authenticationService.currentUser.isAdmin">{{user.email}}</span>
             <app-schedule class="mt-2" [userdata]="user.data" [small]="true"></app-schedule>
         </div>
     </div>

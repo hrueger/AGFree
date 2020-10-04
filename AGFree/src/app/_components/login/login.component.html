@@ -24,6 +24,10 @@
                 </div>
             </div>
         </div>
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe">
+            <label class="custom-control-label" for="rememberMe">{{'general.rememberMe' | translate}}</label>
+        </div>
         <div class="form-group">
             <button [disabled]="loading" type="button" (click)="resetPassword = true; $event.preventDefault" class="btn btn-link">
                 {{'login.lostPassword' | translate}}

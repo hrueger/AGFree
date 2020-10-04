@@ -79,11 +79,11 @@ export class UsersComponentCommon implements OnInit {
         this.editUserForm
             .get("editUserName")
             .setValue(
-                this.authenticationService.currentUserValue.username,
+                this.authenticationService.currentUser.username,
             );
         this.editUserForm
             .get("editUserEmail")
-            .setValue(this.authenticationService.currentUserValue.email);
+            .setValue(this.authenticationService.currentUser.email);
     }
 
     public openEditModal(content: unknown): void {
