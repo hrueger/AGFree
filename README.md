@@ -6,7 +6,7 @@
 [![Lint](https://github.com/hrueger/AGFree/workflows/Lint/badge.svg)](https://github.com/hrueger/AGFree/actions)
 [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE.md)
 [![GitHub last commit](https://img.shields.io/github/last-commit/hrueger/AGFree?color=brightgreen)](https://github.com/hrueger/AGFree/commits)
-[![Maintenance](https://img.shields.io/maintenance/yes/2020)](https://github.com/hrueger/AGFree/commits)
+[![Maintenance](https://img.shields.io/maintenance/yes/2021)](https://github.com/hrueger/AGFree/commits)
 
 ## What is it?
 A simple tool for students to check for common free periods.
